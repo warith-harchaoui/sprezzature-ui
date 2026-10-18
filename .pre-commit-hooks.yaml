@@ -1,0 +1,23 @@
+# Pre-commit hook manifest for sprezzature-ui.
+#
+#   repos:
+#     - repo: https://github.com/warith-harchaoui/sprezzature-ui
+#       rev: v1.0.0
+#       hooks:
+#         - id: sprezzature-ui-i18n-audit
+#
+# Stdlib-only, which is why it belongs in a hook: a hardcoded sentence costs
+# nothing the day it is written and a week the day somebody needs a second
+# language. Catching them one at a time is the whole value.
+
+- id: sprezzature-ui-i18n-audit
+  name: sprezzature-ui — i18n audit (embedded translations, inlined prompts)
+  description: >-
+    Flags GUI translations embedded in JavaScript or HTML and LLM
+    prompts inlined in Python. Both belong in locales/i18n.yaml,
+    loaded through the compiled locales/i18n.json.
+  entry: sprezzature-ui-i18n-audit
+  language: python
+  language_version: python3
+  files: '\.(js|mjs|ts|jsx|tsx|html|py)$'
+  types: [file]

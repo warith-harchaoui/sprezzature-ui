@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sprezzature-ui"
+version = "1.0.0"
+description = "The deterministic half of sprezzature-ui: find the translations embedded in your JavaScript and the prompts inlined in your Python, and scaffold the catalogue they belong in."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+authors = [{name = "Warith HARCHAOUI", email = "warithmetics@deraison.ai"}]
+keywords = ["i18n", "localization", "tailwind", "vanilla-js", "frontend", "audit", "sprezzature"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Internationalization",
+]
+
+# click, and nothing else. `sprezzature-ui` — the click front door — is a
+# declared console script, and a command that `pip install` puts on PATH and
+# that dies on `import click` is a defect this suite has shipped before. The
+# audit itself is stdlib-only, which is what lets it sit in a pre-commit
+# hook.
+dependencies = ["click>=8.1"]
+
+[project.optional-dependencies]
+# The catalogue is YAML; the audit that finds what belongs in it is not.
+i18n = ["PyYAML>=6.0"]
+api = ["fastapi>=0.115", "uvicorn[standard]>=0.30", "pydantic>=2.0"]
+mcp = [
+    "sprezzature-ui[api]",
+    "fastapi-mcp>=0.3",
+    # fastapi-mcp 0.4.0 declares mcp>=1.12.0 with no upper bound but calls
+    # mcp's Server(name, description) positionally — mcp 2.0.0 made
+    # `description` keyword-only. Same pin, same reason, as every sibling.
+    "mcp<2.0",
+]
+dev = ["pytest>=8.0", "ruff", "mypy", "httpx>=0.27", "PyYAML>=6.0"]
+
+[project.scripts]
+# Two front doors over the same table — `make-ui` reads its flags with
+# argparse, `sprezzature-ui` with click — plus one command per tool.
+make-ui = "sprezzature_ui.cli:main"
+sprezzature-ui = "sprezzature_ui.cli_click:main"
+sprezzature-ui-i18n-audit = "sprezzature_ui_scripts.audit_i18n:main"
+sprezzature-ui-i18n-make = "sprezzature_ui_scripts.i18n_make:main"
+sprezzature-ui-mcp = "sprezzature_ui.mcp:main"
+
+[project.urls]
+Homepage = "https://sprezzature.ai/"
+Repository = "https://github.com/warith-harchaoui/sprezzature-ui"
+Changelog = "https://github.com/warith-harchaoui/sprezzature-ui/blob/main/CHANGELOG.md"
+Issues = "https://github.com/warith-harchaoui/sprezzature-ui/issues"
+
+[tool.setuptools]
+packages = ["sprezzature_ui", "sprezzature_ui_scripts"]
+
+[tool.setuptools.package-dir]
+"sprezzature_ui_scripts" = "scripts"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra -q --strict-markers"
+markers = ["network: tests that require network access"]

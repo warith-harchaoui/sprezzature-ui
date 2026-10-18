@@ -1,0 +1,89 @@
+# sprezzature-ui
+
+The deterministic half of a frontend skill: find the strings that should be
+in a translation catalogue, and scaffold the catalogue they belong in.
+
+The other half — writing the interface, in semantic HTML with Tailwind
+utilities and plain ES modules, no framework runtime, with dark-mode peers,
+focus rings and reduced-motion guards — is the model's work, guided by the
+[`SKILL.md`](https://github.com/warith-harchaoui/sprezzature) that ships with
+the suite. No HTTP route can carry "make this dashboard legible", and this
+package does not pretend otherwise.
+
+---
+
+## What's here
+
+| | |
+|---|---|
+| `sprezzature-ui-i18n-audit` | **audit** — translations embedded in JavaScript and HTML, LLM prompts inlined in Python. Both belong in `locales/i18n.yaml`. Standard library only. |
+| `sprezzature-ui-i18n-make` | **make** — scaffold that catalogue, compile it to JSON, emit the loader that reads it. |
+
+Two front doors over both: `make-ui <tool>` (argparse) and
+`sprezzature-ui <tool>` (click). Both read one table, so a tool cannot appear
+in one and be missing from the other.
+
+## Why it matters sooner than it seems
+
+A hardcoded sentence in a template costs nothing on the day it is written.
+It costs a week the day somebody needs a second language and discovers the
+strings are scattered through the source — in JavaScript string literals, in
+HTML attributes, in prompt templates buried in Python. The audit is cheap
+enough to put in a pre-commit hook, which is where it catches them one at a
+time instead of all at once.
+
+## Install
+
+```sh
+pip install sprezzature-ui              # the audit
+pip install "sprezzature-ui[i18n]"      # + the catalogue tools (PyYAML)
+pip install "sprezzature-ui[api,mcp]"   # + the HTTP and agent surfaces
+```
+
+## Use
+
+```sh
+sprezzature-ui-i18n-audit src/            # exit 1 on any finding
+sprezzature-ui-i18n-make locales/i18n.yaml
+```
+
+### As a pre-commit hook
+
+```yaml
+repos:
+  - repo: https://github.com/warith-harchaoui/sprezzature-ui
+    rev: v1.0.0
+    hooks:
+      - id: sprezzature-ui-i18n-audit
+```
+
+### From Python
+
+```python
+from sprezzature_ui import audit_path
+```
+
+### Over HTTP
+
+```sh
+pip install "sprezzature-ui[api]"
+uvicorn sprezzature_ui.api:app --port 8000
+```
+
+One route, `POST /v1/i18n-audit`: source in, findings out. The narrowness is
+the point rather than an omission — see the first paragraph.
+
+## See also
+
+- **[sprezzature-accessibility](https://github.com/warith-harchaoui/sprezzature-accessibility)** — lint the HTML you emit, and draft the alt text it says is missing.
+- **[sprezzature-colors](https://github.com/warith-harchaoui/sprezzature-colors)** — contrast and colour-vision checks on the palette.
+- **[sprezzature-ux-laws](https://github.com/warith-harchaoui/sprezzature-ux-laws)** — audit how the interface feels, by the named heuristics.
+- **[sprezzature](https://github.com/warith-harchaoui/sprezzature)** — the suite, and the skills that drive it from Claude.
+
+## License
+
+BSD-3-Clause. See `LICENSE`.
+
+## Author
+
+[Warith HARCHAOUI, Ph.D.](https://www.linkedin.com/in/warith-harchaoui/)
