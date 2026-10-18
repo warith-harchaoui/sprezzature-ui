@@ -1,0 +1,24 @@
+# `docker compose up` is the whole onboarding. The Dockerfile beside this file
+# is a recipe; this is the way in — the port, the volume and the command,
+# declared rather than reconstructed by the next reader from a `docker run`
+# line in somebody's shell history.
+#
+#   docker compose up -d
+#   curl -s localhost:8000/health
+#   docker compose run --rm api make-ui i18n-audit /work/src
+#
+# One service, and no model server: nothing here asks a model. The audit is
+# a parser and the catalogue tool is YAML.
+
+services:
+  api:
+    build: .
+    image: sprezzature-ui:local
+    ports:
+      - "8000:8000"
+    volumes:
+      # The source to audit, and the catalogue written beside it. Mounted
+      # rather than copied so the container never holds the only copy.
+      - ./work:/work
+    working_dir: /work
+    restart: unless-stopped
