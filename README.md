@@ -73,6 +73,14 @@ uvicorn sprezzature_ui.api:app --port 8000
 One route, `POST /v1/i18n-audit`: source in, findings out. The narrowness is
 the point rather than an omission — see the first paragraph.
 
+## The boundary, said plainly
+
+This package is **small**, and it will stay small. Its job is the aesthetic
+judgement written in prose — the three-Roboto rule, the design tokens, what an
+interface has to respect — plus the part of that judgement which can be
+mechanised. The i18n audit is that part. The temptation will be to add routes
+for the sake of the count; that would be mistaking breadth for value.
+
 ## See also
 
 - **[sprezzature-accessibility](https://github.com/warith-harchaoui/sprezzature-accessibility)** — lint the HTML you emit, and draft the alt text it says is missing.
