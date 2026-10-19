@@ -1,0 +1,131 @@
+meta:
+  reference: sprezzature-ui
+  rotation_deg: -97.899
+  explained_variance_ratio:
+  - 0.5367
+  - 0.2684
+  cumulative_variance: 0.8051
+  n_approaches: 7
+  attributes:
+  - No framework runtime
+  - Catalogue-driven i18n
+  - Works as a pre-commit gate
+  - Design rules written down
+  - Breadth of components
+  - Setup simplicity
+  lower_is_better: []
+axes:
+  axis_1:
+    name: Organized ↔ Streamlined
+    pole_left: Organized
+    pole_right: Streamlined
+    loadings:
+      No framework runtime: 0.2819
+      Catalogue-driven i18n: -0.1616
+      Works as a pre-commit gate: 0.2832
+      Design rules written down: 0.5816
+      Breadth of components: 0.1377
+      Setup simplicity: 0.676
+  axis_2:
+    name: Versatile ↔ Guaranteed
+    pole_bottom: Versatile
+    pole_top: Guaranteed
+    loadings:
+      No framework runtime: 0.3174
+      Catalogue-driven i18n: 0.5329
+      Works as a pre-commit gate: 0.4714
+      Design rules written down: -0.265
+      Breadth of components: -0.5512
+      Setup simplicity: 0.1378
+approaches:
+- name: sprezzature-ui
+  coordinates:
+    axis_1: 1.1682
+    axis_2: 1.9577
+  role: best
+  color: '#FF3B30'
+  attributes:
+    No framework runtime: 5.0
+    Catalogue-driven i18n: 5.0
+    Works as a pre-commit gate: 5.0
+    Design rules written down: 5.0
+    Breadth of components: 1.0
+    Setup simplicity: 5.0
+- name: Tailwind UI
+  coordinates:
+    axis_1: 0.6638
+    axis_2: -0.9551
+  role: competitor
+  color: '#BAD070'
+  attributes:
+    No framework runtime: 5.0
+    Catalogue-driven i18n: 1.0
+    Works as a pre-commit gate: 1.0
+    Design rules written down: 3.0
+    Breadth of components: 5.0
+    Setup simplicity: 3.0
+- name: shadcn/ui
+  coordinates:
+    axis_1: 0.3241
+    axis_2: -1.9305
+  role: competitor
+  color: '#E482A1'
+  attributes:
+    No framework runtime: 1.0
+    Catalogue-driven i18n: 1.0
+    Works as a pre-commit gate: 1.0
+    Design rules written down: 4.0
+    Breadth of components: 5.0
+    Setup simplicity: 3.0
+- name: Material UI
+  coordinates:
+    axis_1: -0.0699
+    axis_2: -1.9577
+  role: worst
+  color: '#A52A2A'
+  attributes:
+    No framework runtime: 1.0
+    Catalogue-driven i18n: 2.0
+    Works as a pre-commit gate: 1.0
+    Design rules written down: 5.0
+    Breadth of components: 5.0
+    Setup simplicity: 2.0
+- name: Bootstrap
+  coordinates:
+    axis_1: 1.1682
+    axis_2: -1.017
+  role: right
+  color: '#007AFF'
+  attributes:
+    No framework runtime: 4.0
+    Catalogue-driven i18n: 1.0
+    Works as a pre-commit gate: 1.0
+    Design rules written down: 3.0
+    Breadth of components: 5.0
+    Setup simplicity: 4.0
+- name: i18next
+  coordinates:
+    axis_1: -0.8641
+    axis_2: 1.5625
+  role: competitor
+  color: '#2C8FC9'
+  attributes:
+    No framework runtime: 3.0
+    Catalogue-driven i18n: 5.0
+    Works as a pre-commit gate: 2.0
+    Design rules written down: 1.0
+    Breadth of components: 1.0
+    Setup simplicity: 3.0
+- name: gettext / Babel
+  coordinates:
+    axis_1: -1.1682
+    axis_2: 1.9577
+  role: top
+  color: '#AF52DE'
+  attributes:
+    No framework runtime: 4.0
+    Catalogue-driven i18n: 5.0
+    Works as a pre-commit gate: 3.0
+    Design rules written down: 1.0
+    Breadth of components: 1.0
+    Setup simplicity: 2.0

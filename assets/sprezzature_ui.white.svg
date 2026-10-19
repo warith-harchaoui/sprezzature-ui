@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1224" height="946" viewBox="0 0 1224 946" role="img" aria-labelledby="sp-title sp-desc" font-family="Roboto, -apple-system, Helvetica, Arial, sans-serif"><rect width="1224" height="946" fill="#FFFFFF"/><title id="sp-title">Approaches in the Quadrant</title><desc id="sp-desc">A 2D positioning map of 7 approaches, Organized to Streamlined on the horizontal axis, Versatile to Guaranteed on the vertical axis.</desc><style>.sp-dot{cursor:pointer}.sp-dot:hover circle,.sp-dot:focus circle{stroke-width:2.4}.sp-dot:hover,.sp-dot:focus{filter:brightness(1.08);outline:none}</style><line x1="205.7" y1="484.0" x2="988.1" y2="484.0" stroke="#C7C7CC" stroke-width="1.2" stroke-dasharray="2,4"/><line x1="612.0" y1="862.0" x2="612.0" y2="106.0" stroke="#C7C7CC" stroke-width="1.2" stroke-dasharray="2,4"/><text data-pole="right" x="1164.0" y="493.1" font-size="26" font-style="italic" fill="#6E6E73" text-anchor="end">Streamlined</text><text data-pole="left" x="60.0" y="493.1" font-size="26" font-style="italic" fill="#6E6E73" text-anchor="start">Organized</text><text data-pole="top" x="612.0" y="64.5" font-size="26" font-style="italic" fill="#6E6E73" text-anchor="middle">Guaranteed</text><text data-pole="bottom" x="612.0" y="918.8" font-size="26" font-style="italic" fill="#6E6E73" text-anchor="middle">Versatile</text><g class="sp-dot" tabindex="0" role="img" aria-label="Approaches: sprezzature-ui
+role: best
+axis1: 1.17
+axis2: 1.96"><circle cx="912.0" cy="259.0" r="8.74" fill="#FF3B30" stroke="white" stroke-width="1" opacity="0.95"/><title>Approaches: sprezzature-ui
+role: best
+axis1: 1.17
+axis2: 1.96</title></g><text x="899.5" y="264.9" font-size="17" fill="#1C1C1E" text-anchor="end">sprezzature-ui</text><g class="sp-dot" tabindex="0" role="img" aria-label="Approaches: Tailwind UI
+role: competitor
+axis1: 0.66
+axis2: -0.96"><circle cx="782.5" cy="593.8" r="8.74" fill="#BAD070" stroke="white" stroke-width="1" opacity="0.95"/><title>Approaches: Tailwind UI
+role: competitor
+axis1: 0.66
+axis2: -0.96</title></g><text x="795.0" y="599.7" font-size="17" fill="#1C1C1E" text-anchor="start">Tailwind UI</text><g class="sp-dot" tabindex="0" role="img" aria-label="Approaches: shadcn/ui
+role: competitor
+axis1: 0.32
+axis2: -1.93"><circle cx="695.2" cy="705.9" r="8.74" fill="#E482A1" stroke="white" stroke-width="1" opacity="0.95"/><title>Approaches: shadcn/ui
+role: competitor
+axis1: 0.32
+axis2: -1.93</title></g><text x="707.7" y="711.8" font-size="17" fill="#1C1C1E" text-anchor="start">shadcn/ui</text><g class="sp-dot" tabindex="0" role="img" aria-label="Approaches: Material UI
+role: worst
+axis1: -0.07
+axis2: -1.96"><circle cx="594.1" cy="709.0" r="8.74" fill="#A52A2A" stroke="white" stroke-width="1" opacity="0.95"/><title>Approaches: Material UI
+role: worst
+axis1: -0.07
+axis2: -1.96</title></g><text x="581.6" y="715.0" font-size="17" fill="#1C1C1E" text-anchor="end">Material UI</text><g class="sp-dot" tabindex="0" role="img" aria-label="Approaches: Bootstrap
+role: right
+axis1: 1.17
+axis2: -1.02"><circle cx="912.0" cy="600.9" r="8.74" fill="#007AFF" stroke="white" stroke-width="1" opacity="0.95"/><title>Approaches: Bootstrap
+role: right
+axis1: 1.17
+axis2: -1.02</title></g><text x="924.5" y="606.8" font-size="17" fill="#1C1C1E" text-anchor="start">Bootstrap</text><g class="sp-dot" tabindex="0" role="img" aria-label="Approaches: i18next
+role: competitor
+axis1: -0.86
+axis2: 1.56"><circle cx="390.1" cy="304.4" r="8.74" fill="#2C8FC9" stroke="white" stroke-width="1" opacity="0.95"/><title>Approaches: i18next
+role: competitor
+axis1: -0.86
+axis2: 1.56</title></g><text x="402.6" y="310.4" font-size="17" fill="#1C1C1E" text-anchor="start">i18next</text><g class="sp-dot" tabindex="0" role="img" aria-label="Approaches: gettext / Babel
+role: top
+axis1: -1.17
+axis2: 1.96"><circle cx="312.0" cy="259.0" r="8.74" fill="#AF52DE" stroke="white" stroke-width="1" opacity="0.95"/><title>Approaches: gettext / Babel
+role: top
+axis1: -1.17
+axis2: 1.96</title></g><text x="324.5" y="264.9" font-size="17" fill="#1C1C1E" text-anchor="start">gettext / Babel</text><text x="612.0" y="26" font-size="18" font-weight="bold" fill="#000" text-anchor="middle">Approaches in the Quadrant</text></svg>
