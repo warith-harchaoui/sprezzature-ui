@@ -36,6 +36,8 @@ __author__ = "Warith HARCHAOUI"
 __email__ = "warithmetics@deraison.ai"
 __license__ = "BSD-3-Clause"
 
+from typing import Any  # noqa: E402
+
 #: Names resolved on first use, mapped to the module that owns them. Lazy for
 #: the same reason as every brick in this suite: ``import sprezzature_ui``
 #: must work after a bare ``pip install``, and the i18n catalogue needs PyYAML
@@ -53,7 +55,7 @@ _EXPORTS: dict[str, str] = {
 }
 
 
-def __getattr__(name: str):
+def __getattr__(name: str) -> Any:
     """Resolve an export on first use, per PEP 562."""
     module_name = _EXPORTS.get(name)
     if module_name is None:
