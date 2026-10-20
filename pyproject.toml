@@ -77,5 +77,13 @@ ignore = ["E501"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-ra -q --strict-markers"
-markers = ["network: tests that require network access"]
+addopts = '-ra -q --strict-markers -m "not eval"'
+markers = [
+    # The i18n catalogue's prompt rules are a claim about model behaviour, so
+    # the tests that support them call a model. They need Ollama running and a
+    # qwen3-vl tag pulled, which a contributor's machine and a runner may not
+    # have — hence opt-in, and hence the pre-push hook collecting them so a
+    # syntax error in there surfaces in a second rather than in a month.
+    "eval: LLM-output quality tests under tests/eval/ (need Ollama running)",
+    "network: tests that require network access",
+]

@@ -14,3 +14,7 @@ out/
 
 # Private notes and assessments: local only, never published.
 .private/
+
+# DeepEval writes a local telemetry file next to wherever it runs; it is
+# machine state, not source. The eval suite is what uses deepeval.
+.deepeval/
