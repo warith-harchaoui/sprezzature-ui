@@ -55,14 +55,38 @@ sprezzature-ui-i18n-make locales/i18n.yaml
 ### En crochet de pré-commit
 
 ```yaml
-- repo: local
-  hooks:
-    - id: i18n-audit
-      name: chaînes hors catalogue
-      entry: sprezzature-ui-i18n-audit src/
-      language: system
-      pass_filenames: false
+repos:
+  - repo: https://github.com/warith-harchaoui/sprezzature-ui
+    rev: v1.0.0
+    hooks:
+      - id: sprezzature-ui-i18n-audit
 ```
+
+### Depuis Python
+
+```python
+from sprezzature_ui import audit_path, gather
+
+for fichier in gather(["src/"]):
+    for constat in audit_path(fichier):
+        print(constat["rule"], constat["path"], constat["line"])
+```
+
+`gather` parcourt l'arborescence et écarte ce qui ne s'audite pas ;
+`audit_path` lit un fichier. Les deux sont séparés parce qu'un crochet de
+pré-commit sait déjà quels fichiers ont changé et n'a pas à payer un
+parcours.
+
+### Par HTTP
+
+```sh
+pip install "sprezzature-ui[api]"
+uvicorn sprezzature_ui.api:app --port 8000
+```
+
+Une seule route, `POST /v1/i18n-audit` : du source entre, des constats
+sortent. L'étroitesse est le propos plutôt qu'un oubli, voir le premier
+paragraphe.
 
 ## La frontière, dite franchement
 

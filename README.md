@@ -60,8 +60,16 @@ repos:
 ### From Python
 
 ```python
-from sprezzature_ui import audit_path
+from sprezzature_ui import audit_path, gather
+
+for file in gather(["src/"]):
+    for finding in audit_path(file):
+        print(finding["rule"], finding["path"], finding["line"])
 ```
+
+`gather` walks the tree and drops what is not auditable; `audit_path`
+reads one file. They are separate because a pre-commit hook already knows
+which files changed and should not pay for a walk.
 
 ### Over HTTP
 
