@@ -58,7 +58,7 @@ dev = [
 # Two front doors over the same table — `make-ui` reads its flags with
 # argparse, `sprezzature-ui` with click — plus one command per tool.
 make-ui = "sprezzature_ui.cli:main"
-sprezzature-ui = "sprezzature_ui.cli_click:main"
+sprezzature-ui = "sprezzature_ui.cli:main"
 sprezzature-ui-i18n-audit = "sprezzature_ui_scripts.audit_i18n:main"
 sprezzature-ui-i18n-make = "sprezzature_ui_scripts.i18n_make:main"
 sprezzature-ui-mcp = "sprezzature_ui.mcp:main"

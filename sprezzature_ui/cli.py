@@ -1,12 +1,19 @@
 """
-The argparse command line — ``make-ui``.
+``sprezzature-ui`` — the command line over this package's tools.
 
-Two tools, each also its own command. This is the front door that says what
-the package does without anybody reading the README, and its twin
-``sprezzature_ui.cli_click`` reads the same table with click.
+One front door. Until 2026-10-25 there were two, an argparse one and a click
+one kept in step by sharing a table; the click module imported ``TOOLS`` from
+the argparse module, so neither could be removed without the other and every
+sub-command had to be written twice. The catalogue now lives in
+:mod:`sprezzature_ui._tools`, and this is the only parser.
 
-The table is small on purpose. Writing a component is the model's work,
-guided by ``SKILL.md``; what ships here is the part a machine can check.
+``make-ui`` and ``sprezzature-ui`` both land here. The first name is kept because it is what the
+skill, the README and years of notes tell people to type; they are two
+spellings of one command, not two commands.
+
+Each tool below is also its own console script, which is what a script or a
+pre-commit hook should call. This front door is for a person who does not
+remember the exact name.
 
 Author
 ------
@@ -15,77 +22,82 @@ Author
 
 from __future__ import annotations
 
-import argparse
 import importlib
 import sys
 
-from sprezzature_ui_scripts._argparse import make_parser
+import click
 
-#: Every tool, with the line that says when to reach for it. The dispatcher
-#: and the help text are the same table, so a tool cannot be listed and
-#: unreachable, or reachable and undocumented.
-TOOLS: dict[str, tuple[str, str]] = {
-    "i18n-audit": (
-        "audit_i18n",
-        "Find translations embedded in JavaScript and HTML, and LLM prompts "
-        "inlined in Python. Both belong in locales/i18n.yaml.",
-    ),
-    "i18n-make": (
-        "i18n_make",
-        "Scaffold that catalogue, compile it to JSON, and emit the loader "
-        "that reads it.",
-    ),
-}
+from sprezzature_ui._tools import TOOLS
+
+#: Shown under the command list. Completion is click's, and worth saying out
+#: loud: a front door with several tools is exactly where tab completion pays
+#: off, and nobody discovers it by guessing.
+_EPILOG = """\
+Shell completion:
+
+  \b
+  eval "$(_SPREZZATURE_UI_COMPLETE=bash_source sprezzature-ui)"   # bash
+  eval "$(_SPREZZATURE_UI_COMPLETE=zsh_source sprezzature-ui)"    # zsh
+
+Run `sprezzature-ui tools` to see which tools are ready on this machine
+and which need an extra installed.
+"""
 
 
-def build_parser() -> argparse.ArgumentParser:
-    """The parser, built separately so a test can read it without running it."""
+@click.group(
+    context_settings={"help_option_names": ["-h", "--help"]},
+    epilog=_EPILOG,
+    help=("The deterministic half of sprezzature-ui. Each tool below is also its own command."),
+)
+@click.version_option(package_name="sprezzature-ui")
+def main() -> None:  # pragma: no cover - click dispatches
+    """Front door over the two tools this package ships."""
+
+
+@main.command(name="tools")
+def list_tools() -> None:
+    """
+    List the tools, and say which ones can run here.
+
+    The second half is the point: "installed" and "will run" are different
+    questions when a tool needs an extra, and a reader should not have to
+    discover the difference from a traceback.
+    """
     width = max(len(name) for name in TOOLS)
-    catalogue = "\n".join(
-        f"  {name:<{width}}  {summary}" for name, (_, summary) in TOOLS.items()
+    for name, entry in TOOLS.items():
+        _module, extra = (entry[0], entry[1]) if len(entry) == 3 else (entry[0], "")
+        target = f"sprezzature_ui_scripts.{_module}"
+        try:
+            importlib.import_module(target)
+            mark = "ready"
+        except ImportError:
+            mark = f"needs [{extra}]" if extra else "unavailable"
+        summary = entry[-1].split(".")[0]
+        click.echo(f"  {name:<{width}}  {mark:<14}  {summary}.")
+
+
+def _attach(name: str, module_name: str, summary: str) -> None:
+    """Register one tool as a click sub-command, from the shared table."""
+
+    @main.command(
+        name,
+        help=summary,
+        context_settings={"ignore_unknown_options": True, "allow_extra_args": True},
     )
-    parser = make_parser(
-        prog="make-ui",
-        description=(
-            "The deterministic half of sprezzature-ui. Writing an interface "
-            "is the model's work, guided by SKILL.md; these are the two "
-            "tools a machine can run."
-        ),
-        epilog=(
-            f"Tools:\n{catalogue}\n"
-            "\n"
-            "Examples:\n"
-            "  make-ui i18n-audit src/\n"
-            "  make-ui i18n-make locales/i18n.yaml\n"
-            "\n"
-            "Every flag after the tool name belongs to that tool; run\n"
-            "`make-ui <tool> --help` to see them.\n"
-        ),
-    )
-    parser.add_argument("tool", choices=sorted(TOOLS), help="Which tool to run.")
-    # Everything after the tool name belongs to the tool, including flags this
-    # parser also defines — otherwise `make-ui i18n-audit --help` would print
-    # this help rather than the tool's.
-    parser.add_argument("rest", nargs=argparse.REMAINDER,
-                        help="Arguments passed through to the tool.")
-    return parser
+    @click.argument("rest", nargs=-1, type=click.UNPROCESSED)
+    def _run(rest: tuple[str, ...], _module: str = module_name, _name: str = name) -> None:
+        module = importlib.import_module(f"sprezzature_ui_scripts.{_module}")
+        saved = sys.argv
+        try:
+            sys.argv = [f"sprezzature-ui {_name}", *rest]
+            raise SystemExit(int(module.main() or 0))
+        finally:
+            sys.argv = saved
 
 
-def main(argv: list[str] | None = None) -> int:
-    """Dispatch to one of the two tools."""
-    args = build_parser().parse_args(argv)
-    module_name, _ = TOOLS[args.tool]
-    module = importlib.import_module(f"sprezzature_ui_scripts.{module_name}")
-
-    # The tools read sys.argv themselves — they were commands before they
-    # were sub-commands, and they still are.
-    saved = sys.argv
-    try:
-        sys.argv = [f"make-ui {args.tool}", *args.rest]
-        return int(module.main() or 0)
-    finally:
-        sys.argv = saved
+for _tool, (_module_name, _summary) in TOOLS.items():
+    _attach(_tool, _module_name, _summary)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
