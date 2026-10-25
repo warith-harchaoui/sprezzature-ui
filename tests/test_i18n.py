@@ -27,6 +27,7 @@ import i18n_make  # noqa: E402
 
 # ── audit: I18N001 (GUI translations embedded in JS) ────────────────────────
 
+
 def test_audit_flags_named_js_translation_table(tmp_path: Path) -> None:
     """A ``const i18n = { … }`` table in JS is an I18N001 violation."""
     js = tmp_path / "app.js"
@@ -59,6 +60,7 @@ def test_audit_passes_clean_gui(tmp_path: Path) -> None:
 
 # ── audit: I18N002 (LLM prompts inlined in Python) ──────────────────────────
 
+
 def test_audit_flags_inline_python_prompt(tmp_path: Path) -> None:
     """A ``*_PROMPT`` string constant is an I18N002 violation."""
     py = tmp_path / "engine.py"
@@ -84,6 +86,7 @@ def test_audit_passes_loaded_prompt(tmp_path: Path) -> None:
 
 # ── audit: dir recursion + exit-code contract ───────────────────────────────
 
+
 def test_audit_recurses_dir_and_skips_vendor(tmp_path: Path) -> None:
     """gather() recurses dirs and skips node_modules / vendor bundles."""
     (tmp_path / "src").mkdir()
@@ -96,6 +99,7 @@ def test_audit_recurses_dir_and_skips_vendor(tmp_path: Path) -> None:
 
 
 # ── make: scaffold / compile / loader ───────────────────────────────────────
+
 
 def test_make_scaffolds_catalog_json_and_loader(tmp_path: Path) -> None:
     """A full make run writes i18n.yaml + i18n.json + i18n.js under locales/."""
@@ -115,8 +119,8 @@ def test_make_init_is_idempotent(tmp_path: Path) -> None:
     catalog = tmp_path / "locales" / "i18n.yaml"
     assert i18n_make.scaffold(catalog) is True
     catalog.write_text("locales: [en]\ngui:\n  x: {en: custom}\n")  # user edits
-    assert i18n_make.scaffold(catalog) is False        # second run: no-op
-    assert "custom" in catalog.read_text()             # user content preserved
+    assert i18n_make.scaffold(catalog) is False  # second run: no-op
+    assert "custom" in catalog.read_text()  # user content preserved
 
 
 def test_make_compile_is_deterministic(tmp_path: Path) -> None:

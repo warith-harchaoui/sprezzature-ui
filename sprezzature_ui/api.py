@@ -52,8 +52,8 @@ class AuditRequest(BaseModel):
     filename: str = Field(
         default="app.js",
         description="Name the source is reported under. Its **extension "
-                    "decides which rules run** — .js and .html are read for "
-                    "embedded translations, .py for inlined prompts.",
+        "decides which rules run** — .js and .html are read for "
+        "embedded translations, .py for inlined prompts.",
     )
 
 

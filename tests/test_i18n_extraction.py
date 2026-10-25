@@ -59,9 +59,7 @@ def test_a_prompt_constant_is_moved_with_its_validated_locale(tmp_path: Path) ->
         'SUMMARIZE_SYSTEM_PROMPT = "You are terse. Answer in one sentence."\n',
         encoding="utf-8",
     )
-    written, notes = audit_i18n.fix(
-        [tmp_path / "engine.py"], tmp_path / "locales" / "i18n.yaml"
-    )
+    written, notes = audit_i18n.fix([tmp_path / "engine.py"], tmp_path / "locales" / "i18n.yaml")
     assert written == 1
     entry = _catalog(tmp_path)["prompts"]["summarize.system.prompt"]
     assert entry["validated"] == "en"
@@ -103,8 +101,7 @@ def test_an_existing_id_is_left_alone(tmp_path: Path) -> None:
     catalog = tmp_path / "locales" / "i18n.yaml"
     catalog.parent.mkdir(parents=True)
     catalog.write_text(
-        "locales: [en, fr]\nprompts:\n  summarize.prompt:\n"
-        "    validated: fr\n    fr: Résume.\n",
+        "locales: [en, fr]\nprompts:\n  summarize.prompt:\n    validated: fr\n    fr: Résume.\n",
         encoding="utf-8",
     )
     (tmp_path / "e.py").write_text('SUMMARIZE_PROMPT = "Summarise."\n', encoding="utf-8")
@@ -120,20 +117,12 @@ def test_an_existing_id_is_left_alone(tmp_path: Path) -> None:
 def test_a_locale_table_is_lifted_under_its_message_id(tmp_path: Path) -> None:
     """Both locales, under the id the table used, not under a line number."""
     (tmp_path / "app.js").write_text(
-        'const i18n = {\n'
-        '  "app.title": {\n'
-        '    en: "Dashboard", fr: "Tableau de bord"\n'
-        '  }\n'
-        '};\n',
+        'const i18n = {\n  "app.title": {\n    en: "Dashboard", fr: "Tableau de bord"\n  }\n};\n',
         encoding="utf-8",
     )
-    written, notes = audit_i18n.fix(
-        [tmp_path / "app.js"], tmp_path / "locales" / "i18n.yaml"
-    )
+    written, notes = audit_i18n.fix([tmp_path / "app.js"], tmp_path / "locales" / "i18n.yaml")
     assert written == 1
-    assert _catalog(tmp_path)["gui"]["app.title"] == {
-        "en": "Dashboard", "fr": "Tableau de bord"
-    }
+    assert _catalog(tmp_path)["gui"]["app.title"] == {"en": "Dashboard", "fr": "Tableau de bord"}
     assert any('t("app.title")' in note for note in notes)
 
 
@@ -148,14 +137,14 @@ def test_a_locale_mapping_to_a_plural_object_is_reported_not_dropped(
     counted, and the catalogue without it.
     """
     (tmp_path / "app.js").write_text(
-        'const messages = {\n'
+        "const messages = {\n"
         '  "results.count": {\n'
         '    en: { one: "1 result", other: "many" }\n'
-        '  },\n'
+        "  },\n"
         '  "action.save": {\n'
         '    en: "Save", fr: "Enregistrer"\n'
-        '  }\n'
-        '};\n',
+        "  }\n"
+        "};\n",
         encoding="utf-8",
     )
     entries, unparsed = audit_i18n.extract_js(tmp_path / "app.js")
@@ -164,9 +153,7 @@ def test_a_locale_mapping_to_a_plural_object_is_reported_not_dropped(
         "the plural line was neither extracted nor reported — which is the "
         "silent half of a half-done extraction"
     )
-    written, notes = audit_i18n.fix(
-        [tmp_path / "app.js"], tmp_path / "locales" / "i18n.yaml"
-    )
+    written, notes = audit_i18n.fix([tmp_path / "app.js"], tmp_path / "locales" / "i18n.yaml")
     assert written == 1
     assert any("by hand" in note for note in notes)
 
@@ -187,9 +174,7 @@ def test_nothing_is_written_when_there_is_nothing_to_move(tmp_path: Path) -> Non
         'from locales.i18n_prompts import prompt\nP = prompt("a.b", "en").text\n',
         encoding="utf-8",
     )
-    written, _ = audit_i18n.fix(
-        [tmp_path / "clean.py"], tmp_path / "locales" / "i18n.yaml"
-    )
+    written, _ = audit_i18n.fix([tmp_path / "clean.py"], tmp_path / "locales" / "i18n.yaml")
     assert written == 0
     assert not (tmp_path / "locales" / "i18n.yaml").exists()
 
@@ -206,9 +191,7 @@ def test_fix_leaves_the_audit_failing(tmp_path: Path, monkeypatch: pytest.Monkey
     """
     (tmp_path / "engine.py").write_text('SYSTEM_PROMPT = "Be terse."\n', encoding="utf-8")
     monkeypatch.chdir(tmp_path)
-    monkeypatch.setattr(
-        "sys.argv", ["audit_i18n", "--fix", "engine.py"]
-    )
+    monkeypatch.setattr("sys.argv", ["audit_i18n", "--fix", "engine.py"])
     assert audit_i18n.main() == 1
     assert "system.prompt" in _catalog(tmp_path)["prompts"]
 

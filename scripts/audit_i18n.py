@@ -117,7 +117,9 @@ _PY_PROMPT_NAME = re.compile(r"(PROMPT|INSTRUCTION)", re.IGNORECASE)
 VALIDATED_KEY: str = "validated"
 
 
-def _finding(rule: str, severity: str, path: str, line: int, message: str, snippet: str) -> dict[str, Any]:
+def _finding(
+    rule: str, severity: str, path: str, line: int, message: str, snippet: str
+) -> dict[str, Any]:
     """Build one finding dict in the shared auditor shape.
 
     Parameters
@@ -140,8 +142,14 @@ def _finding(rule: str, severity: str, path: str, line: int, message: str, snipp
     dict
         A single finding, JSON-serialisable.
     """
-    return {"rule": rule, "severity": severity, "path": path, "line": line,
-            "message": message, "snippet": snippet}
+    return {
+        "rule": rule,
+        "severity": severity,
+        "path": path,
+        "line": line,
+        "message": message,
+        "snippet": snippet,
+    }
 
 
 def audit_js(path: Path) -> list[dict[str, Any]]:
@@ -185,12 +193,17 @@ def audit_js(path: Path) -> list[dict[str, Any]]:
             flagged_lines.add(i)
     lines = text.splitlines()
     for i in sorted(flagged_lines):
-        findings.append(_finding(
-            "I18N001", "error", str(path), i,
-            "GUI translations embedded in JS/HTML — move them to locales/i18n.yaml "
-            "and load via the compiled locales/i18n.json (see i18n_make.py).",
-            lines[i - 1].strip()[:160],
-        ))
+        findings.append(
+            _finding(
+                "I18N001",
+                "error",
+                str(path),
+                i,
+                "GUI translations embedded in JS/HTML — move them to locales/i18n.yaml "
+                "and load via the compiled locales/i18n.json (see i18n_make.py).",
+                lines[i - 1].strip()[:160],
+            )
+        )
     return findings
 
 
@@ -227,12 +240,17 @@ def audit_py(path: Path) -> list[dict[str, Any]]:
         # A joined f-string (ast.JoinedStr) built inline is also an inlined prompt.
         is_fstr = isinstance(value, ast.JoinedStr)
         if (is_str or is_fstr) and _PY_PROMPT_NAME.search(name):
-            findings.append(_finding(
-                "I18N002", "error", str(path), lineno,
-                f"LLM prompt '{name}' inlined in Python — move it to "
-                "locales/i18n.yaml (prompts:) or a prompts/*.yaml catalog and load it.",
-                name,
-            ))
+            findings.append(
+                _finding(
+                    "I18N002",
+                    "error",
+                    str(path),
+                    lineno,
+                    f"LLM prompt '{name}' inlined in Python — move it to "
+                    "locales/i18n.yaml (prompts:) or a prompts/*.yaml catalog and load it.",
+                    name,
+                )
+            )
 
     # Only module top-level + class-body assignments (constants), not locals.
     bodies: list[ast.stmt] = list(tree.body)
@@ -244,7 +262,11 @@ def audit_py(path: Path) -> list[dict[str, Any]]:
             for tgt in node.targets:
                 if isinstance(tgt, ast.Name):
                     check(tgt.id, node.value, node.lineno)
-        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name) and node.value is not None:
+        elif (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            and node.value is not None
+        ):
             check(node.target.id, node.value, node.lineno)
     return findings
 
@@ -288,9 +310,7 @@ _JS_ENTRY_ID = re.compile(r"""^\s*["']?(?P<id>[\w.\-]+)["']?\s*:\s*\{""")
 #: ``"app.title": {`` does: a locale mapping to an object is a plural entry,
 #: not the header of a new message. Without this check the line was read as a
 #: header and skipped, so a plural table was dropped without a word.
-_LOCALE_CODES: frozenset[str] = frozenset(
-    "en fr es de it pt nl ja zh ko ru ar hi".split()
-)
+_LOCALE_CODES: frozenset[str] = frozenset("en fr es de it pt nl ja zh ko ru ar hi".split())
 
 
 def _message_id(constant: str) -> str:
@@ -403,8 +423,7 @@ def fix(paths: list[Path], catalog: Path) -> tuple[int, list[str]]:
     """
     if yaml is None:  # pragma: no cover - dependency guard
         return 0, [
-            "--fix writes YAML, which is the [i18n] extra: "
-            "pip install 'sprezzature-ui[i18n]'"
+            "--fix writes YAML, which is the [i18n] extra: pip install 'sprezzature-ui[i18n]'"
         ]
 
     data: dict[str, Any] = {}
@@ -488,8 +507,11 @@ def gather(paths: list[str]) -> list[Path]:
         p = Path(raw)
         if p.is_dir():
             for f in p.rglob("*"):
-                if f.is_file() and f.suffix.lower() in JS_EXTS + PY_EXTS \
-                        and not (set(f.parts) & skip):
+                if (
+                    f.is_file()
+                    and f.suffix.lower() in JS_EXTS + PY_EXTS
+                    and not (set(f.parts) & skip)
+                ):
                     out.add(f)
         elif p.is_file():
             out.add(p)
@@ -507,18 +529,20 @@ def main() -> int:
     p = make_parser(
         prog="sprezzature-ui-i18n-audit",
         description="Flag GUI translations embedded in JS/HTML and LLM prompts "
-                    "inlined in Python — both belong in locales/i18n.yaml.",
+        "inlined in Python — both belong in locales/i18n.yaml.",
         epilog=__doc__,
     )
     p.add_argument("paths", nargs="+", help="Files and/or directories to audit.")
     p.add_argument("--json", action="store_true", help="Emit findings as a JSON array.")
     p.add_argument(
-        "--fix", action="store_true",
+        "--fix",
+        action="store_true",
         help="Move the strings into locales/i18n.yaml and print the call to paste. "
-             "Does not rewrite the call site — see the module docstring.",
+        "Does not rewrite the call site — see the module docstring.",
     )
     p.add_argument(
-        "--catalog", default="locales/i18n.yaml",
+        "--catalog",
+        default="locales/i18n.yaml",
         help="Catalogue --fix writes to (default: locales/i18n.yaml).",
     )
     args = p.parse_args()
