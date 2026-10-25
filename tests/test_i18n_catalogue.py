@@ -89,8 +89,7 @@ def _js(project: Path, expression: str) -> object:
     script = _HARNESS % {"loader": loader, "expression": expression}
     proc = subprocess.run(
         [node, "--input-type=module", "-e", script],
-        capture_output=True,
-        text=True,
+        capture_output=True, text=True,
     )
     assert proc.returncode == 0, f"node failed:\n{proc.stdout}\n{proc.stderr}"
     return json.loads(proc.stdout)
@@ -101,7 +100,6 @@ def _prompts(project: Path):
     sys.path.insert(0, str(project / "locales"))
     try:
         import i18n_prompts  # noqa: PLC0415 — the module under test is generated
-
         return i18n_prompts
     finally:
         sys.path.pop(0)
@@ -118,11 +116,8 @@ def test_french_zero_is_singular_and_english_zero_is_not(project: Path) -> None:
     built on ``count === 1`` returns "0 résultats" here — grammatical in
     neither language's rules, and invisible to a reviewer who only speaks one.
     """
-    got = _js(
-        project,
-        '[0,1,2].map(n => [m.t("results.count", {count:n}, "en"),'
-        ' m.t("results.count", {count:n}, "fr")])',
-    )
+    got = _js(project, '[0,1,2].map(n => [m.t("results.count", {count:n}, "en"),'
+                       ' m.t("results.count", {count:n}, "fr")])')
     assert got == [
         ["0 results", "0 résultat"],
         ["1 result", "1 résultat"],
@@ -211,10 +206,8 @@ def test_an_unknown_prompt_raises_rather_than_returning_its_id(project: Path) ->
     who looks. The same string reaching a model is a prompt — a short, strange
     one that it will answer anyway, plausibly, with no error anywhere.
     """
-    got = _js(
-        project,
-        '(() => { try { m.prompt("absent"); return null; } catch (e) { return e.message; } })()',
-    )
+    got = _js(project, '(() => { try { m.prompt("absent"); return null; }'
+                       ' catch (e) { return e.message; } })()')
     assert got is not None, "prompt() returned instead of raising for an unknown id"
     assert "absent" in got
 
@@ -276,17 +269,15 @@ def test_compile_refuses_a_prompt_without_a_validated_locale(tmp_path: Path) -> 
 
 def test_check_prompts_names_each_way_a_prompt_can_be_unresolvable() -> None:
     """Three distinct faults, three distinct messages — not one generic refusal."""
-    problems = i18n_make.check_prompts(
-        {
-            "locales": ["en", "fr"],
-            "prompts": {
-                "no.validated": {"en": "x"},
-                "validated.elsewhere": {"validated": "de", "en": "x"},
-                "validated.empty": {"validated": "fr", "en": "x"},
-                "fine": {"validated": "en", "en": "x"},
-            },
-        }
-    )
+    problems = i18n_make.check_prompts({
+        "locales": ["en", "fr"],
+        "prompts": {
+            "no.validated": {"en": "x"},
+            "validated.elsewhere": {"validated": "de", "en": "x"},
+            "validated.empty": {"validated": "fr", "en": "x"},
+            "fine": {"validated": "en", "en": "x"},
+        },
+    })
     joined = "\n".join(problems)
     assert "no.validated" in joined
     assert "validated.elsewhere" in joined and "locales" in joined

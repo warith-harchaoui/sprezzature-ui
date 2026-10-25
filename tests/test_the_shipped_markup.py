@@ -39,7 +39,9 @@ def lint():
     try:
         from sprezzature_accessibility import lint_file
     except ImportError:
-        pytest.skip("needs the sibling linter: pip install sprezzature-accessibility")
+        pytest.skip(
+            "needs the sibling linter: pip install sprezzature-accessibility"
+        )
     return lint_file
 
 
@@ -56,7 +58,9 @@ def test_this_package_actually_ships_markup() -> None:
 def test_every_shipped_page_passes_the_suite_lint(page: Path, lint) -> None:
     """The exemplar must not fail the standard it exemplifies."""
     findings = lint(page, frozenset())
-    assert not findings, "\n".join(f"{page.name}:{f.line} {f.rule}: {f.message}" for f in findings)
+    assert not findings, "\n".join(
+        f"{page.name}:{f.line} {f.rule}: {f.message}" for f in findings
+    )
 
 
 def _is_document(text: str) -> bool:

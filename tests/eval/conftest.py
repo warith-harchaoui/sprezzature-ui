@@ -127,7 +127,7 @@ def ask(text_model: str) -> Callable[..., str]:
     llm = pytest.importorskip(
         "best_engine_ai_helper.llm",
         reason="best-engine-ai-helper is not installed; it is what routes every "
-        "model call in this project",
+               "model call in this project",
     )
     # A judge call is longer than the answer it judges: DeepEval's rubric plus
     # its JSON instruction is several times the size of a summarisation prompt,

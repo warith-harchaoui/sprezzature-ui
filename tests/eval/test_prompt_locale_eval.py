@@ -94,17 +94,8 @@ _BULLET = re.compile(r"^\s*(?:[-*•–]\s+|\d+[.)]\s+)")
 #: read out of the prompt text rather than written here, so the expectation
 #: cannot drift from the instruction it is checking.
 _NUMBER_WORDS: dict[str, int] = {
-    "one": 1,
-    "two": 2,
-    "three": 3,
-    "four": 4,
-    "five": 5,
-    "un": 1,
-    "une": 1,
-    "deux": 2,
-    "trois": 3,
-    "quatre": 4,
-    "cinq": 5,
+    "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+    "un": 1, "une": 1, "deux": 2, "trois": 3, "quatre": 4, "cinq": 5,
 }
 
 #: The number has to sit immediately before the thing being counted. Scanning
@@ -121,7 +112,11 @@ _ASKS_FOR = re.compile(
 
 def _bullets(answer: str) -> list[str]:
     """The bullet lines in `answer`, stripped of their markers."""
-    return [_BULLET.sub("", line).strip() for line in answer.splitlines() if _BULLET.match(line)]
+    return [
+        _BULLET.sub("", line).strip()
+        for line in answer.splitlines()
+        if _BULLET.match(line)
+    ]
 
 
 def _looks_like(text: str, locale: str) -> bool:
@@ -135,7 +130,7 @@ def _looks_like(text: str, locale: str) -> bool:
     langdetect = pytest.importorskip(
         "langdetect",
         reason="langdetect is the [lang] extra; it is how this project detects "
-        "a language and the measurement needs it",
+               "a language and the measurement needs it",
     )
     langdetect.DetectorFactory.seed = 0
     try:
