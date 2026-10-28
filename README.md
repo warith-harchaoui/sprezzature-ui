@@ -12,6 +12,10 @@ package does not pretend otherwise.
 
 ---
 
+## How it works
+
+![Flow diagram. At the top, your source tree feeds two lanes. The left lane audits: it walks the tree, finds sentences hardcoded in JavaScript, in HTML attributes and in Python prompt templates, and returns findings with exit code 1. The right lane makes: it scaffolds a single locales file, compiles it to JSON and emits the loader that reads it. Both meet in one outcome, an interface that can take a second language the day it is asked for.](https://raw.githubusercontent.com/warith-harchaoui/sprezzature-ui/main/assets/how-it-works.svg)
+
 ## What's here
 
 | | |
@@ -19,9 +23,10 @@ package does not pretend otherwise.
 | `sprezzature-ui-i18n-audit` | **audit** — translations embedded in JavaScript and HTML, LLM prompts inlined in Python. Both belong in `locales/i18n.yaml`. Standard library only. |
 | `sprezzature-ui-i18n-make` | **make** — scaffold that catalogue, compile it to JSON, emit the loader that reads it. |
 
-Two front doors over both: `make-ui <tool>` (argparse) and
-`sprezzature-ui <tool>` (click). Both read one table, so a tool cannot appear
-in one and be missing from the other.
+One front door over both, in click, under two names: `make-ui <tool>` and
+`sprezzature-ui <tool>` resolve to the same callable, so they cannot drift.
+The argparse twin was removed on 2026-10-25 — two parsers meant every
+sub-command written twice.
 
 ## Why it matters sooner than it seems
 

@@ -16,6 +16,10 @@ et ce paquet ne prétend pas le contraire.
 
 ---
 
+## Comment ça marche
+
+![Schéma de flux. En haut, votre arborescence de sources alimente deux voies. La voie de gauche contrôle : elle parcourt l'arborescence, trouve les phrases écrites en dur dans le JavaScript, dans les attributs HTML et dans les gabarits de prompts Python, et rend ses constats avec le code de sortie 1. La voie de droite fabrique : elle amorce un fichier de langues unique, le compile en JSON et produit le chargeur qui le lit. Les deux se rejoignent en un seul résultat, une interface qui accepte une deuxième langue le jour où on la demande.](https://raw.githubusercontent.com/warith-harchaoui/sprezzature-ui/main/assets/comment-ca-marche.svg)
+
 ## Ce qu'il y a dedans
 
 | | |

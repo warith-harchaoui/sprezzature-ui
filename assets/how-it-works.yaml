@@ -1,0 +1,85 @@
+# How this brick works, as drawn in README.md and LISEZMOI.md.
+#
+# The renderer lives in the hub, at sprezzature/scripts/make_brick_diagram.py,
+# because the ten bricks share one drawing and ten generators would have become
+# ten dialects of it. The content lives here, because the brick is what knows
+# what is true about itself.
+#
+# Redraw after any edit:
+#   python ~/sprezzature/scripts/make_brick_diagram.py sprezzature-ui
+package: sprezzature-ui
+
+en:
+  title: How sprezzature-ui works
+  subtitle: The half of a front-end skill a function can own, and the half that stays prose.
+  alt: >-
+    Flow diagram. At the top, your source tree feeds two lanes. The left lane
+    audits: it walks the tree, finds sentences hardcoded in JavaScript, in HTML
+    attributes and in Python prompt templates, and returns findings with exit code
+    1. The right lane makes: it scaffolds a single locales file, compiles it to
+    JSON and emits the loader that reads it. Both meet in one outcome, an interface
+    that can take a second language the day it is asked for.
+  input:
+    label: Your source tree
+    note: JavaScript, HTML templates, and the prompt strings buried in Python
+  lanes:
+    - title: "Audit: sentences that are not in the catalogue"
+      steps:
+        - label: Walk the tree, drop what cannot be audited
+          note: "gather() is separate from audit_path() on purpose: a pre-commit hook already knows which files changed and should not pay for a walk"
+        - label: Find the hardcoded strings
+          note: a sentence in a JavaScript literal, in an HTML attribute, in a prompt template. All three are language, and all three drift.
+      result:
+        label: Findings, with rule, path and line
+        note: exit 1 on any, which is what makes it worth a pre-commit hook rather than a Friday afternoon
+    - title: "Make: the catalogue they belong in"
+      steps:
+        - label: Scaffold locales/i18n.yaml
+          note: interface strings and model prompts in one file, because an interface and a prompt that disagree about a language is a bug nobody reports
+        - label: Compile it, and emit the loader
+          note: JSON for the browser, plus the module that reads it. Deterministic, so the artifact is reproducible rather than re-invented.
+      result:
+        label: One catalogue, two consumers
+        note: the screen and the prompts cannot drift apart, because they are read from the same file
+  outcome:
+    label: An interface that takes a second language the day it is asked for, instead of a week later
+    note: "What an interface has to respect, the three-Roboto rule, the design tokens, the focus rings, the dark-mode peers, the reduced-motion guards, is written in SKILL.md and stays a judgement. No HTTP route carries \"make this dashboard legible\", and this package does not pretend otherwise."
+  footer: This package is small and will stay small. Adding routes for the sake of the count would be mistaking breadth for value.
+
+fr:
+  title: Comment fonctionne sprezzature-ui
+  subtitle: La moitié d'une compétence front qu'une fonction peut porter, et celle qui reste de la prose.
+  alt: >-
+    Schéma de flux. En haut, votre arborescence de sources alimente deux voies. La
+    voie de gauche contrôle : elle parcourt l'arborescence, trouve les phrases
+    écrites en dur dans le JavaScript, dans les attributs HTML et dans les gabarits
+    de prompts Python, et rend ses constats avec le code de sortie 1. La voie de
+    droite fabrique : elle amorce un fichier de langues unique, le compile en JSON
+    et produit le chargeur qui le lit. Les deux se rejoignent en un seul résultat,
+    une interface qui accepte une deuxième langue le jour où on la demande.
+  input:
+    label: Votre arborescence de sources
+    note: le JavaScript, les gabarits HTML, et les chaînes de prompts enfouies dans le Python
+  lanes:
+    - title: "Contrôler : les phrases absentes du catalogue"
+      steps:
+        - label: Parcourir l'arborescence, écarter l'inauditable
+          note: "gather() est séparée d'audit_path() exprès : un crochet de pre-commit sait déjà quels fichiers ont changé et n'a pas à payer le parcours"
+        - label: Trouver les chaînes écrites en dur
+          note: une phrase dans un littéral JavaScript, dans un attribut HTML, dans un gabarit de prompt. Les trois sont de la langue, et les trois dérivent.
+      result:
+        label: Des constats, avec la règle, le chemin et la ligne
+        note: code de sortie 1 au premier, ce qui en fait un crochet de pre-commit plutôt qu'un vendredi après-midi
+    - title: "Fabriquer : le catalogue qui leur revient"
+      steps:
+        - label: Amorcer locales/i18n.yaml
+          note: les chaînes de l'interface et les prompts du modèle dans un seul fichier, parce qu'une interface et un prompt en désaccord sur une langue est un défaut que personne ne signale
+        - label: Le compiler, et produire le chargeur
+          note: du JSON pour le navigateur, et le module qui le lit. Déterministe, donc reproductible plutôt que réinventé.
+      result:
+        label: Un catalogue, deux consommateurs
+        note: l'écran et les prompts ne peuvent plus diverger, puisqu'ils lisent le même fichier
+  outcome:
+    label: Une interface qui accepte une deuxième langue le jour où on la demande, et pas une semaine plus tard
+    note: "Ce qu'une interface doit respecter, la règle des trois Roboto, les jetons de style, les anneaux de focus, les variantes sombres, les garde-fous de mouvement réduit, est écrit dans SKILL.md et reste un jugement. Aucune route HTTP ne transporte « rends ce tableau de bord lisible », et ce paquet ne prétend pas le contraire."
+  footer: Ce paquet est petit et le restera. Ajouter des routes pour le nombre reviendrait à confondre l'étendue et la valeur.
