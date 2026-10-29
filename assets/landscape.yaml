@@ -1,0 +1,671 @@
+meta:
+  reference: sprezzature-ui
+  rotation_deg: -42.61
+  explained_variance_ratio:
+  - 0.4195
+  - 0.2214
+  cumulative_variance: 0.6408
+  n_approaches: 25
+  attributes:
+  - Hardcoded string detection
+  - Source languages covered
+  - Catalogue scaffolding and compilation
+  - Runtime loader shipped
+  - CI verdict with an exit code
+  - No framework runtime in the output
+  - Accessibility out of the box
+  - Dark mode out of the box
+  - Reduced motion guard
+  - Customisation and theming
+  - Deterministic and reproducible
+  - Local and offline (no account)
+  - Free or open source
+  - Maturity and ecosystem
+  - Component library breadth
+  - Translator workflow
+  lower_is_better: []
+  imputed_cells: []
+axes:
+  axis_1:
+    name: Capable ↔ Adaptable
+    pole_left: Capable
+    pole_right: Adaptable
+    loadings:
+      Hardcoded string detection: -0.0129
+      Source languages covered: -0.285
+      Catalogue scaffolding and compilation: -0.1237
+      Runtime loader shipped: -0.1234
+      CI verdict with an exit code: -0.0935
+      No framework runtime in the output: 0.128
+      Accessibility out of the box: 0.2735
+      Dark mode out of the box: 0.3198
+      Reduced motion guard: 0.3056
+      Customisation and theming: 0.3117
+      Deterministic and reproducible: 0.3502
+      Local and offline (no account): 0.3372
+      Free or open source: 0.2697
+      Maturity and ecosystem: -0.159
+      Component library breadth: 0.1774
+      Translator workflow: -0.36
+  axis_2:
+    name: Inclusive ↔ Reliable
+    pole_bottom: Inclusive
+    pole_top: Reliable
+    loadings:
+      Hardcoded string detection: 0.2771
+      Source languages covered: 0.1491
+      Catalogue scaffolding and compilation: 0.3158
+      Runtime loader shipped: 0.2766
+      CI verdict with an exit code: 0.3029
+      No framework runtime in the output: 0.2227
+      Accessibility out of the box: -0.2398
+      Dark mode out of the box: -0.156
+      Reduced motion guard: 0.0178
+      Customisation and theming: -0.1455
+      Deterministic and reproducible: 0.3312
+      Local and offline (no account): 0.3445
+      Free or open source: 0.3512
+      Maturity and ecosystem: -0.1425
+      Component library breadth: -0.3251
+      Translator workflow: 0.0485
+approaches:
+- name: sprezzature-ui
+  coordinates:
+    axis_1: 3.7027
+    axis_2: 3.8639
+  role: best
+  color: '#FF3B30'
+  attributes:
+    Hardcoded string detection: 2.0
+    Source languages covered: 3.0
+    Catalogue scaffolding and compilation: 5.0
+    Runtime loader shipped: 4.0
+    CI verdict with an exit code: 5.0
+    No framework runtime in the output: 5.0
+    Accessibility out of the box: 3.0
+    Dark mode out of the box: 5.0
+    Reduced motion guard: 5.0
+    Customisation and theming: 5.0
+    Deterministic and reproducible: 5.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 1.0
+    Component library breadth: 2.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: i18next + i18next-cli
+  coordinates:
+    axis_1: -0.6242
+    axis_2: 3.8639
+  role: top
+  color: '#AF52DE'
+  attributes:
+    Hardcoded string detection: 5.0
+    Source languages covered: 2.0
+    Catalogue scaffolding and compilation: 5.0
+    Runtime loader shipped: 5.0
+    CI verdict with an exit code: 5.0
+    No framework runtime in the output: 3.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 2.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 5.0
+    Component library breadth: 1.0
+    Translator workflow: 2.0
+  imputed_attributes: []
+- name: eslint-plugin-i18next
+  coordinates:
+    axis_1: 0.4893
+    axis_2: 2.791
+  role: competitor
+  color: '#47DED4'
+  attributes:
+    Hardcoded string detection: 5.0
+    Source languages covered: 2.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 5.0
+    No framework runtime in the output: 3.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 1.0
+    Deterministic and reproducible: 5.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 4.0
+    Component library breadth: 1.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: i18n-ally
+  coordinates:
+    axis_1: -0.3887
+    axis_2: 1.9541
+  role: competitor
+  color: '#6EA3EF'
+  attributes:
+    Hardcoded string detection: 4.0
+    Source languages covered: 4.0
+    Catalogue scaffolding and compilation: 3.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 3.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 1.0
+    Deterministic and reproducible: 3.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 3.0
+    Component library breadth: 1.0
+    Translator workflow: 2.0
+  imputed_attributes: []
+- name: FormatJS / react-intl
+  coordinates:
+    axis_1: -0.4008
+    axis_2: 2.1354
+  role: competitor
+  color: '#6ECBFF'
+  attributes:
+    Hardcoded string detection: 2.0
+    Source languages covered: 2.0
+    Catalogue scaffolding and compilation: 4.0
+    Runtime loader shipped: 5.0
+    CI verdict with an exit code: 2.0
+    No framework runtime in the output: 2.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 2.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 5.0
+    Component library breadth: 1.0
+    Translator workflow: 2.0
+  imputed_attributes: []
+- name: LinguiJS
+  coordinates:
+    axis_1: -0.5406
+    axis_2: 2.9057
+  role: competitor
+  color: '#1DAFD7'
+  attributes:
+    Hardcoded string detection: 2.0
+    Source languages covered: 2.0
+    Catalogue scaffolding and compilation: 5.0
+    Runtime loader shipped: 5.0
+    CI verdict with an exit code: 3.0
+    No framework runtime in the output: 3.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 2.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 4.0
+    Component library breadth: 1.0
+    Translator workflow: 3.0
+  imputed_attributes: []
+- name: GNU gettext + Babel
+  coordinates:
+    axis_1: -0.9355
+    axis_2: 3.5572
+  role: competitor
+  color: '#A5B7FF'
+  attributes:
+    Hardcoded string detection: 2.0
+    Source languages covered: 5.0
+    Catalogue scaffolding and compilation: 5.0
+    Runtime loader shipped: 4.0
+    CI verdict with an exit code: 3.0
+    No framework runtime in the output: 5.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 1.0
+    Deterministic and reproducible: 5.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 5.0
+    Component library breadth: 1.0
+    Translator workflow: 3.0
+  imputed_attributes: []
+- name: Project Fluent
+  coordinates:
+    axis_1: -0.1697
+    axis_2: 2.2683
+  role: competitor
+  color: '#34D1E1'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 2.0
+    Catalogue scaffolding and compilation: 3.0
+    Runtime loader shipped: 4.0
+    CI verdict with an exit code: 2.0
+    No framework runtime in the output: 4.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 1.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 3.0
+    Component library breadth: 1.0
+    Translator workflow: 3.0
+  imputed_attributes: []
+- name: Weblate
+  coordinates:
+    axis_1: -1.9747
+    axis_2: 1.4444
+  role: competitor
+  color: '#AE82D3'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 5.0
+    Catalogue scaffolding and compilation: 3.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 3.0
+    No framework runtime in the output: 4.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 1.0
+    Deterministic and reproducible: 2.0
+    Local and offline (no account): 4.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 4.0
+    Component library breadth: 1.0
+    Translator workflow: 5.0
+  imputed_attributes: []
+- name: Crowdin
+  coordinates:
+    axis_1: -3.5116
+    axis_2: 0.2507
+  role: competitor
+  color: '#C37FC5'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 5.0
+    Catalogue scaffolding and compilation: 3.0
+    Runtime loader shipped: 3.0
+    CI verdict with an exit code: 3.0
+    No framework runtime in the output: 4.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 1.0
+    Deterministic and reproducible: 2.0
+    Local and offline (no account): 1.0
+    Free or open source: 2.0
+    Maturity and ecosystem: 5.0
+    Component library breadth: 1.0
+    Translator workflow: 5.0
+  imputed_attributes: []
+- name: Lokalise
+  coordinates:
+    axis_1: -3.7027
+    axis_2: 0.002
+  role: competitor
+  color: '#DE87BD'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 5.0
+    Catalogue scaffolding and compilation: 3.0
+    Runtime loader shipped: 3.0
+    CI verdict with an exit code: 3.0
+    No framework runtime in the output: 4.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 1.0
+    Deterministic and reproducible: 2.0
+    Local and offline (no account): 1.0
+    Free or open source: 1.0
+    Maturity and ecosystem: 5.0
+    Component library breadth: 1.0
+    Translator workflow: 5.0
+  imputed_attributes: []
+- name: Tolgee
+  coordinates:
+    axis_1: -2.1582
+    axis_2: 1.8428
+  role: competitor
+  color: '#8B7ACE'
+  attributes:
+    Hardcoded string detection: 2.0
+    Source languages covered: 4.0
+    Catalogue scaffolding and compilation: 3.0
+    Runtime loader shipped: 4.0
+    CI verdict with an exit code: 3.0
+    No framework runtime in the output: 3.0
+    Accessibility out of the box: 1.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 1.0
+    Deterministic and reproducible: 2.0
+    Local and offline (no account): 4.0
+    Free or open source: 4.0
+    Maturity and ecosystem: 3.0
+    Component library breadth: 1.0
+    Translator workflow: 5.0
+  imputed_attributes: []
+- name: shadcn/ui
+  coordinates:
+    axis_1: 3.7027
+    axis_2: -1.9651
+  role: right
+  color: '#007AFF'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 1.0
+    Accessibility out of the box: 5.0
+    Dark mode out of the box: 5.0
+    Reduced motion guard: 3.0
+    Customisation and theming: 5.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 5.0
+    Component library breadth: 5.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: Tailwind Plus
+  coordinates:
+    axis_1: 2.1264
+    axis_2: -2.3439
+  role: competitor
+  color: '#FC9981'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 4.0
+    Accessibility out of the box: 4.0
+    Dark mode out of the box: 4.0
+    Reduced motion guard: 2.0
+    Customisation and theming: 4.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 4.0
+    Free or open source: 1.0
+    Maturity and ecosystem: 5.0
+    Component library breadth: 5.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: DaisyUI
+  coordinates:
+    axis_1: 3.2538
+    axis_2: -0.56
+  role: competitor
+  color: '#869A39'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 5.0
+    Accessibility out of the box: 3.0
+    Dark mode out of the box: 5.0
+    Reduced motion guard: 2.0
+    Customisation and theming: 4.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 4.0
+    Component library breadth: 4.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: Flowbite
+  coordinates:
+    axis_1: 3.0657
+    axis_2: -1.1513
+  role: competitor
+  color: '#DE9B4B'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 4.0
+    Accessibility out of the box: 3.0
+    Dark mode out of the box: 5.0
+    Reduced motion guard: 2.0
+    Customisation and theming: 4.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 4.0
+    Maturity and ecosystem: 4.0
+    Component library breadth: 5.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: Preline UI
+  coordinates:
+    axis_1: 3.2279
+    axis_2: -1.0059
+  role: competitor
+  color: '#D5AB48'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 4.0
+    Accessibility out of the box: 3.0
+    Dark mode out of the box: 5.0
+    Reduced motion guard: 2.0
+    Customisation and theming: 4.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 4.0
+    Maturity and ecosystem: 3.0
+    Component library breadth: 5.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: HyperUI
+  coordinates:
+    axis_1: 3.4128
+    axis_2: -0.1818
+  role: competitor
+  color: '#6CA455'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 5.0
+    Accessibility out of the box: 3.0
+    Dark mode out of the box: 4.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 5.0
+    Deterministic and reproducible: 5.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 3.0
+    Component library breadth: 4.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: Radix UI
+  coordinates:
+    axis_1: 3.2322
+    axis_2: -1.6047
+  role: competitor
+  color: '#D17D48'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 1.0
+    Accessibility out of the box: 5.0
+    Dark mode out of the box: 3.0
+    Reduced motion guard: 3.0
+    Customisation and theming: 5.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 5.0
+    Component library breadth: 4.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: Bootstrap
+  coordinates:
+    axis_1: 3.577
+    axis_2: -0.8355
+  role: competitor
+  color: '#C3B750'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 5.0
+    Accessibility out of the box: 4.0
+    Dark mode out of the box: 4.0
+    Reduced motion guard: 4.0
+    Customisation and theming: 3.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 5.0
+    Component library breadth: 5.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: Pico CSS
+  coordinates:
+    axis_1: 3.4821
+    axis_2: 0.1202
+  role: competitor
+  color: '#43A269'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 5.0
+    Accessibility out of the box: 4.0
+    Dark mode out of the box: 5.0
+    Reduced motion guard: 2.0
+    Customisation and theming: 3.0
+    Deterministic and reproducible: 5.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 3.0
+    Component library breadth: 2.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: htmx
+  coordinates:
+    axis_1: 1.2125
+    axis_2: 0.4458
+  role: competitor
+  color: '#009E7D'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 4.0
+    Accessibility out of the box: 3.0
+    Dark mode out of the box: 1.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 1.0
+    Deterministic and reproducible: 4.0
+    Local and offline (no account): 5.0
+    Free or open source: 5.0
+    Maturity and ecosystem: 4.0
+    Component library breadth: 1.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: v0 (Vercel)
+  coordinates:
+    axis_1: 0.7453
+    axis_2: -3.8639
+  role: competitor
+  color: '#F28C91'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 1.0
+    Accessibility out of the box: 4.0
+    Dark mode out of the box: 4.0
+    Reduced motion guard: 2.0
+    Customisation and theming: 4.0
+    Deterministic and reproducible: 1.0
+    Local and offline (no account): 1.0
+    Free or open source: 2.0
+    Maturity and ecosystem: 4.0
+    Component library breadth: 5.0
+    Translator workflow: 1.0
+  imputed_attributes: []
+- name: Lovable
+  coordinates:
+    axis_1: -0.383
+    axis_2: -3.4879
+  role: worst
+  color: '#A52A2A'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 1.0
+    Accessibility out of the box: 3.0
+    Dark mode out of the box: 3.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 3.0
+    Deterministic and reproducible: 1.0
+    Local and offline (no account): 1.0
+    Free or open source: 2.0
+    Maturity and ecosystem: 4.0
+    Component library breadth: 5.0
+    Translator workflow: 2.0
+  imputed_attributes: []
+- name: bolt.new
+  coordinates:
+    axis_1: -0.0413
+    axis_2: -3.357
+  role: competitor
+  color: '#E482A1'
+  attributes:
+    Hardcoded string detection: 1.0
+    Source languages covered: 1.0
+    Catalogue scaffolding and compilation: 1.0
+    Runtime loader shipped: 1.0
+    CI verdict with an exit code: 1.0
+    No framework runtime in the output: 2.0
+    Accessibility out of the box: 3.0
+    Dark mode out of the box: 3.0
+    Reduced motion guard: 1.0
+    Customisation and theming: 3.0
+    Deterministic and reproducible: 1.0
+    Local and offline (no account): 1.0
+    Free or open source: 2.0
+    Maturity and ecosystem: 4.0
+    Component library breadth: 5.0
+    Translator workflow: 1.0
+  imputed_attributes: []

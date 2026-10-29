@@ -1,0 +1,671 @@
+meta:
+  reference: sprezzature-ui
+  rotation_deg: -42.61
+  explained_variance_ratio:
+  - 0.4195
+  - 0.2214
+  cumulative_variance: 0.6408
+  n_approaches: 25
+  attributes:
+  - Détection des chaînes codées en dur
+  - Langages de source couverts
+  - Échafaudage et compilation du catalogue
+  - Chargeur d'exécution fourni
+  - Verdict en intégration continue avec code de sortie
+  - Aucun runtime de framework en sortie
+  - Accessibilité par défaut
+  - Mode sombre par défaut
+  - Garde de mouvement réduit
+  - Personnalisation et thèmes
+  - Déterministe et reproductible
+  - Local et hors ligne (sans compte)
+  - Gratuit ou open source
+  - Maturité et écosystème
+  - Étendue de la bibliothèque de composants
+  - Flux de travail des traducteurs
+  lower_is_better: []
+  imputed_cells: []
+axes:
+  axis_1:
+    name: Efficacité ↔ Autonomie
+    pole_left: Efficacité
+    pole_right: Autonomie
+    loadings:
+      Détection des chaînes codées en dur: -0.0129
+      Langages de source couverts: -0.285
+      Échafaudage et compilation du catalogue: -0.1237
+      Chargeur d'exécution fourni: -0.1234
+      Verdict en intégration continue avec code de sortie: -0.0935
+      Aucun runtime de framework en sortie: 0.128
+      Accessibilité par défaut: 0.2735
+      Mode sombre par défaut: 0.3198
+      Garde de mouvement réduit: 0.3056
+      Personnalisation et thèmes: 0.3117
+      Déterministe et reproductible: 0.3502
+      Local et hors ligne (sans compte): 0.3372
+      Gratuit ou open source: 0.2697
+      Maturité et écosystème: -0.159
+      Étendue de la bibliothèque de composants: 0.1774
+      Flux de travail des traducteurs: -0.36
+  axis_2:
+    name: Adaptabilité ↔ Robustesse
+    pole_bottom: Adaptabilité
+    pole_top: Robustesse
+    loadings:
+      Détection des chaînes codées en dur: 0.2771
+      Langages de source couverts: 0.1491
+      Échafaudage et compilation du catalogue: 0.3158
+      Chargeur d'exécution fourni: 0.2766
+      Verdict en intégration continue avec code de sortie: 0.3029
+      Aucun runtime de framework en sortie: 0.2227
+      Accessibilité par défaut: -0.2398
+      Mode sombre par défaut: -0.156
+      Garde de mouvement réduit: 0.0178
+      Personnalisation et thèmes: -0.1455
+      Déterministe et reproductible: 0.3312
+      Local et hors ligne (sans compte): 0.3445
+      Gratuit ou open source: 0.3512
+      Maturité et écosystème: -0.1425
+      Étendue de la bibliothèque de composants: -0.3251
+      Flux de travail des traducteurs: 0.0485
+approaches:
+- name: sprezzature-ui
+  coordinates:
+    axis_1: 3.7027
+    axis_2: 3.8639
+  role: best
+  color: '#FF3B30'
+  attributes:
+    Détection des chaînes codées en dur: 2.0
+    Langages de source couverts: 3.0
+    Échafaudage et compilation du catalogue: 5.0
+    Chargeur d'exécution fourni: 4.0
+    Verdict en intégration continue avec code de sortie: 5.0
+    Aucun runtime de framework en sortie: 5.0
+    Accessibilité par défaut: 3.0
+    Mode sombre par défaut: 5.0
+    Garde de mouvement réduit: 5.0
+    Personnalisation et thèmes: 5.0
+    Déterministe et reproductible: 5.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 1.0
+    Étendue de la bibliothèque de composants: 2.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: i18next + i18next-cli
+  coordinates:
+    axis_1: -0.6242
+    axis_2: 3.8639
+  role: top
+  color: '#AF52DE'
+  attributes:
+    Détection des chaînes codées en dur: 5.0
+    Langages de source couverts: 2.0
+    Échafaudage et compilation du catalogue: 5.0
+    Chargeur d'exécution fourni: 5.0
+    Verdict en intégration continue avec code de sortie: 5.0
+    Aucun runtime de framework en sortie: 3.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 2.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 5.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 2.0
+  imputed_attributes: []
+- name: eslint-plugin-i18next
+  coordinates:
+    axis_1: 0.4893
+    axis_2: 2.791
+  role: competitor
+  color: '#47DED4'
+  attributes:
+    Détection des chaînes codées en dur: 5.0
+    Langages de source couverts: 2.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 5.0
+    Aucun runtime de framework en sortie: 3.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 1.0
+    Déterministe et reproductible: 5.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 4.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: i18n-ally
+  coordinates:
+    axis_1: -0.3887
+    axis_2: 1.9541
+  role: competitor
+  color: '#6EA3EF'
+  attributes:
+    Détection des chaînes codées en dur: 4.0
+    Langages de source couverts: 4.0
+    Échafaudage et compilation du catalogue: 3.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 3.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 1.0
+    Déterministe et reproductible: 3.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 3.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 2.0
+  imputed_attributes: []
+- name: FormatJS / react-intl
+  coordinates:
+    axis_1: -0.4008
+    axis_2: 2.1354
+  role: competitor
+  color: '#6ECBFF'
+  attributes:
+    Détection des chaînes codées en dur: 2.0
+    Langages de source couverts: 2.0
+    Échafaudage et compilation du catalogue: 4.0
+    Chargeur d'exécution fourni: 5.0
+    Verdict en intégration continue avec code de sortie: 2.0
+    Aucun runtime de framework en sortie: 2.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 2.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 5.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 2.0
+  imputed_attributes: []
+- name: LinguiJS
+  coordinates:
+    axis_1: -0.5406
+    axis_2: 2.9057
+  role: competitor
+  color: '#1DAFD7'
+  attributes:
+    Détection des chaînes codées en dur: 2.0
+    Langages de source couverts: 2.0
+    Échafaudage et compilation du catalogue: 5.0
+    Chargeur d'exécution fourni: 5.0
+    Verdict en intégration continue avec code de sortie: 3.0
+    Aucun runtime de framework en sortie: 3.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 2.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 4.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 3.0
+  imputed_attributes: []
+- name: GNU gettext + Babel
+  coordinates:
+    axis_1: -0.9355
+    axis_2: 3.5572
+  role: competitor
+  color: '#A5B7FF'
+  attributes:
+    Détection des chaînes codées en dur: 2.0
+    Langages de source couverts: 5.0
+    Échafaudage et compilation du catalogue: 5.0
+    Chargeur d'exécution fourni: 4.0
+    Verdict en intégration continue avec code de sortie: 3.0
+    Aucun runtime de framework en sortie: 5.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 1.0
+    Déterministe et reproductible: 5.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 5.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 3.0
+  imputed_attributes: []
+- name: Project Fluent
+  coordinates:
+    axis_1: -0.1697
+    axis_2: 2.2683
+  role: competitor
+  color: '#34D1E1'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 2.0
+    Échafaudage et compilation du catalogue: 3.0
+    Chargeur d'exécution fourni: 4.0
+    Verdict en intégration continue avec code de sortie: 2.0
+    Aucun runtime de framework en sortie: 4.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 1.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 3.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 3.0
+  imputed_attributes: []
+- name: Weblate
+  coordinates:
+    axis_1: -1.9747
+    axis_2: 1.4444
+  role: competitor
+  color: '#AE82D3'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 5.0
+    Échafaudage et compilation du catalogue: 3.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 3.0
+    Aucun runtime de framework en sortie: 4.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 1.0
+    Déterministe et reproductible: 2.0
+    Local et hors ligne (sans compte): 4.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 4.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 5.0
+  imputed_attributes: []
+- name: Crowdin
+  coordinates:
+    axis_1: -3.5116
+    axis_2: 0.2507
+  role: competitor
+  color: '#C37FC5'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 5.0
+    Échafaudage et compilation du catalogue: 3.0
+    Chargeur d'exécution fourni: 3.0
+    Verdict en intégration continue avec code de sortie: 3.0
+    Aucun runtime de framework en sortie: 4.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 1.0
+    Déterministe et reproductible: 2.0
+    Local et hors ligne (sans compte): 1.0
+    Gratuit ou open source: 2.0
+    Maturité et écosystème: 5.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 5.0
+  imputed_attributes: []
+- name: Lokalise
+  coordinates:
+    axis_1: -3.7027
+    axis_2: 0.002
+  role: competitor
+  color: '#DE87BD'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 5.0
+    Échafaudage et compilation du catalogue: 3.0
+    Chargeur d'exécution fourni: 3.0
+    Verdict en intégration continue avec code de sortie: 3.0
+    Aucun runtime de framework en sortie: 4.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 1.0
+    Déterministe et reproductible: 2.0
+    Local et hors ligne (sans compte): 1.0
+    Gratuit ou open source: 1.0
+    Maturité et écosystème: 5.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 5.0
+  imputed_attributes: []
+- name: Tolgee
+  coordinates:
+    axis_1: -2.1582
+    axis_2: 1.8428
+  role: competitor
+  color: '#8B7ACE'
+  attributes:
+    Détection des chaînes codées en dur: 2.0
+    Langages de source couverts: 4.0
+    Échafaudage et compilation du catalogue: 3.0
+    Chargeur d'exécution fourni: 4.0
+    Verdict en intégration continue avec code de sortie: 3.0
+    Aucun runtime de framework en sortie: 3.0
+    Accessibilité par défaut: 1.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 1.0
+    Déterministe et reproductible: 2.0
+    Local et hors ligne (sans compte): 4.0
+    Gratuit ou open source: 4.0
+    Maturité et écosystème: 3.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 5.0
+  imputed_attributes: []
+- name: shadcn/ui
+  coordinates:
+    axis_1: 3.7027
+    axis_2: -1.9651
+  role: right
+  color: '#007AFF'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 1.0
+    Accessibilité par défaut: 5.0
+    Mode sombre par défaut: 5.0
+    Garde de mouvement réduit: 3.0
+    Personnalisation et thèmes: 5.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 5.0
+    Étendue de la bibliothèque de composants: 5.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: Tailwind Plus
+  coordinates:
+    axis_1: 2.1264
+    axis_2: -2.3439
+  role: competitor
+  color: '#FC9981'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 4.0
+    Accessibilité par défaut: 4.0
+    Mode sombre par défaut: 4.0
+    Garde de mouvement réduit: 2.0
+    Personnalisation et thèmes: 4.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 4.0
+    Gratuit ou open source: 1.0
+    Maturité et écosystème: 5.0
+    Étendue de la bibliothèque de composants: 5.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: DaisyUI
+  coordinates:
+    axis_1: 3.2538
+    axis_2: -0.56
+  role: competitor
+  color: '#869A39'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 5.0
+    Accessibilité par défaut: 3.0
+    Mode sombre par défaut: 5.0
+    Garde de mouvement réduit: 2.0
+    Personnalisation et thèmes: 4.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 4.0
+    Étendue de la bibliothèque de composants: 4.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: Flowbite
+  coordinates:
+    axis_1: 3.0657
+    axis_2: -1.1513
+  role: competitor
+  color: '#DE9B4B'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 4.0
+    Accessibilité par défaut: 3.0
+    Mode sombre par défaut: 5.0
+    Garde de mouvement réduit: 2.0
+    Personnalisation et thèmes: 4.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 4.0
+    Maturité et écosystème: 4.0
+    Étendue de la bibliothèque de composants: 5.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: Preline UI
+  coordinates:
+    axis_1: 3.2279
+    axis_2: -1.0059
+  role: competitor
+  color: '#D5AB48'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 4.0
+    Accessibilité par défaut: 3.0
+    Mode sombre par défaut: 5.0
+    Garde de mouvement réduit: 2.0
+    Personnalisation et thèmes: 4.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 4.0
+    Maturité et écosystème: 3.0
+    Étendue de la bibliothèque de composants: 5.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: HyperUI
+  coordinates:
+    axis_1: 3.4128
+    axis_2: -0.1818
+  role: competitor
+  color: '#6CA455'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 5.0
+    Accessibilité par défaut: 3.0
+    Mode sombre par défaut: 4.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 5.0
+    Déterministe et reproductible: 5.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 3.0
+    Étendue de la bibliothèque de composants: 4.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: Radix UI
+  coordinates:
+    axis_1: 3.2322
+    axis_2: -1.6047
+  role: competitor
+  color: '#D17D48'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 1.0
+    Accessibilité par défaut: 5.0
+    Mode sombre par défaut: 3.0
+    Garde de mouvement réduit: 3.0
+    Personnalisation et thèmes: 5.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 5.0
+    Étendue de la bibliothèque de composants: 4.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: Bootstrap
+  coordinates:
+    axis_1: 3.577
+    axis_2: -0.8355
+  role: competitor
+  color: '#C3B750'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 5.0
+    Accessibilité par défaut: 4.0
+    Mode sombre par défaut: 4.0
+    Garde de mouvement réduit: 4.0
+    Personnalisation et thèmes: 3.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 5.0
+    Étendue de la bibliothèque de composants: 5.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: Pico CSS
+  coordinates:
+    axis_1: 3.4821
+    axis_2: 0.1202
+  role: competitor
+  color: '#43A269'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 5.0
+    Accessibilité par défaut: 4.0
+    Mode sombre par défaut: 5.0
+    Garde de mouvement réduit: 2.0
+    Personnalisation et thèmes: 3.0
+    Déterministe et reproductible: 5.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 3.0
+    Étendue de la bibliothèque de composants: 2.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: htmx
+  coordinates:
+    axis_1: 1.2125
+    axis_2: 0.4458
+  role: competitor
+  color: '#009E7D'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 4.0
+    Accessibilité par défaut: 3.0
+    Mode sombre par défaut: 1.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 1.0
+    Déterministe et reproductible: 4.0
+    Local et hors ligne (sans compte): 5.0
+    Gratuit ou open source: 5.0
+    Maturité et écosystème: 4.0
+    Étendue de la bibliothèque de composants: 1.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: v0 (Vercel)
+  coordinates:
+    axis_1: 0.7453
+    axis_2: -3.8639
+  role: competitor
+  color: '#F28C91'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 1.0
+    Accessibilité par défaut: 4.0
+    Mode sombre par défaut: 4.0
+    Garde de mouvement réduit: 2.0
+    Personnalisation et thèmes: 4.0
+    Déterministe et reproductible: 1.0
+    Local et hors ligne (sans compte): 1.0
+    Gratuit ou open source: 2.0
+    Maturité et écosystème: 4.0
+    Étendue de la bibliothèque de composants: 5.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
+- name: Lovable
+  coordinates:
+    axis_1: -0.383
+    axis_2: -3.4879
+  role: worst
+  color: '#A52A2A'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 1.0
+    Accessibilité par défaut: 3.0
+    Mode sombre par défaut: 3.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 3.0
+    Déterministe et reproductible: 1.0
+    Local et hors ligne (sans compte): 1.0
+    Gratuit ou open source: 2.0
+    Maturité et écosystème: 4.0
+    Étendue de la bibliothèque de composants: 5.0
+    Flux de travail des traducteurs: 2.0
+  imputed_attributes: []
+- name: bolt.new
+  coordinates:
+    axis_1: -0.0413
+    axis_2: -3.357
+  role: competitor
+  color: '#E482A1'
+  attributes:
+    Détection des chaînes codées en dur: 1.0
+    Langages de source couverts: 1.0
+    Échafaudage et compilation du catalogue: 1.0
+    Chargeur d'exécution fourni: 1.0
+    Verdict en intégration continue avec code de sortie: 1.0
+    Aucun runtime de framework en sortie: 2.0
+    Accessibilité par défaut: 3.0
+    Mode sombre par défaut: 3.0
+    Garde de mouvement réduit: 1.0
+    Personnalisation et thèmes: 3.0
+    Déterministe et reproductible: 1.0
+    Local et hors ligne (sans compte): 1.0
+    Gratuit ou open source: 2.0
+    Maturité et écosystème: 4.0
+    Étendue de la bibliothèque de composants: 5.0
+    Flux de travail des traducteurs: 1.0
+  imputed_attributes: []
