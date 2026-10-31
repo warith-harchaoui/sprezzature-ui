@@ -27,9 +27,11 @@ et ce paquet ne prétend pas le contraire.
 | `sprezzature-ui-i18n-audit` | **audit** — les traductions noyées dans du JavaScript et du HTML, les prompts de modèle incrustés dans du Python. Les deux ont leur place dans `locales/i18n.yaml`. Bibliothèque standard seule. |
 | `sprezzature-ui-i18n-make` | **fabrique** — échafauder ce catalogue, le compiler en JSON, émettre le chargeur qui le lit. |
 
-Deux portes d'entrée sur les deux : `make-ui <outil>` (argparse) et
-`sprezzature-ui <outil>` (click). Les deux lisent **une seule** table, donc un
-outil ne peut pas apparaître dans l'une et manquer dans l'autre.
+Une seule porte d'entrée sur les deux, en click, sous deux noms :
+`make-ui <outil>` et `sprezzature-ui <outil>` résolvent vers le même appelable,
+donc ils ne peuvent pas diverger. Le jumeau argparse a été retiré le
+2026-10-25 : deux analyseurs voulaient dire chaque sous-commande écrite deux
+fois.
 
 ## Pourquoi ça compte plus tôt qu'on ne croit
 

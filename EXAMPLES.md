@@ -64,9 +64,9 @@ make-ui i18n-make --compile
 sprezzature-ui i18n-audit src/
 ```
 
-`make-ui <tool>` reads its flags with argparse, `sprezzature-ui <tool>`
-with click, and both resolve against one table. A tool cannot appear in
-one and be missing from the other.
+`make-ui <tool>` and `sprezzature-ui <tool>` are one click command under
+two names, resolving against one table. A tool cannot appear in one and be
+missing from the other.
 
 ## As a pre-commit hook
 

@@ -27,10 +27,11 @@ read it. A loader that needs bundling would contradict the stack the skill
 prescribes, and a reference that teaches a rule the runtime cannot hold is
 the defect the suite watches for.
 
-## The two front doors share one table
+## The two names share one table
 
-`make-ui` reads its flags with argparse, `sprezzature-ui` with click, and
-both resolve against one table of tools. A tool added to one and not the
+`make-ui` and `sprezzature-ui` are two spellings of one click front door —
+the argparse twin was dropped on 2026-10-25 — and both resolve against one
+table of tools. A tool added to one and not the
 other is a half-shipped tool, and `tests/test_the_surfaces_agree.py` fails
 on it. Add the entry point in `pyproject.toml` and the table picks it up.
 

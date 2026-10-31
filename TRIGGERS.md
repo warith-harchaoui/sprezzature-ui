@@ -69,8 +69,9 @@ The audit is the only tool that crosses a network boundary cleanly: source
 in, findings out. The other two write files into a project, so they stay
 commands. Call them with Bash.
 
-Either front door works: `make-ui <tool>` reads its flags with argparse,
-`sprezzature-ui <tool>` with click, and both resolve against one table.
+Either spelling works: `make-ui <tool>` and `sprezzature-ui <tool>` are
+one click command under two names, resolving against one table. The argparse
+twin was removed on 2026-10-25.
 
 ---
 
