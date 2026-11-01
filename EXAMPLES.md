@@ -101,7 +101,7 @@ instance, already knows which files changed and should not pay for a walk.
 ## Over HTTP
 
 ```bash
-pip install "sprezzature-ui[api]"
+pip install "sprezzature-ui"
 uvicorn sprezzature_ui.api:app --port 8000
 curl -s localhost:8000/health
 ```

@@ -68,7 +68,7 @@ def __getattr__(name: str) -> Any:
         raise ImportError(
             f"`{name}` lives in {module_name}, whose dependencies are an "
             f"optional extra. Install them with: "
-            f"pip install 'sprezzature-ui[i18n]'"
+            f"pip install 'sprezzature-ui'"
         ) from exc
     return getattr(module, name)
 

@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install --no-cache-dir ".[i18n,api,mcp]"
+RUN pip install --no-cache-dir "."
 
 EXPOSE 8000
 

@@ -404,7 +404,7 @@ def fix(paths: list[Path], catalog: Path) -> tuple[int, list[str]]:
     if yaml is None:  # pragma: no cover - dependency guard
         return 0, [
             "--fix writes YAML, which is the [i18n] extra: "
-            "pip install 'sprezzature-ui[i18n]'"
+            "pip install 'sprezzature-ui'"
         ]
 
     data: dict[str, Any] = {}

@@ -41,8 +41,8 @@ time instead of all at once.
 
 ```sh
 pip install sprezzature-ui              # the audit
-pip install "sprezzature-ui[i18n]"      # + the catalogue tools (PyYAML)
-pip install "sprezzature-ui[api,mcp]"   # + the HTTP and agent surfaces
+pip install "sprezzature-ui"      # + the catalogue tools (PyYAML)
+pip install "sprezzature-ui"   # + the HTTP and agent surfaces
 ```
 
 ## Use
@@ -79,7 +79,7 @@ which files changed and should not pay for a walk.
 ### Over HTTP
 
 ```sh
-pip install "sprezzature-ui[api]"
+pip install "sprezzature-ui"
 uvicorn sprezzature_ui.api:app --port 8000
 ```
 

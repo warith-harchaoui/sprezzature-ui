@@ -26,20 +26,28 @@ classifiers = [
 # that dies on `import click` is a defect this suite has shipped before. The
 # audit itself is stdlib-only, which is what lets it sit in a pre-commit
 # hook.
-dependencies = ["click>=8.1"]
+dependencies = [
+    "click>=8.1",
 
-[project.optional-dependencies]
-# The catalogue is YAML; the audit that finds what belongs in it is not.
-i18n = ["PyYAML>=6.0"]
-api = ["fastapi>=0.115", "uvicorn[standard]>=0.30", "pydantic>=2.0"]
-mcp = [
-    "sprezzature-ui[api]",
+    # ------------------------------------------------- une seule installation
+    # Folded in from the extras on 2026-11-01. The base was 1
+    # dependency, so `pip install sprezzature-ui` installed almost nothing and
+    # did almost nothing: choosing the right extra was a thing a reader had to
+    # know before the package could do its job. Across the suite that was 59
+    # extras over eleven repositories, six of them with a base of one.
+    #
+    # The surfaces are not features and they are not optional any more: the
+    # HTTP app and the MCP server are two of this package's five front doors,
+    # and a door you have to install separately is a door people do not find.
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.0",
+    "PyYAML>=6.0",
     "fastapi-mcp>=0.3",
-    # fastapi-mcp 0.4.0 declares mcp>=1.12.0 with no upper bound but calls
-    # mcp's Server(name, description) positionally — mcp 2.0.0 made
-    # `description` keyword-only. Same pin, same reason, as every sibling.
     "mcp<2.0",
 ]
+
+[project.optional-dependencies]
 dev = [
     # The sibling linter, as a *dev* dependency. `tests/test_the_shipped_markup.py`
     # runs it over the markup this package ships — the starter page, the

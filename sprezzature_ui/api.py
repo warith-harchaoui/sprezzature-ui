@@ -25,8 +25,10 @@ try:
     from fastapi.responses import RedirectResponse
 except ImportError as exc:  # pragma: no cover - dependency guard
     raise ImportError(
-        "The FastAPI HTTP surface requires the [api] extra. "
-        "Install with: pip install 'sprezzature-ui[api]'"
+        "The FastAPI HTTP surface could not import fastapi, which is a base "
+        "dependency since 2026-11-01 -- so this is a broken install rather "
+        "than a missing extra. Reinstall with: "
+        "pip install 'sprezzature-ui'"
     ) from exc
 
 from pydantic import BaseModel, Field

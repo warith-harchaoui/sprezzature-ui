@@ -5,7 +5,7 @@
 ```bash
 git clone https://github.com/warith-harchaoui/sprezzature-ui
 cd sprezzature-ui
-pip install -e ".[dev,i18n,api,mcp]"
+pip install -e ".[dev]"
 ```
 
 That is the line CI runs. The development dependencies live in the `dev`

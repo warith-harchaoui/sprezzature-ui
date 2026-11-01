@@ -47,8 +47,8 @@ toutes d'un coup.
 
 ```sh
 pip install sprezzature-ui              # l'audit
-pip install "sprezzature-ui[i18n]"      # + les outils de catalogue (PyYAML)
-pip install "sprezzature-ui[api,mcp]"   # + les surfaces HTTP et agent
+pip install "sprezzature-ui"      # + les outils de catalogue (PyYAML)
+pip install "sprezzature-ui"   # + les surfaces HTTP et agent
 ```
 
 ## Utilisation
@@ -86,7 +86,7 @@ parcours.
 ### Par HTTP
 
 ```sh
-pip install "sprezzature-ui[api]"
+pip install "sprezzature-ui"
 uvicorn sprezzature_ui.api:app --port 8000
 ```
 

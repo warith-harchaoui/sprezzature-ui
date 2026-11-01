@@ -114,7 +114,7 @@ try:
 except ImportError as _exc:  # pragma: no cover - dependency guard
     raise SystemExit(
         "the catalogue tools read and write YAML, which is the [i18n] extra: "
-        "pip install 'sprezzature-ui[i18n]'"
+        "pip install 'sprezzature-ui'"
     ) from _exc
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
