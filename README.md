@@ -29,7 +29,9 @@ otherwise.
 One front door over both, written in click, under two names:
 `make-ui <tool>` and `sprezzature-ui <tool>` are the same callable, so they
 cannot drift. `sprezzature-ui tools` lists the tools and says whether each
-can run on this machine. The argparse front door was removed on 2026-10-25.
+can run on this machine. The argparse front door was removed on 2026-10-25,
+and since 2026-11-04 no command parses with argparse: the per-tool commands
+and `sprezzature-ui-mcp` are click too, and `-V` prints the package version.
 Each tool keeps its own command, which is what a script or a pre-commit hook
 should call.
 
@@ -39,7 +41,7 @@ should call.
 |---|---|---|
 | Library | `from sprezzature_ui import …` | `audit_js`, `audit_py`, `audit_path`, `gather`, `scaffold`, `compile_json`, `emit_loader` |
 | CLI (command-line interface) | `sprezzature-ui`, `make-ui`, `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make` | both tools |
-| HTTP | `uvicorn sprezzature_ui.api:app`, or the `Dockerfile` and `docker-compose.yml` | `GET /health`, `POST /v1/i18n-audit` |
+| HTTP | `uvicorn sprezzature_ui.api:app`, or the `Dockerfile` and `docker-compose.yml` (which also serve `/mcp`) | `GET /health`, `POST /v1/i18n-audit` |
 | MCP (Model Context Protocol) | `sprezzature-ui-mcp` | tools `health` and `audit_i18n`, at `/mcp` |
 | Skill | [`SKILL.md`](https://github.com/warith-harchaoui/sprezzature/blob/main/sprezzature-ui/SKILL.md) in the suite | the design prose, plus the two commands |
 
@@ -151,11 +153,10 @@ curl -s localhost:8000/health
 docker compose run --rm api make-ui i18n-audit /work/src
 ```
 
-The image serves the HTTP app on port 8000. Compose mounts `./work` at
-`/work`, so the source to audit and the catalogue written beside it stay on
-the host. The image's default command is `uvicorn`, which does not mount
-`/mcp`; run `sprezzature-ui-mcp --host 0.0.0.0` in the container for the
-MCP endpoint.
+The image serves the HTTP routes and the MCP endpoint on port 8000, from
+one process: its default command is `sprezzature-ui-mcp --host 0.0.0.0`, so
+`/v1/...` and `/mcp` both answer. Compose mounts `./work` at `/work`, so the
+source to audit and the catalogue written beside it stay on the host.
 
 ## What the audit sees
 

@@ -21,9 +21,29 @@ pytest
 The `tests/eval/` suite is marked `eval` and excluded from the default run:
 it calls a local model through Ollama (a `qwen3-vl` tag must be pulled), so
 it is slow and it needs one installed. Run it with `pytest -m eval`. It
-skips, rather than fails, when no Ollama server answers. It also imports
-`best-engine-ai-helper`, `langdetect` and `deepeval`, which `[dev]` does not
-install; each test that needs one skips when it is absent.
+skips, rather than fails, when no Ollama server answers.
+
+It also imports three packages that `[dev]` does not install, and each test
+that needs one skips when it is absent. To run the whole suite rather than
+the part of it your machine happens to hold:
+
+```bash
+pip install -e ".[dev]" best-engine-ai-helper langdetect deepeval
+ollama pull qwen3-vl:8b        # or any qwen3-vl tag; the size is the machine's choice
+pytest -m eval
+```
+
+| Package | Used by |
+|---|---|
+| `best-engine-ai-helper` | every eval test: the model is called through `best_engine_ai_helper.llm.chat` (`tests/eval/conftest.py`) |
+| `langdetect` | the check that a translated prompt answers in its own language |
+| `deepeval` | the G-Eval judge that compares a translated prompt with its source |
+
+They stay out of `[dev]` on purpose. `langdetect` is small, but `deepeval`
+is not: it brings `openai`, `grpcio`, OpenTelemetry, two telemetry clients,
+and three pytest plugins (`pytest-xdist`, `pytest-rerunfailures`,
+`pytest-asyncio`) that would then load into every default `pytest` run, for
+a suite that run excludes.
 
 ## Lint
 

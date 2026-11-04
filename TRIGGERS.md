@@ -85,7 +85,8 @@ project, so it stays a command. Call it with Bash.
 
 Either front door works: `make-ui <tool>` and `sprezzature-ui <tool>` are
 one click command under two names, with `i18n-audit` and `i18n-make` as
-sub-commands. The argparse front door was removed on 2026-10-25.
+sub-commands. The argparse front door was removed on 2026-10-25, and since
+2026-11-04 every command, `sprezzature-ui-mcp` included, parses with click.
 
 Install is one line, `pip install sprezzature-ui`, which brings every
 surface. There are no feature extras.

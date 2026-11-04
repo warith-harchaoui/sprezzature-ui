@@ -132,5 +132,6 @@ curl -s localhost:8000/health
 docker compose run --rm api make-ui i18n-audit /work/src
 ```
 
-Compose mounts `./work` at `/work`. The image's default command serves the
-HTTP routes only; `/mcp` needs `sprezzature-ui-mcp --host 0.0.0.0`.
+Compose mounts `./work` at `/work`. The image's default command,
+`sprezzature-ui-mcp --host 0.0.0.0`, serves the HTTP routes and `/mcp` on
+the same port.

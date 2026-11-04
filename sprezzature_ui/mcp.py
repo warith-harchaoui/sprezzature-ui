@@ -54,7 +54,7 @@ try:
     from fastapi_mcp import FastApiMCP
 except ImportError:  # pragma: no cover - dependency guard
 
-    def main(argv: list[str] | None = None) -> None:
+    def main(argv: list[str] | None = None) -> int:
         """
         Entry point when the MCP extra is not installed.
 
@@ -76,7 +76,6 @@ except ImportError:  # pragma: no cover - dependency guard
         sys.exit(1)
 
 else:
-
     # Reuse the exact same FastAPI app -- MCP is a thin wrapper on top.
     from sprezzature_ui.api import app
 
@@ -101,8 +100,7 @@ else:
     else:  # pragma: no cover - legacy fastapi-mcp
         mcp.mount()
 
-
-    def main(argv: list[str] | None = None) -> None:
+    def main(argv: list[str] | None = None) -> int:
         """
         Entry point for the ``sprezzature-ui-mcp`` console script.
 
@@ -112,47 +110,61 @@ else:
         or ``gunicorn`` directly.
 
         Arguments are parsed before anything is bound, so ``--help`` answers
-        instead of starting a server and hanging.
+        instead of starting a server and hanging. The parser is click, through
+        the same ``sprezzature_command`` every command of this package uses.
 
         Parameters
         ----------
         argv : list of str or None, optional
             Arguments to parse. ``None`` reads ``sys.argv``.
+
+        Returns
+        -------
+        int
+            0 once the server stops, 2 on a usage error.
         """
-        import argparse
         import os
 
-        parser = argparse.ArgumentParser(
-            prog="sprezzature-ui-mcp",
-            description=(
+        import click
+        from sprezzature_ui_scripts._click import run_command, sprezzature_command
+
+        @sprezzature_command(
+            "sprezzature-ui-mcp",
+            help=(
                 "Serve the sprezzature-ui MCP tools over HTTP. Every tool is a "
                 "route on the same FastAPI app, with the MCP endpoint "
                 "mounted beside them."
             ),
-            formatter_class=argparse.RawDescriptionHelpFormatter,
             epilog=(
-                "Defaults come from SPREZZATURE_UI_HOST and "
+                "\b\n"
+                "Defaults come from SPREZZATURE_UI_HOST and\n"
                 "SPREZZATURE_UI_PORT when those are set.\n"
-                "The host defaults to 127.0.0.1: pass --host 0.0.0.0 to "
-                "accept connections from outside this machine."
+                "The host defaults to 127.0.0.1: pass --host 0.0.0.0\n"
+                "to accept connections from outside this machine."
             ),
         )
-        parser.add_argument(
+        @click.option(
             "--host",
             default=os.environ.get("SPREZZATURE_UI_HOST", "127.0.0.1"),
-            help="Interface to bind (default: %(default)s).",
+            show_default=True,
+            help="Interface to bind.",
         )
-        parser.add_argument(
+        @click.option(
             "--port",
             type=int,
             default=int(os.environ.get("SPREZZATURE_UI_PORT", "8000")),
-            help="Port to bind (default: %(default)s).",
+            show_default=True,
+            help="Port to bind.",
         )
-        args = parser.parse_args(argv)
+        def _serve(host: str, port: int) -> int:
+            """Bind `host`:`port` and serve until interrupted."""
+            import uvicorn
 
-        import uvicorn
+            uvicorn.run(app, host=host, port=port, workers=1)
+            return 0
 
-        uvicorn.run(app, host=args.host, port=args.port, workers=1)
+        return run_command(_serve, argv)
+
 
 if __name__ == "__main__":  # pragma: no cover
     main()

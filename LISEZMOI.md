@@ -32,7 +32,9 @@ Une seule porte d'entrée sur les deux, écrite en click, sous deux noms :
 `make-ui <outil>` et `sprezzature-ui <outil>` sont le même appelable, donc
 ils ne peuvent pas diverger. `sprezzature-ui tools` liste les outils et dit
 si chacun peut tourner sur cette machine. La porte d'entrée argparse a été
-retirée le 2026-10-25. Chaque outil garde sa propre commande, et c'est elle
+retirée le 2026-10-25, et depuis le 2026-11-04 plus aucune commande ne lit
+ses options avec argparse : les commandes par outil et `sprezzature-ui-mcp`
+sont en click elles aussi, et `-V` affiche la version du paquet. Chaque outil garde sa propre commande, et c'est elle
 qu'un script ou un crochet de pré-commit doit appeler.
 
 ## Cinq surfaces
@@ -41,7 +43,7 @@ qu'un script ou un crochet de pré-commit doit appeler.
 |---|---|---|
 | Bibliothèque | `from sprezzature_ui import …` | `audit_js`, `audit_py`, `audit_path`, `gather`, `scaffold`, `compile_json`, `emit_loader` |
 | CLI (interface en ligne de commande) | `sprezzature-ui`, `make-ui`, `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make` | les deux outils |
-| HTTP | `uvicorn sprezzature_ui.api:app`, ou le `Dockerfile` et le `docker-compose.yml` | `GET /health`, `POST /v1/i18n-audit` |
+| HTTP | `uvicorn sprezzature_ui.api:app`, ou le `Dockerfile` et le `docker-compose.yml` (qui servent aussi `/mcp`) | `GET /health`, `POST /v1/i18n-audit` |
 | MCP (Model Context Protocol) | `sprezzature-ui-mcp` | les outils `health` et `audit_i18n`, sur `/mcp` |
 | Skill | [`SKILL.md`](https://github.com/warith-harchaoui/sprezzature/blob/main/sprezzature-ui/SKILL.md) dans la suite | la prose de design, plus les deux commandes |
 
@@ -158,11 +160,11 @@ curl -s localhost:8000/health
 docker compose run --rm api make-ui i18n-audit /work/src
 ```
 
-L'image sert l'application HTTP sur le port 8000. Compose monte `./work` sur
-`/work` : les sources à auditer et le catalogue écrit à côté restent sur
-l'hôte. La commande par défaut de l'image est `uvicorn`, qui ne monte pas
-`/mcp` ; lancez `sprezzature-ui-mcp --host 0.0.0.0` dans le conteneur pour
-avoir le point d'accès MCP.
+L'image sert les routes HTTP et le point d'accès MCP sur le port 8000, depuis
+un seul processus : sa commande par défaut est
+`sprezzature-ui-mcp --host 0.0.0.0`, si bien que `/v1/...` et `/mcp` répondent
+tous deux. Compose monte `./work` sur `/work` : les sources à auditer et le
+catalogue écrit à côté restent sur l'hôte.
 
 ## Ce que l'audit voit
 

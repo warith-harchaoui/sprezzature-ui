@@ -84,10 +84,18 @@ def test_a_command_announces_the_name_that_installs_it(command: str) -> None:
 
     The click front door is skipped: click takes its name from the installed
     entry point rather than from a literal in the source, so there is nothing
-    here that could disagree.
+    here that could disagree. The per-tool commands and the MCP server are
+    click too, but name themselves through ``sprezzature_command``, and that
+    literal is read.
     """
     source = _source_of(CONSOLE_SCRIPTS[command])
-    declared = re.findall(r'prog\s*=\s*"([^"]+)"', source)
+    # Two spellings of the same literal: argparse's ``prog="..."`` and the
+    # first argument of ``sprezzature_command("...")``, which is how every
+    # per-tool command names itself since they became click on 2026-11-04.
+    # Reading only the first turned three checks into skips on that day.
+    declared = re.findall(r'prog\s*=\s*"([^"]+)"', source) + re.findall(
+        r'sprezzature_command\(\s*"([^"]+)"', source
+    )
     if not declared:
         pytest.skip("this command takes its name from the entry point itself")
     assert command in declared, (

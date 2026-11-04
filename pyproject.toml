@@ -64,7 +64,8 @@ dev = [
 
 [project.scripts]
 # One click front door under two names over the same table (the argparse
-# front door was removed on 2026-10-25), plus one command per tool.
+# front door was removed on 2026-10-25), plus one command per tool and the MCP
+# server. All five are click since 2026-11-04.
 make-ui = "sprezzature_ui.cli:main"
 sprezzature-ui = "sprezzature_ui.cli:main"
 sprezzature-ui-i18n-audit = "sprezzature_ui_scripts.audit_i18n:main"

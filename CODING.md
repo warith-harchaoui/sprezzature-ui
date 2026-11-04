@@ -18,6 +18,11 @@ catalogue is YAML and the audit that finds what belongs in it is not. PyYAML
 is a base dependency, like every other runtime dependency of this package:
 there are no feature extras.
 
+The command line is click, and click is imported inside `_build()`, when
+`main()` runs, not at the top of the module. So `import sprezzature_ui`, which
+reaches the detectors through this file, still loads nothing outside the
+standard library.
+
 An import added to the audit is a review question, not a detail.
 
 ## The emitted code has standards too
@@ -33,7 +38,10 @@ the defect the suite watches for.
 
 `make-ui` and `sprezzature-ui` are two spellings of one click front door,
 `sprezzature_ui.cli:main`. The argparse front door was dropped on
-2026-10-25. Both names resolve against one table of tools, `TOOLS` in
+2026-10-25; since 2026-11-04 the per-tool commands and `sprezzature-ui-mcp`
+are click as well, built with `sprezzature_command` and `run_command` from
+`scripts/_click.py`, and `tests/test_every_command_can_start.py` refuses an
+argparse import anywhere in `sprezzature_ui/` or `scripts/`. Both names resolve against one table of tools, `TOOLS` in
 `sprezzature_ui/_tools.py`, so a tool cannot reach one name and miss the
 other. A new tool is an entry in that table plus its own console script in
 `pyproject.toml`; `tests/test_the_surfaces_agree.py` checks that every

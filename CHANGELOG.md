@@ -6,6 +6,27 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- **Every command is click.** `sprezzature-ui-i18n-audit`,
+  `sprezzature-ui-i18n-make` and `sprezzature-ui-mcp` were the last argparse
+  parsers; they now go through `sprezzature_command` and `run_command` from
+  `scripts/_click.py`, the helper the rest of the suite uses. Options, defaults,
+  positional `PATHS`, exit codes (2 on a usage error) and `main(argv=None)` are
+  unchanged. `-V` printed `1.5.0`, a version copied from another package; it
+  prints the package version, `1.0.0`. `scripts/_argparse.py` is deleted.
+  `tests/test_every_command_can_start.py` now demands a click `Usage:` line
+  from every console script and refuses an argparse import in the package.
+- **The container serves `/mcp`.** The image ran `uvicorn
+  sprezzature_ui.api:app`, which never imports `sprezzature_ui.mcp` and so
+  never mounts the MCP endpoint. Its command, and the compose service's, is
+  now `sprezzature-ui-mcp --host 0.0.0.0 --port 8000`: one process answers
+  `/health`, `/v1/i18n-audit` and `/mcp` on port 8000.
+- **`CONTRIBUTING.md` says how to run `pytest -m eval`.** The eval suite
+  imports `best-engine-ai-helper`, `langdetect` and `deepeval`; the exact
+  install line is written there. They stay out of `[dev]`: `deepeval` brings
+  `openai`, `grpcio` and three pytest plugins into every default run.
+
 ### Docs
 
 The Markdown now says what the code does on 2026-11-04. Each claim below was

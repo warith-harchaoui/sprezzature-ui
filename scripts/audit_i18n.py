@@ -68,15 +68,17 @@ import json
 import re
 import sys
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 try:
     import yaml
 except ImportError:  # the audit half is stdlib-only; only --fix writes YAML
     yaml = None  # type: ignore[assignment]
 
+if TYPE_CHECKING:
+    import click
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _argparse import make_parser  # noqa: E402
 
 #: File extensions treated as GUI code (checked for I18N001).
 JS_EXTS: tuple[str, ...] = (".js", ".mjs", ".cjs", ".jsx", ".ts", ".tsx", ".html", ".htm")
@@ -117,7 +119,9 @@ _PY_PROMPT_NAME = re.compile(r"(PROMPT|INSTRUCTION)", re.IGNORECASE)
 VALIDATED_KEY: str = "validated"
 
 
-def _finding(rule: str, severity: str, path: str, line: int, message: str, snippet: str) -> dict[str, Any]:
+def _finding(
+    rule: str, severity: str, path: str, line: int, message: str, snippet: str
+) -> dict[str, Any]:
     """Build one finding dict in the shared auditor shape.
 
     Parameters
@@ -140,8 +144,14 @@ def _finding(rule: str, severity: str, path: str, line: int, message: str, snipp
     dict
         A single finding, JSON-serialisable.
     """
-    return {"rule": rule, "severity": severity, "path": path, "line": line,
-            "message": message, "snippet": snippet}
+    return {
+        "rule": rule,
+        "severity": severity,
+        "path": path,
+        "line": line,
+        "message": message,
+        "snippet": snippet,
+    }
 
 
 def audit_js(path: Path) -> list[dict[str, Any]]:
@@ -185,12 +195,17 @@ def audit_js(path: Path) -> list[dict[str, Any]]:
             flagged_lines.add(i)
     lines = text.splitlines()
     for i in sorted(flagged_lines):
-        findings.append(_finding(
-            "I18N001", "error", str(path), i,
-            "GUI translations embedded in JS/HTML — move them to locales/i18n.yaml "
-            "and load via the compiled locales/i18n.json (see i18n_make.py).",
-            lines[i - 1].strip()[:160],
-        ))
+        findings.append(
+            _finding(
+                "I18N001",
+                "error",
+                str(path),
+                i,
+                "GUI translations embedded in JS/HTML — move them to locales/i18n.yaml "
+                "and load via the compiled locales/i18n.json (see i18n_make.py).",
+                lines[i - 1].strip()[:160],
+            )
+        )
     return findings
 
 
@@ -227,12 +242,17 @@ def audit_py(path: Path) -> list[dict[str, Any]]:
         # A joined f-string (ast.JoinedStr) built inline is also an inlined prompt.
         is_fstr = isinstance(value, ast.JoinedStr)
         if (is_str or is_fstr) and _PY_PROMPT_NAME.search(name):
-            findings.append(_finding(
-                "I18N002", "error", str(path), lineno,
-                f"LLM prompt '{name}' inlined in Python — move it to "
-                "locales/i18n.yaml (prompts:) or a prompts/*.yaml catalog and load it.",
-                name,
-            ))
+            findings.append(
+                _finding(
+                    "I18N002",
+                    "error",
+                    str(path),
+                    lineno,
+                    f"LLM prompt '{name}' inlined in Python — move it to "
+                    "locales/i18n.yaml (prompts:) or a prompts/*.yaml catalog and load it.",
+                    name,
+                )
+            )
 
     # Only module top-level + class-body assignments (constants), not locals.
     bodies: list[ast.stmt] = list(tree.body)
@@ -244,7 +264,11 @@ def audit_py(path: Path) -> list[dict[str, Any]]:
             for tgt in node.targets:
                 if isinstance(tgt, ast.Name):
                     check(tgt.id, node.value, node.lineno)
-        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name) and node.value is not None:
+        elif (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            and node.value is not None
+        ):
             check(node.target.id, node.value, node.lineno)
     return findings
 
@@ -288,9 +312,7 @@ _JS_ENTRY_ID = re.compile(r"""^\s*["']?(?P<id>[\w.\-]+)["']?\s*:\s*\{""")
 #: ``"app.title": {`` does: a locale mapping to an object is a plural entry,
 #: not the header of a new message. Without this check the line was read as a
 #: header and skipped, so a plural table was dropped without a word.
-_LOCALE_CODES: frozenset[str] = frozenset(
-    "en fr es de it pt nl ja zh ko ru ar hi".split()
-)
+_LOCALE_CODES: frozenset[str] = frozenset("en fr es de it pt nl ja zh ko ru ar hi".split())
 
 
 def _message_id(constant: str) -> str:
@@ -488,73 +510,113 @@ def gather(paths: list[str]) -> list[Path]:
         p = Path(raw)
         if p.is_dir():
             for f in p.rglob("*"):
-                if f.is_file() and f.suffix.lower() in JS_EXTS + PY_EXTS \
-                        and not (set(f.parts) & skip):
+                if (
+                    f.is_file()
+                    and f.suffix.lower() in JS_EXTS + PY_EXTS
+                    and not (set(f.parts) & skip)
+                ):
                     out.add(f)
         elif p.is_file():
             out.add(p)
     return sorted(out)
 
 
-def main() -> int:
+def _raw(text: str | None) -> str:
+    """`text` with every paragraph marked so click prints it as written.
+
+    The epilog is this module's docstring, whose usage block is laid out by
+    hand. Click rewraps paragraphs by default; a ``\\b`` line in front of a
+    paragraph tells it not to, which is what argparse's raw formatter did.
+    """
+    return "\n\n".join(f"\b\n{block}" for block in (text or "").strip().split("\n\n"))
+
+
+def _build() -> click.Command:
+    """The click command, built on first use rather than at import.
+
+    ``import sprezzature_ui`` reaches the detectors above through this module,
+    and they need nothing outside the standard library: that is what makes the
+    audit cheap enough for a pre-commit hook and importable from any
+    environment. Importing click here, inside the command line, keeps it so.
+    """
+    import click
+    from _click import sprezzature_command
+
+    @sprezzature_command(
+        "sprezzature-ui-i18n-audit",
+        help="Flag GUI translations embedded in JS/HTML and LLM prompts "
+        "inlined in Python — both belong in locales/i18n.yaml.\n\n"
+        "PATHS: files and/or directories to audit.",
+        epilog=_raw(__doc__),
+    )
+    @click.argument("paths", nargs=-1, required=True)
+    @click.option("--json", "as_json", is_flag=True, help="Emit findings as a JSON array.")
+    @click.option(
+        "--fix",
+        "do_fix",
+        is_flag=True,
+        help="Move the strings into locales/i18n.yaml and print the call to paste. "
+        "Does not rewrite the call site — see the module docstring.",
+    )
+    @click.option(
+        "--catalog",
+        default="locales/i18n.yaml",
+        help="Catalogue --fix writes to (default: locales/i18n.yaml).",
+    )
+    def _command(paths: tuple[str, ...], as_json: bool, do_fix: bool, catalog: str) -> int:
+        """Audit `paths`, and with ``--fix`` move what is found into `catalog`."""
+        files = gather(list(paths))
+        findings: list[dict[str, Any]] = []
+        for f in files:
+            findings.extend(audit_path(f))
+
+        if do_fix:
+            # Only the files that actually tripped the audit: extracting from a
+            # clean file would lift strings nobody said were translatable.
+            offending = sorted({Path(fd["path"]) for fd in findings})
+            written, notes = fix(offending, Path(catalog))
+            for note in notes:
+                print(note)
+            print()
+            print(f"{written} string(s) moved into {catalog}.")
+            if written:
+                print("Re-run `sprezzature-ui-i18n-make --compile` to rebuild the JSON.")
+            # Still non-zero: the strings are in the catalogue and still in the
+            # code. The fix is complete when the call sites read from the
+            # catalogue, and this tool deliberately does not do that for you.
+            return 0 if not findings else 1
+
+        if as_json:
+            json.dump(findings, sys.stdout, indent=2, ensure_ascii=False)
+            sys.stdout.write("\n")
+        else:
+            for fd in findings:
+                # `path:line: RULE message` — one grep-friendly line per finding.
+                print(f"{fd['path']}:{fd['line']}: {fd['rule']} {fd['message']}")
+            print()
+            print(f"{len(findings)} finding(s)." if findings else "0 findings.")
+
+        return 0 if not findings else 1
+
+    return _command
+
+
+def main(argv: list[str] | None = None) -> int:
     """CLI entry point. Returns 0 when clean, 1 on any finding.
+
+    Parameters
+    ----------
+    argv : list of str or None, optional
+        Arguments without the program name. ``None`` reads ``sys.argv``.
 
     Returns
     -------
     int
-        Process exit code (0 clean, 1 findings).
+        Process exit code (0 clean, 1 findings, 2 usage error).
     """
-    p = make_parser(
-        prog="sprezzature-ui-i18n-audit",
-        description="Flag GUI translations embedded in JS/HTML and LLM prompts "
-                    "inlined in Python — both belong in locales/i18n.yaml.",
-        epilog=__doc__,
-    )
-    p.add_argument("paths", nargs="+", help="Files and/or directories to audit.")
-    p.add_argument("--json", action="store_true", help="Emit findings as a JSON array.")
-    p.add_argument(
-        "--fix", action="store_true",
-        help="Move the strings into locales/i18n.yaml and print the call to paste. "
-             "Does not rewrite the call site — see the module docstring.",
-    )
-    p.add_argument(
-        "--catalog", default="locales/i18n.yaml",
-        help="Catalogue --fix writes to (default: locales/i18n.yaml).",
-    )
-    args = p.parse_args()
+    from _click import run_command
 
-    files = gather(args.paths)
-    findings: list[dict[str, Any]] = []
-    for f in files:
-        findings.extend(audit_path(f))
-
-    if args.fix:
-        # Only the files that actually tripped the audit: extracting from a
-        # clean file would lift strings nobody said were translatable.
-        offending = sorted({Path(fd["path"]) for fd in findings})
-        written, notes = fix(offending, Path(args.catalog))
-        for note in notes:
-            print(note)
-        print()
-        print(f"{written} string(s) moved into {args.catalog}.")
-        if written:
-            print("Re-run `sprezzature-ui-i18n-make --compile` to rebuild the JSON.")
-        # Still non-zero: the strings are in the catalogue and still in the
-        # code. The fix is complete when the call sites read from the
-        # catalogue, and this tool deliberately does not do that for you.
-        return 0 if not findings else 1
-
-    if args.json:
-        json.dump(findings, sys.stdout, indent=2, ensure_ascii=False)
-        sys.stdout.write("\n")
-    else:
-        for fd in findings:
-            # `path:line: RULE message` — one grep-friendly line per finding.
-            print(f"{fd['path']}:{fd['line']}: {fd['rule']} {fd['message']}")
-        print()
-        print(f"{len(findings)} finding(s)." if findings else "0 findings.")
-
-    return 0 if not findings else 1
+    return run_command(_build(), argv)
 
 
 if __name__ == "__main__":

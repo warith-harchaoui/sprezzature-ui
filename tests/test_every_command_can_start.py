@@ -53,6 +53,7 @@ Author
 
 from __future__ import annotations
 
+import ast
 import re
 import shutil
 import subprocess
@@ -143,9 +144,7 @@ def test_the_front_door_library_is_a_base_dependency() -> None:
     )
 
     optional = _OPTIONAL_BLOCK.search(text)
-    extras = (
-        re.findall(r"^([\w.-]+)\s*=\s*\[", optional.group(1), re.M) if optional else []
-    )
+    extras = re.findall(r"^([\w.-]+)\s*=\s*\[", optional.group(1), re.M) if optional else []
     assert "click" not in extras, (
         f"{PACKAGE} declares both a base click and a [click] extra. Every "
         f"README line reading pip install '{PACKAGE}[click]' then documents an "
@@ -165,9 +164,7 @@ def test_the_manifest_declares_commands() -> None:
 
 
 @pytest.mark.parametrize("command,module,function", _commands(), ids=lambda v: v)
-def test_the_command_starts_and_names_itself(
-    command: str, module: str, function: str
-) -> None:
+def test_the_command_starts_and_names_itself(command: str, module: str, function: str) -> None:
     """``--help`` is the cheapest proof that a command is callable at all."""
     proc = _run(command, module, function)
     output = proc.stdout + proc.stderr
@@ -181,9 +178,7 @@ def test_the_command_starts_and_names_itself(
     if f"No module named '{top}'" in output:
         pytest.skip(f"{PACKAGE} is not installed here: pip install -e '.[dev]'")
 
-    assert "Traceback" not in output, (
-        f"{command} --help raised:\n{output}"
-    )
+    assert "Traceback" not in output, f"{command} --help raised:\n{output}"
     assert output.strip(), f"{command} --help printed nothing (exit {proc.returncode})"
 
     assert proc.returncode == 0, (
@@ -196,4 +191,51 @@ def test_the_command_starts_and_names_itself(
         f"{command} --help does not name {command}. A usage line that names "
         f"the module instead sends the reader to a file they cannot run:\n"
         f"{output.splitlines()[0] if output.splitlines() else ''}"
+    )
+
+    # click, not argparse: the two spell the usage line differently, and the
+    # spelling is the cheapest outside proof of which parser answered.
+    first = output.lstrip().splitlines()[0]
+    assert first.startswith("Usage: "), (
+        f"{command} --help does not answer with a click usage line. Every "
+        f"command of this suite parses with click since 2026-11-04; a line "
+        f"starting with lowercase 'usage:' is an argparse parser come back:\n"
+        f"{first}"
+    )
+
+
+def _imports_argparse(path: Path) -> bool:
+    """Does `path` import argparse, at any depth, in either spelling?"""
+    tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import) and any(
+            alias.name.split(".")[0] == "argparse" for alias in node.names
+        ):
+            return True
+        if isinstance(node, ast.ImportFrom) and (node.module or "").split(".")[0] == "argparse":
+            return True
+    return False
+
+
+def test_no_module_of_the_package_imports_argparse() -> None:
+    """Every command line here is click; argparse coming back is a regression.
+
+    Read off the source rather than off ``sys.modules`` after an import: a
+    parser built lazily inside ``main`` (the way ``mcp.py`` built its own until
+    2026-11-04) is invisible to an import and plain in the syntax tree. Both
+    trees that ship are walked, ``sprezzature_ui/`` and ``scripts/``, so a new
+    module is covered the day it is written.
+    """
+    shipped = sorted(
+        path
+        for folder in ("sprezzature_ui", "scripts")
+        for path in (REPO_ROOT / folder).rglob("*.py")
+        if "__pycache__" not in path.parts
+    )
+    assert shipped, "no Python module found under sprezzature_ui/ or scripts/"
+    offenders = [str(path.relative_to(REPO_ROOT)) for path in shipped if _imports_argparse(path)]
+    assert not offenders, (
+        f"these modules import argparse: {offenders}. The suite parses every "
+        f"command with click, through scripts/_click.py (sprezzature_command "
+        f"+ run_command)."
     )
