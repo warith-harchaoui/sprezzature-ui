@@ -49,7 +49,7 @@ site.webmanifest
 head.html                <link> and <meta> tags ready to paste into <head>
 ```
 
-See `references/meta-tags.md` for the full meta-tag set this fits into.
+See `sprezzature-publish/references/meta-tags.md` for the full meta-tag set this fits into.
 
 ## HTML head boilerplate
 

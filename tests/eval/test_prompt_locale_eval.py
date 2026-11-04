@@ -129,8 +129,8 @@ def _looks_like(text: str, locale: str) -> bool:
     """
     langdetect = pytest.importorskip(
         "langdetect",
-        reason="langdetect is the [lang] extra; it is how this project detects "
-               "a language and the measurement needs it",
+        reason="langdetect is not installed (no dependency of this package "
+               "declares it); it is how the measurement detects a language",
     )
     langdetect.DetectorFactory.seed = 0
     try:

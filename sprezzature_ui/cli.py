@@ -39,8 +39,7 @@ Shell completion:
   eval "$(_SPREZZATURE_UI_COMPLETE=bash_source sprezzature-ui)"   # bash
   eval "$(_SPREZZATURE_UI_COMPLETE=zsh_source sprezzature-ui)"    # zsh
 
-Run `sprezzature-ui tools` to see which tools are ready on this machine
-and which need an extra installed.
+Run `sprezzature-ui tools` to see which tools can run on this machine.
 """
 
 
@@ -60,19 +59,19 @@ def list_tools() -> None:
     List the tools, and say which ones can run here.
 
     The second half is the point: "installed" and "will run" are different
-    questions when a tool needs an extra, and a reader should not have to
+    questions when an import fails, and a reader should not have to
     discover the difference from a traceback.
     """
     width = max(len(name) for name in TOOLS)
-    for name, entry in TOOLS.items():
-        _module, extra = (entry[0], entry[1]) if len(entry) == 3 else (entry[0], "")
-        target = f"sprezzature_ui_scripts.{_module}"
+    for name, (module_name, description) in TOOLS.items():
+        # No extras since 2026-11-01: a tool that fails to import is a broken
+        # install, so there is no extra to name, only "unavailable".
         try:
-            importlib.import_module(target)
+            importlib.import_module(f"sprezzature_ui_scripts.{module_name}")
             mark = "ready"
         except ImportError:
-            mark = f"needs [{extra}]" if extra else "unavailable"
-        summary = entry[-1].split(".")[0]
+            mark = "unavailable"
+        summary = description.split(".")[0]
         click.echo(f"  {name:<{width}}  {mark:<14}  {summary}.")
 
 

@@ -15,8 +15,8 @@ without a browser, a model, or the network:
   named ``i18n`` / ``translations`` / ``messages`` / ``locales`` / ``strings``
   assigned an object literal. Those belong in ``locales/i18n.yaml``.
 - I18N002 — an LLM prompt inlined in Python: a module- or class-level
-  constant whose name contains ``PROMPT`` / ``TEMPLATE`` / ``SYSTEM`` /
-  ``INSTRUCTION`` assigned a string literal, instead of being loaded from
+  constant whose name contains ``PROMPT`` or ``INSTRUCTION`` (any case)
+  assigned a string literal or an f-string, instead of being loaded from
   ``locales/i18n.yaml`` (or a ``prompts/*.yaml`` catalog).
 
 It is the counterpart to :mod:`i18n_make` (the make half). Output is a JSON
@@ -403,8 +403,8 @@ def fix(paths: list[Path], catalog: Path) -> tuple[int, list[str]]:
     """
     if yaml is None:  # pragma: no cover - dependency guard
         return 0, [
-            "--fix writes YAML, which is the [i18n] extra: "
-            "pip install 'sprezzature-ui'"
+            "--fix writes YAML and could not import PyYAML, a base dependency "
+            "of this package: reinstall with pip install sprezzature-ui"
         ]
 
     data: dict[str, Any] = {}

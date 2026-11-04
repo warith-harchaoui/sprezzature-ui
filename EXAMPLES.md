@@ -12,8 +12,9 @@ sprezzature-ui-i18n-audit src/ templates/ static/js/
 sprezzature-ui-i18n-audit src/ --json
 ```
 
-Exit 1 on any finding, which is what makes it usable as a gate. Standard
-library only, so it runs in a minimal container in milliseconds.
+Exit 1 on any finding, which is what makes it usable as a gate. The audit
+imports only the standard library. `--json` prints the findings as a JSON
+array; without it, one `path:line: RULE message` line per finding.
 
 Two things are flagged, and they are the same mistake in two languages: a
 translation dictionary embedded in JavaScript or HTML, and an LLM prompt
@@ -27,7 +28,8 @@ sprezzature-ui-i18n-audit src/ --fix --catalog locales/strings.yaml
 ```
 
 `--fix` writes the strings into the catalogue and prints the call to
-paste. It does not rewrite the call site. That restraint is deliberate:
+paste. It does not rewrite the call site, and it still exits 1 while the
+strings remain in the code. That restraint is deliberate:
 replacing a string literal with a lookup changes what the surrounding code
 means, and a tool that guesses at it wrongly is harder to clean up than
 the original.
@@ -66,7 +68,8 @@ sprezzature-ui i18n-audit src/
 
 `make-ui <tool>` and `sprezzature-ui <tool>` are one click command under
 two names, resolving against one table. A tool cannot appear in one and be
-missing from the other.
+missing from the other. `sprezzature-ui tools` lists both tools and says
+whether each can run here.
 
 ## As a pre-commit hook
 
@@ -101,18 +104,33 @@ instance, already knows which files changed and should not pay for a walk.
 ## Over HTTP
 
 ```bash
-pip install "sprezzature-ui"
 uvicorn sprezzature_ui.api:app --port 8000
 curl -s localhost:8000/health
+curl -s localhost:8000/v1/i18n-audit -H 'Content-Type: application/json' \
+  -d '{"source": "SYSTEM_PROMPT = \"You are concise.\"\n", "filename": "engine.py"}'
 ```
 
-One route, `POST /v1/i18n-audit`: source in, findings out. The narrowness
-is the point. No HTTP route can carry "make this dashboard legible", and
+One working route, `POST /v1/i18n-audit`, beside `GET /health`: source in,
+findings out. The narrowness is the point. No HTTP route can carry "make this dashboard legible", and
 this package does not invent one that pretends to.
+
+## Over MCP
+
+```bash
+sprezzature-ui-mcp
+sprezzature-ui-mcp --host 0.0.0.0 --port 9000
+```
+
+The MCP endpoint is at `/mcp`, beside the HTTP routes. Two tools, named
+after the routes' `operation_id`: `health` and `audit_i18n`.
 
 ## In containers
 
 ```bash
 docker compose up -d
 curl -s localhost:8000/health
+docker compose run --rm api make-ui i18n-audit /work/src
 ```
+
+Compose mounts `./work` at `/work`. The image's default command serves the
+HTTP routes only; `/mcp` needs `sprezzature-ui-mcp --host 0.0.0.0`.

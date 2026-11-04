@@ -21,7 +21,7 @@ classifiers = [
     "Topic :: Software Development :: Internationalization",
 ]
 
-# click, and nothing else. `sprezzature-ui` — the click front door — is a
+# click first. `sprezzature-ui` — the click front door — is a
 # declared console script, and a command that `pip install` puts on PATH and
 # that dies on `import click` is a defect this suite has shipped before. The
 # audit itself is stdlib-only, which is what lets it sit in a pre-commit
@@ -63,8 +63,8 @@ dev = [
 ]
 
 [project.scripts]
-# Two front doors over the same table — `make-ui` reads its flags with
-# argparse, `sprezzature-ui` with click — plus one command per tool.
+# One click front door under two names over the same table (the argparse
+# front door was removed on 2026-10-25), plus one command per tool.
 make-ui = "sprezzature_ui.cli:main"
 sprezzature-ui = "sprezzature_ui.cli:main"
 sprezzature-ui-i18n-audit = "sprezzature_ui_scripts.audit_i18n:main"

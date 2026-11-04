@@ -6,6 +6,65 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Docs
+
+The Markdown now says what the code does on 2026-11-04. Each claim below was
+checked against the code, by `--help` or by a run.
+
+- **`README.md` and `LISEZMOI.md`.** The install section listed three
+  `pip install` lines that had become identical once the extras were folded
+  in; it is one line now. `sprezzature-ui-i18n-make locales/i18n.yaml` took
+  a positional argument the command does not accept: the catalogue is found
+  through `--dir`. Added what was missing: the five surfaces in one table,
+  the flags of both commands (`--json`, `--fix`, `--catalog`, `--dir`,
+  `--init`, `--compile`, `--emit-loader`, `--emit-python`), the
+  `sprezzature-ui tools` sub-command, the exit code of `--fix` (still 1),
+  the request and response fields of `POST /v1/i18n-audit`, the MCP server
+  with its `/mcp` endpoint and its two tools, Docker and compose, the two
+  rules and the file types each reads, and the three-Roboto rule. The two
+  files now have the same sections in the same order, and the French one
+  has non-breaking spaces before `:` and `;`.
+- **`TRIGGERS.md`.** The generalisation now routes on the domain's closed
+  vocabulary instead of sample phrasings. Added a table of every tool and
+  the request it answers, the `health` MCP tool, `sprezzature-ui tools`,
+  `sprezzature-ui-mcp`, the HTTP and library columns, and the `.cjs`,
+  `.jsx`, `.tsx` and `.htm` files the audit also reads.
+- **`EXAMPLES.md`.** "One route" became one working route beside
+  `GET /health`. Added the MCP server, a `POST` example and the compose
+  command that runs the audit. Dropped a timing claim nobody measured.
+- **`CODING.md`.** PyYAML was described as the dependency of an `i18n`
+  extra that no longer exists. A new tool was said to be picked up by
+  adding an entry point; it has to go in `TOOLS` in
+  `sprezzature_ui/_tools.py` as well.
+- **`CONTRIBUTING.md`.** Detector tests live in `tests/test_i18n.py`, not in
+  the extraction tests. Said how to run the `eval` suite and what it imports
+  that `[dev]` does not install.
+- **`references/`.** `stack-vanilla-js.md` taught a translation table kept
+  in a JavaScript object, which is what `I18N001` exists to flag; it now
+  shows the emitted `locales/i18n.js` loader. `checklist.md` cited
+  `tests/test_dogfood_audits.py`, which does not exist. The guards are
+  `tests/test_the_shipped_markup.py` (accessibility lint, every shipped HTML
+  file) and the monorepo's `tests/test_snippet_catalog.py` (both auditors,
+  snippets only). `stack-tailwind.md` named `scripts/validate.py`,
+  which is in no repository; the suite's validator is the monorepo's
+  `scripts/validate_content.py`. `material-design.md` asked for a typeface
+  "not Roboto"; it means not Roboto Flex. `ui-guidelines/foundations/images.md`
+  installed alt-text drafting from a requirements file and claimed Python
+  3.9; it is `pip install sprezzature-accessibility`, on Python 3.10 to 3.13.
+  Two links to `alt-text-ai.md` and `meta-tags.md` now name the brick that
+  holds them.
+- **Docstrings and help strings.** The MCP module named three colour tools
+  and three accessibility tools this server does not have, and announced
+  itself to MCP hosts as "Sprezzature Accessibility". The `audit_i18n`
+  docstring listed `TEMPLATE` and `SYSTEM` among the prompt names the rule
+  matches; it matches `PROMPT` and `INSTRUCTION` only. Four messages and the
+  `sprezzature-ui --help` epilog still spoke of an extra to install. The
+  `pyproject.toml` comment said `make-ui` read its flags with argparse.
+- **`sprezzature-ui tools`** lost a branch that named an extra to install.
+  No entry of the tool table carries one, so the branch could not run; the
+  output is unchanged. An eval-suite skip reason named a `[lang]` extra that
+  does not exist.
+
 ### Changed — one `pip install`
 
 **Everything this package does now installs with it.** 4 extras became

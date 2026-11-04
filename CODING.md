@@ -13,8 +13,10 @@ comment saying why the broad catch is intentional.
 `scripts/audit_i18n.py` imports nothing outside the standard library. It
 parses JavaScript, HTML and Python with the tools already in the
 interpreter, which is what makes it cheap enough to put in a pre-commit
-hook. PyYAML is a dependency of the `i18n` extra, because the catalogue is
-YAML and the audit that finds what belongs in it is not.
+hook. PyYAML is imported only by `--fix` and by `i18n_make`, because the
+catalogue is YAML and the audit that finds what belongs in it is not. PyYAML
+is a base dependency, like every other runtime dependency of this package:
+there are no feature extras.
 
 An import added to the audit is a review question, not a detail.
 
@@ -29,11 +31,13 @@ the defect the suite watches for.
 
 ## The two names share one table
 
-`make-ui` and `sprezzature-ui` are two spellings of one click front door —
-the argparse twin was dropped on 2026-10-25 — and both resolve against one
-table of tools. A tool added to one and not the
-other is a half-shipped tool, and `tests/test_the_surfaces_agree.py` fails
-on it. Add the entry point in `pyproject.toml` and the table picks it up.
+`make-ui` and `sprezzature-ui` are two spellings of one click front door,
+`sprezzature_ui.cli:main`. The argparse front door was dropped on
+2026-10-25. Both names resolve against one table of tools, `TOOLS` in
+`sprezzature_ui/_tools.py`, so a tool cannot reach one name and miss the
+other. A new tool is an entry in that table plus its own console script in
+`pyproject.toml`; `tests/test_the_surfaces_agree.py` checks that every
+declared command imports and announces the name that installs it.
 
 ## Small on purpose
 

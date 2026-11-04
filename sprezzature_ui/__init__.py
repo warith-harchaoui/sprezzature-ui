@@ -40,8 +40,8 @@ from typing import Any  # noqa: E402
 
 #: Names resolved on first use, mapped to the module that owns them. Lazy for
 #: the same reason as every brick in this suite: ``import sprezzature_ui``
-#: must work after a bare ``pip install``, and the i18n catalogue needs PyYAML
-#: that a caller who only audits never touches.
+#: stays cheap, and a caller who only audits never imports PyYAML, which the
+#: i18n catalogue needs.
 _EXPORTS: dict[str, str] = {
     # audit
     "audit_js": "audit_i18n",
@@ -66,9 +66,9 @@ def __getattr__(name: str) -> Any:
         module = importlib.import_module(f"sprezzature_ui_scripts.{module_name}")
     except ImportError as exc:  # pragma: no cover - dependency guard
         raise ImportError(
-            f"`{name}` lives in {module_name}, whose dependencies are an "
-            f"optional extra. Install them with: "
-            f"pip install 'sprezzature-ui'"
+            f"`{name}` lives in {module_name}, which could not be imported. "
+            f"Its dependencies are base dependencies of this package, so this "
+            f"is a broken install. Reinstall with: pip install sprezzature-ui"
         ) from exc
     return getattr(module, name)
 

@@ -3,23 +3,36 @@
 When to reach for this package, and what to call.
 
 This file is written for an agent: a Claude Code or OpenCode skill, an MCP
-host, anything choosing a tool on someone's behalf. Humans are welcome, but
-the routing rules below are the point.
+(Model Context Protocol) host, anything choosing a tool on someone's behalf.
+Humans are welcome, but the routing rules below are the point.
 
 ---
 
 ## The generalisation, stated once
 
-> **Somebody wants an interface built, and has not asked for a framework.**
-> They say "build me a settings page", "make a dashboard for this", "I need
-> a form with validation", "scaffold a landing", « fais-moi une page de
-> connexion ». What is bounded is not how they phrase it: it is that the
-> output is HTML a browser runs directly, with Tailwind utilities and plain
-> ES modules, and no React, no build step, no framework runtime.
+Route on what the person is holding, named in the domain's own closed
+vocabulary, not on how they phrase the request. The ways to ask are
+unbounded; the things this package deals with are not.
 
-The second trigger is the one that gets missed: **a string was just
-hardcoded.** A label in a JavaScript object, a prompt in a Python constant.
-The audit catches those, and it is cheap enough to run every time.
+> **A screen to build, with no framework asked for.** The nouns are a
+> closed set: page, landing, component, button, card, form, form field,
+> modal, dialog, nav, menu, table, dashboard, chart, settings page, theme
+> toggle. The output is HTML a browser runs directly, with Tailwind
+> utilities and plain ES modules: no React, no build step, no framework
+> runtime. This half is the model's work, read from `SKILL.md` and
+> `references/`.
+>
+> **Source that holds strings meant for people or for a model.** The nouns
+> are a closed set too: translation, locale, language code, message id,
+> catalogue, plural, i18n (internationalisation), and, on the Python side,
+> prompt, system prompt, instruction. When any of these sits in
+> JavaScript, HTML or Python rather than in `locales/i18n.yaml`, the audit
+> is the answer. The same holds right after such a file was written: a
+> label just hardcoded in a JavaScript object, a prompt just put in a
+> Python constant.
+
+If the noun is neither a screen nor a string catalogue, this package is
+not the answer. The neighbours below say which one is.
 
 ---
 
@@ -29,13 +42,53 @@ This is the distinction to get right before routing anything here.
 
 | The half | Who does it | How |
 |---|---|---|
-| **Writing the interface** | the model | read `SKILL.md` and the files in `references/`, then write the HTML |
+| **Writing the interface** | the model | read `SKILL.md` and the files in `references/`, copy from `assets/components/` and `assets/snippets/`, then write the HTML |
 | **Finding hardcoded strings** | this package | `sprezzature-ui-i18n-audit`, or the `audit_i18n` MCP tool |
+| **Building the catalogue** | this package | `sprezzature-ui-i18n-make` |
 
 No HTTP route can carry "make this dashboard legible". Asking for a tool
 that does it will find nothing, because nothing here claims to. The prose
 in `references/` is the larger half of the package, and reading it is how
-the skill is used.
+the skill is used. Its default typography is the three-Roboto rule: Roboto,
+Roboto Serif and Roboto Mono, self-hosted.
+
+---
+
+## Every tool, and the request it answers
+
+| Tool | The request it answers |
+|---|---|
+| `sprezzature-ui-i18n-audit` | "Which strings in this tree belong in a catalogue?" Reports `I18N001` (a translation table in JavaScript or HTML) and `I18N002` (a prompt constant in Python). Exit 1 on any finding. |
+| `sprezzature-ui-i18n-audit --fix` | "Move them into the catalogue." Writes `locales/i18n.yaml` (or `--catalog PATH`) and prints the call to paste. It does not rewrite the call site, and still exits 1. |
+| `sprezzature-ui-i18n-make` | "Set up the catalogue and the code that reads it." Scaffolds `locales/i18n.yaml`, compiles `locales/i18n.json`, emits `locales/i18n.js` and `locales/i18n_prompts.py`. One step alone with `--init`, `--compile`, `--emit-loader` or `--emit-python`. |
+| `sprezzature-ui tools` | "What does this package offer, and can it run here?" Lists both tools with their status. |
+| `sprezzature-ui-mcp` | "Expose the audit to an MCP host." Serves the HTTP app with the MCP endpoint at `/mcp`. |
+| `health` (MCP tool, `GET /health`) | "Is this server up, and which version?" |
+| `audit_i18n` (MCP tool, `POST /v1/i18n-audit`) | The audit over the network: one file's text and its filename in, findings out. |
+
+---
+
+## What to call, on every surface
+
+| Job | CLI | MCP tool | HTTP route | Library |
+|---|---|---|---|---|
+| Find hardcoded strings | `sprezzature-ui-i18n-audit` | `audit_i18n` | `POST /v1/i18n-audit` | `gather`, `audit_path`, `audit_js`, `audit_py` |
+| Move them to the catalogue | `sprezzature-ui-i18n-audit --fix` | none, it writes files | none | none |
+| Scaffold and compile the catalogue, emit the loaders | `sprezzature-ui-i18n-make` | none, it writes files | none | `scaffold`, `compile_json`, `emit_loader` |
+| Check the server | none | `health` | `GET /health` | none |
+| List the tools | `sprezzature-ui tools` | none | none | none |
+
+The MCP tool names are the routes' `operation_id`, so the two cannot
+disagree. The audit is the only tool that crosses a network boundary
+cleanly: source in, findings out. The make tool writes files into a
+project, so it stays a command. Call it with Bash.
+
+Either front door works: `make-ui <tool>` and `sprezzature-ui <tool>` are
+one click command under two names, with `i18n-audit` and `i18n-make` as
+sub-commands. The argparse front door was removed on 2026-10-25.
+
+Install is one line, `pip install sprezzature-ui`, which brings every
+surface. There are no feature extras.
 
 ---
 
@@ -44,7 +97,7 @@ the skill is used.
 Four different questions get asked about the same page. They do not
 substitute for one another, and this package answers only the first.
 
-| The question | Package | Tool |
+| The question | Package | MCP tool |
 |---|---|---|
 | **How should it be built?** stack, tokens, typography, layout | sprezzature-ui | the references, plus `audit_i18n` |
 | **Is it accessible?** missing alt, unlabelled inputs, heading order | sprezzature-accessibility | `lint_html` |
@@ -55,42 +108,30 @@ A page can pass any one and fail the others. When someone asks a broad
 "review my UI", run the other three and say which found what; this one has
 nothing mechanical to add to that review beyond the strings.
 
----
-
-## What to call, on every surface
-
-| Job | CLI | MCP tool |
-|---|---|---|
-| Find hardcoded strings | `sprezzature-ui-i18n-audit` | `audit_i18n` |
-| Move them to the catalogue | `sprezzature-ui-i18n-audit --fix` | none, it writes files |
-| Scaffold and compile the catalogue | `sprezzature-ui-i18n-make` | none, it writes files |
-
-The audit is the only tool that crosses a network boundary cleanly: source
-in, findings out. The other two write files into a project, so they stay
-commands. Call them with Bash.
-
-Either spelling works: `make-ui <tool>` and `sprezzature-ui <tool>` are
-one click command under two names, resolving against one table. The argparse
-twin was removed on 2026-10-25.
+Two more boundaries. A command-line tool that needs a screen in front of it
+goes to sprezzature-cli-gui. Markdown that must become a site goes to
+sprezzature-publish.
 
 ---
 
 ## What this cannot see, and say so when you report
 
-The audit reads source. It finds a translation dictionary sitting in
-JavaScript and a prompt sitting in Python, and it says where. It cannot
-tell whether the translations are any good, whether a string is
-user-facing at all, or whether the interface around them works.
+The audit reads source. It finds a translation table sitting in JavaScript
+and a prompt sitting in Python, and it says where. It cannot tell whether
+the translations are any good, whether a string is user-facing at all, or
+whether the interface around them works.
 
 Two findings exist, `I18N001` and `I18N002`, out of a field that is mostly
-judgement. Report them as evidence, never as a verdict. "Nothing fired"
-means exactly that, not "this interface is ready to ship".
+judgement. `I18N002` fires only on names containing `PROMPT` or
+`INSTRUCTION`; a prompt stored under another name is not seen. Report the
+findings as evidence, never as a verdict. "Nothing fired" means exactly
+that, not "this interface is ready to ship".
 
 ---
 
 ## File patterns
 
-`*.js`, `*.mjs`, `*.ts`, `*.html` and `*.py` route to the audit when
-translations or prompts are the concern, and, per the generalisation
-above, when such a file was just written. A request to *build* an
-interface routes to the references, not to a command.
+`*.js`, `*.mjs`, `*.cjs`, `*.jsx`, `*.ts`, `*.tsx`, `*.html`, `*.htm` and
+`*.py` route to the audit when translations or prompts are the concern, and,
+per the generalisation above, when such a file was just written. A request
+to *build* an interface routes to the references, not to a command.

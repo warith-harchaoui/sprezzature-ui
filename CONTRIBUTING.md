@@ -18,9 +18,12 @@ is one list and the workflow installs it by name.
 pytest
 ```
 
-The `tests/eval/` suite is excluded from the default run: it calls a local
-model, so it is slow and it needs one installed. Ask for it by name when
-you want it.
+The `tests/eval/` suite is marked `eval` and excluded from the default run:
+it calls a local model through Ollama (a `qwen3-vl` tag must be pulled), so
+it is slow and it needs one installed. Run it with `pytest -m eval`. It
+skips, rather than fails, when no Ollama server answers. It also imports
+`best-engine-ai-helper`, `langdetect` and `deepeval`, which `[dev]` does not
+install; each test that needs one skips when it is absent.
 
 ## Lint
 
@@ -36,12 +39,13 @@ ruff check .
 
 1. Give it an id in the `I18N0xx` series and add the detector in
    `scripts/audit_i18n.py`, standard library only. See `CODING.md`.
-2. Add a test in `tests/test_i18n_extraction.py`: at least one source that
-   should trigger the finding, one that should not. The second one matters
+2. Add a test in `tests/test_i18n.py`: at least one source that should
+   trigger the finding, one that should not. If `--fix` should move what the
+   rule finds, the extraction tests live in `tests/test_i18n_extraction.py`. The second one matters
    more; an over-eager i18n rule is worse than a missing one, because it
    trains people to pass `--fix` without reading.
-3. Document it in `README.md` and `LISEZMOI.md`, in both languages, and add
-   a worked invocation to `EXAMPLES.md`.
+3. Document it in `README.md` and `LISEZMOI.md`, in both languages, list it
+   in `TRIGGERS.md`, and add a worked invocation to `EXAMPLES.md`.
 
 ## Changing what the reference files teach
 
