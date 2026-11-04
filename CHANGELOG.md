@@ -6,6 +6,8 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.1.0] — 2026-11-04: click everywhere, and the documentation says what the code does
+
 ### Changed
 
 - **Every command is click.** `sprezzature-ui-i18n-audit`,
