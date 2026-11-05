@@ -34,7 +34,8 @@ ils ne peuvent pas diverger. `sprezzature-ui tools` liste les outils et dit
 si chacun peut tourner sur cette machine. La porte d'entrée argparse a été
 retirée le 2026-10-25, et depuis le 2026-11-04 plus aucune commande ne lit
 ses options avec argparse : les commandes par outil et `sprezzature-ui-mcp`
-sont en click elles aussi, et `-V` affiche la version du paquet. Chaque outil garde sa propre commande, et c'est elle
+sont en click elles aussi, et `-V` (ou `--version`) affiche la version du paquet,
+sur la porte d'entrée comme sur chaque outil. Chaque outil garde sa propre commande, et c'est elle
 qu'un script ou un crochet de pré-commit doit appeler.
 
 ## Cinq surfaces

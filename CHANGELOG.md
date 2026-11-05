@@ -6,6 +6,13 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- The front door `sprezzature-ui` (and `make-ui`) answers `-V` as well as
+  `--version`, like every per-tool command already did; it was a usage
+  error. `tests/test_the_front_door_answers_both_version_flags.py` holds
+  both flags against the installed version.
+
 ## [1.2.0] — 2026-11-05
 
 ### Fixed

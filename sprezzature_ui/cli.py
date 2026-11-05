@@ -48,7 +48,7 @@ Run `sprezzature-ui tools` to see which tools can run on this machine.
     epilog=_EPILOG,
     help=("The deterministic half of sprezzature-ui. Each tool below is also its own command."),
 )
-@click.version_option(package_name="sprezzature-ui")
+@click.version_option(None, "-V", "--version", package_name="sprezzature-ui")
 def main() -> None:  # pragma: no cover - click dispatches
     """Front door over the two tools this package ships."""
 

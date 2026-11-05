@@ -31,7 +31,8 @@ One front door over both, written in click, under two names:
 cannot drift. `sprezzature-ui tools` lists the tools and says whether each
 can run on this machine. The argparse front door was removed on 2026-10-25,
 and since 2026-11-04 no command parses with argparse: the per-tool commands
-and `sprezzature-ui-mcp` are click too, and `-V` prints the package version.
+and `sprezzature-ui-mcp` are click too, and `-V` (or `--version`) prints the
+package version, on the front door as on every tool.
 Each tool keeps its own command, which is what a script or a pre-commit hook
 should call.
 
