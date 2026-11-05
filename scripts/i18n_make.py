@@ -311,9 +311,9 @@ def _catalog(directory=None):
     """Read the compiled catalogue beside this file.
 
     The JSON is read rather than the YAML: it is what ``i18n_make --compile``
-    writes for the browser, the standard library can parse it without the
-    [i18n] extra, and reading the same artefact both runtimes read is what
-    keeps them from disagreeing.
+    writes for the browser, the standard library can parse it without
+    PyYAML, and reading the same artefact both runtimes read is what keeps
+    them from disagreeing.
     """
     path = (Path(directory) if directory else _HERE) / "i18n.json"
     if not path.is_file():

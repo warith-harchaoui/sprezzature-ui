@@ -26,6 +26,6 @@ TOOLS: dict[str, tuple[str, str]] = {
     ),
     "i18n-make": (
         "i18n_make",
-        "Scaffold that catalogue, compile it to JSON, and emit the loader that reads it.",
+        "Scaffold that catalogue, compile it to JSON, and emit the two loaders that read it.",
     ),
 }

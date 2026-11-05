@@ -74,7 +74,7 @@ Roboto Serif and Roboto Mono, self-hosted.
 |---|---|---|---|---|
 | Find hardcoded strings | `sprezzature-ui-i18n-audit` | `audit_i18n` | `POST /v1/i18n-audit` | `gather`, `audit_path`, `audit_js`, `audit_py` |
 | Move them to the catalogue | `sprezzature-ui-i18n-audit --fix` | none, it writes files | none | none |
-| Scaffold and compile the catalogue, emit the loaders | `sprezzature-ui-i18n-make` | none, it writes files | none | `scaffold`, `compile_json`, `emit_loader` |
+| Scaffold and compile the catalogue, emit the loaders | `sprezzature-ui-i18n-make` | none, it writes files | none | `scaffold`, `compile_json`, `emit_loader`, `emit_python` |
 | Check the server | none | `health` | `GET /health` | none |
 | List the tools | `sprezzature-ui tools` | none | none | none |
 

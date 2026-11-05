@@ -19,7 +19,7 @@ le contraire.
 
 ## Comment ça marche
 
-![Schéma de flux. En haut, votre arborescence de sources alimente deux voies. La voie de gauche contrôle : elle parcourt l'arborescence, trouve les phrases écrites en dur dans le JavaScript, dans les attributs HTML et dans les gabarits de prompts Python, et rend ses constats avec le code de sortie 1. La voie de droite fabrique : elle amorce un fichier de langues unique, le compile en JSON et produit le chargeur qui le lit. Les deux se rejoignent en un seul résultat, une interface qui accepte une deuxième langue le jour où on la demande.](https://raw.githubusercontent.com/warith-harchaoui/sprezzature-ui/main/assets/comment-ca-marche.svg)
+![Schéma de flux. En haut, votre arborescence de sources alimente deux voies. La voie de gauche contrôle : elle parcourt l'arborescence, trouve les tables de traduction noyées dans le JavaScript et le HTML et les constantes de prompt incrustées dans le Python, et rend ses constats avec le code de sortie 1. La voie de droite fabrique : elle amorce un fichier de langues unique, le compile en JSON et produit les deux chargeurs qui le lisent, l'un pour le navigateur, l'autre pour Python. Les deux se rejoignent en un seul résultat, une interface qui accepte une deuxième langue le jour où on la demande.](https://raw.githubusercontent.com/warith-harchaoui/sprezzature-ui/main/assets/comment-ca-marche.svg)
 
 ## Ce qu'il y a dedans
 
@@ -41,7 +41,7 @@ qu'un script ou un crochet de pré-commit doit appeler.
 
 | Surface | Point d'entrée | Ce qu'elle expose |
 |---|---|---|
-| Bibliothèque | `from sprezzature_ui import …` | `audit_js`, `audit_py`, `audit_path`, `gather`, `scaffold`, `compile_json`, `emit_loader` |
+| Bibliothèque | `from sprezzature_ui import …` | `audit_js`, `audit_py`, `audit_path`, `gather`, `scaffold`, `compile_json`, `emit_loader`, `emit_python` |
 | CLI (interface en ligne de commande) | `sprezzature-ui`, `make-ui`, `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make` | les deux outils |
 | HTTP | `uvicorn sprezzature_ui.api:app`, ou le `Dockerfile` et le `docker-compose.yml` (qui servent aussi `/mcp`) | `GET /health`, `POST /v1/i18n-audit` |
 | MCP (Model Context Protocol) | `sprezzature-ui-mcp` | les outils `health` et `audit_i18n`, sur `/mcp` |
@@ -106,8 +106,8 @@ repos:
       - id: sprezzature-ui-i18n-audit
 ```
 
-Le crochet s'applique aux fichiers `.js`, `.mjs`, `.ts`, `.jsx`, `.tsx`,
-`.html` et `.py`.
+Le crochet s'applique aux fichiers que l'audit lit : `.js`, `.mjs`, `.cjs`,
+`.jsx`, `.ts`, `.tsx`, `.html`, `.htm` et `.py`.
 
 ### Depuis Python
 

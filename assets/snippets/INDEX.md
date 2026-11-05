@@ -30,8 +30,8 @@ shapes worth emitting in the first place.
    strings to the user's domain. Each snippet already carries the
    required dark-mode peers and focus rings — do not strip them.
 2. **At audit time.** Run the emitted page through
-   `python sprezzature-ux-laws/scripts/audit_laws_of_ux.py <page>` and
-   `python sprezzature-accessibility/scripts/lint_a11y.py <page>` to
+   `sprezzature-ux-laws-audit <page>` and
+   `sprezzature-accessibility-lint <page>` to
    confirm the adaptation did not regress what the source guaranteed.
 3. **As a refusal target.** When a user asks for a UI pattern that
    the catalog already names, refuse to invent a one-off — start
@@ -56,5 +56,5 @@ hooks in the reference, not as snippets here.
 3. Run **both** auditors against it — zero findings is the
    acceptance bar.
 4. Add a row to this index with the law name and 2-4 trigger phrases.
-5. Add a test in `tests/test_snippet_catalog.py` so the dual-auditor
+5. Add a test in the monorepo's `tests/test_snippet_catalog.py` so the dual-auditor
    check runs in CI.

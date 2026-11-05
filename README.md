@@ -17,7 +17,7 @@ otherwise.
 
 ## How it works
 
-![Flow diagram. At the top, your source tree feeds two lanes. The left lane audits: it walks the tree, finds sentences hardcoded in JavaScript, in HTML attributes and in Python prompt templates, and returns findings with exit code 1. The right lane makes: it scaffolds a single locales file, compiles it to JSON and emits the loader that reads it. Both meet in one outcome, an interface that can take a second language the day it is asked for.](https://raw.githubusercontent.com/warith-harchaoui/sprezzature-ui/main/assets/how-it-works.svg)
+![Flow diagram. At the top, your source tree feeds two lanes. The left lane audits: it walks the tree, finds translation tables embedded in JavaScript and HTML and prompt constants inlined in Python, and returns findings with exit code 1. The right lane makes: it scaffolds a single locales file, compiles it to JSON and emits the two loaders that read it, one for the browser and one for Python. Both meet in one outcome, an interface that can take a second language the day it is asked for.](https://raw.githubusercontent.com/warith-harchaoui/sprezzature-ui/main/assets/how-it-works.svg)
 
 ## What's here
 
@@ -39,7 +39,7 @@ should call.
 
 | Surface | Entry point | What it exposes |
 |---|---|---|
-| Library | `from sprezzature_ui import …` | `audit_js`, `audit_py`, `audit_path`, `gather`, `scaffold`, `compile_json`, `emit_loader` |
+| Library | `from sprezzature_ui import …` | `audit_js`, `audit_py`, `audit_path`, `gather`, `scaffold`, `compile_json`, `emit_loader`, `emit_python` |
 | CLI (command-line interface) | `sprezzature-ui`, `make-ui`, `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make` | both tools |
 | HTTP | `uvicorn sprezzature_ui.api:app`, or the `Dockerfile` and `docker-compose.yml` (which also serve `/mcp`) | `GET /health`, `POST /v1/i18n-audit` |
 | MCP (Model Context Protocol) | `sprezzature-ui-mcp` | tools `health` and `audit_i18n`, at `/mcp` |
@@ -102,8 +102,8 @@ repos:
       - id: sprezzature-ui-i18n-audit
 ```
 
-The hook runs on `.js`, `.mjs`, `.ts`, `.jsx`, `.tsx`, `.html` and `.py`
-files.
+The hook runs on the files the audit reads: `.js`, `.mjs`, `.cjs`, `.jsx`,
+`.ts`, `.tsx`, `.html`, `.htm` and `.py`.
 
 ### From Python
 

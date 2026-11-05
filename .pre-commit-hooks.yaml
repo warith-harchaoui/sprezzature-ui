@@ -19,5 +19,7 @@
   entry: sprezzature-ui-i18n-audit
   language: python
   language_version: python3
-  files: '\.(js|mjs|ts|jsx|tsx|html|py)$'
+  # Every extension the audit reads (JS_EXTS + PY_EXTS in audit_i18n.py);
+  # a file the hook never passes is a file the audit never sees.
+  files: '\.(js|mjs|cjs|jsx|ts|tsx|html|htm|py)$'
   types: [file]

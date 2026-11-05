@@ -70,11 +70,6 @@ import sys
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-try:
-    import yaml
-except ImportError:  # the audit half is stdlib-only; only --fix writes YAML
-    yaml = None  # type: ignore[assignment]
-
 if TYPE_CHECKING:
     import click
 
@@ -423,7 +418,12 @@ def fix(paths: list[Path], catalog: Path) -> tuple[int, list[str]]:
         ``(count_written, notes)`` — how many ids were added, and one line per
         string the author still has to place by hand or call by id.
     """
-    if yaml is None:  # pragma: no cover - dependency guard
+    # Imported here, not at the top: the audit half is stdlib-only, and a
+    # module-level import made `import sprezzature_ui` load PyYAML for a caller
+    # who only audits. Only --fix writes YAML.
+    try:
+        import yaml
+    except ImportError:  # pragma: no cover - dependency guard
         return 0, [
             "--fix writes YAML and could not import PyYAML, a base dependency "
             "of this package: reinstall with pip install sprezzature-ui"

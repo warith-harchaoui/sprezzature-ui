@@ -15,7 +15,8 @@ rather than reasoned about.
   `locales/i18n.yaml`, and both are invisible until somebody needs a second
   language and discovers the strings are scattered through the source.
 * **make** — `sprezzature-ui-i18n-make` scaffolds that catalogue, compiles it
-  to JSON and emits the loader that reads it.
+  to JSON and emits the two loaders that read it: ``i18n.js`` for the browser,
+  ``i18n_prompts.py`` for Python.
 
 Why the package stops there
 ---------------------------
@@ -52,6 +53,7 @@ _EXPORTS: dict[str, str] = {
     "scaffold": "i18n_make",
     "compile_json": "i18n_make",
     "emit_loader": "i18n_make",
+    "emit_python": "i18n_make",
 }
 
 

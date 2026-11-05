@@ -6,6 +6,38 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- **The audit is stdlib-only, as the documentation said.** `audit_i18n`
+  imported PyYAML at the top of the module, so `from sprezzature_ui import
+  audit_path` loaded it for a caller who only audits, while the README,
+  `CODING.md` and the package docstring said otherwise. PyYAML is now
+  imported inside `fix()`, the only code that writes YAML, and
+  `tests/test_the_surfaces_agree.py` asks a fresh interpreter whether
+  `yaml` or `click` was loaded.
+- **The pre-commit hook passes `.cjs` and `.htm` files**, which the audit
+  reads and the hook's `files:` pattern left out.
+- **`emit_python` is exported** beside `emit_loader`: the library reached
+  three of the make tool's four steps.
+
+### Docs
+
+- **The figure, its alt text, `LANDSCAPE.md` and `PAYSAGE.md`** said the
+  audit finds sentences in HTML attributes and in prompt templates. It
+  finds translation tables in JavaScript and HTML and prompt constants in
+  Python; the make tool emits two loaders, not one. Spec edited, figure
+  redrawn. The `sprezzature-ui tools` line for `i18n-make` said one loader
+  too.
+- **`README.md` and `LISEZMOI.md`** list the hook's file types from the
+  hook itself, and `emit_python` among the library exports, as does
+  `TRIGGERS.md`.
+- **`assets/snippets/INDEX.md`** names the installed commands
+  (`sprezzature-ux-laws-audit`, `sprezzature-accessibility-lint`) instead
+  of script paths in a clone, and places `tests/test_snippet_catalog.py`
+  in the monorepo.
+- **The emitted `i18n_prompts.py`** said it read JSON to avoid an `[i18n]`
+  extra that no longer exists.
+
 ## [1.1.0] — 2026-11-04: click everywhere, and the documentation says what the code does
 
 ### Changed

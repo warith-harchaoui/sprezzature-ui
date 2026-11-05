@@ -200,6 +200,30 @@ def test_the_library_imports_with_no_extras_at_all() -> None:
     assert sprezzature_ui.__all__
 
 
+def test_the_audit_loads_nothing_outside_the_standard_library() -> None:
+    """
+    Reaching the audit through the library must not import PyYAML or click.
+
+    The test above only shows that the import works, which it does whether or
+    not PyYAML comes with it. Until 1.1.0 ``audit_i18n`` imported PyYAML at
+    the top of the module, so every caller who only audits loaded it, while
+    the README, ``CODING.md`` and this package's docstring all said the audit
+    was stdlib-only. Asked in a fresh interpreter, because this one has
+    imported both long ago.
+    """
+    import subprocess
+    import sys
+
+    probe = (
+        "import sys, sprezzature_ui; sprezzature_ui.audit_path; sprezzature_ui.gather; "
+        "print(sorted(m for m in ('yaml', 'click') if m in sys.modules))"
+    )
+    out = subprocess.run(
+        [sys.executable, "-c", probe], cwd=ROOT, capture_output=True, text=True, check=True
+    ).stdout.strip()
+    assert out == "[]", f"the audit pulled in {out}; only --fix may import PyYAML"
+
+
 def test_an_unknown_name_is_an_attribute_error_not_an_import_error() -> None:
     """A typo should read as a typo, not as a missing dependency."""
     import sprezzature_ui
