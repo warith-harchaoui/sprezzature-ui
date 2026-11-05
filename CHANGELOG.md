@@ -18,6 +18,11 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `sprezzature-ux-laws-audit`, as the skill does. `assets/snippets/INDEX.md`
   says the snippet test lives in the suite repository, since this one has no
   `tests/test_snippet_catalog.py`.
+- **The light turquoise is `#C0E7E7`**, the `LightHex` of
+  `sprezzature-colors/references/palette.csv` since that package corrected
+  it in September. The starter page, `stack-tailwind.md`,
+  `ui-guidelines/foundations/color.md` and `color-psychology.md` still
+  carried the old `#00FFEF`. Black text on the new tint is 15.8:1.
 
 ## [1.2.1] — 2026-11-05
 
