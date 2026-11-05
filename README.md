@@ -98,7 +98,7 @@ with no text in it.
 ```yaml
 repos:
   - repo: https://github.com/warith-harchaoui/sprezzature-ui
-    rev: v1.2.0
+    rev: v1.2.1
     hooks:
       - id: sprezzature-ui-i18n-audit
 ```

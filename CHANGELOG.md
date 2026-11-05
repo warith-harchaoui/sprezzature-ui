@@ -6,6 +6,8 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.2.1] — 2026-11-05
+
 ### Changed
 
 - The front door `sprezzature-ui` (and `make-ui`) answers `-V` as well as

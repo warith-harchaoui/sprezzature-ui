@@ -102,7 +102,7 @@ déclare aucune langue `validated:`, ou qui n'a pas de texte dans celle-ci.
 ```yaml
 repos:
   - repo: https://github.com/warith-harchaoui/sprezzature-ui
-    rev: v1.2.0
+    rev: v1.2.1
     hooks:
       - id: sprezzature-ui-i18n-audit
 ```
