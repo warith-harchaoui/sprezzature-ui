@@ -6,6 +6,8 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-11-05
+
 ### Fixed
 
 - **The audit is stdlib-only, as the documentation said.** `audit_i18n`
