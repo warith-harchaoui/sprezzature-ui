@@ -6,6 +6,19 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Docs
+
+- **The reference files in this repository name commands that exist.** Five
+  of them had fallen behind the skill copy in the suite: they pointed at
+  `dataviz/scripts/validate_palette.js`, which nothing ships, and at
+  `python sprezzature-colors/scripts/palette_to_tailwind.py` and
+  `sprezzature-ux-laws/scripts/audit_laws_of_ux.py`, paths that resolve only
+  in a clone. They now name `sprezzature-colors-contrast`,
+  `sprezzature-colors-cvd`, `sprezzature-colors-palette-to-tailwind` and
+  `sprezzature-ux-laws-audit`, as the skill does. `assets/snippets/INDEX.md`
+  says the snippet test lives in the suite repository, since this one has no
+  `tests/test_snippet_catalog.py`.
+
 ## [1.2.1] — 2026-11-05
 
 ### Changed
