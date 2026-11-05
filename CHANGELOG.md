@@ -6,6 +6,8 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.2.2] — 2026-11-05
+
 ### Docs
 
 - **The reference files in this repository name commands that exist.** Five

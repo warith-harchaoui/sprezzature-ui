@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sprezzature-ui"
-version = "1.2.1"
+version = "1.2.2"
 description = "The deterministic half of sprezzature-ui: find the translations embedded in your JavaScript and the prompts inlined in your Python, and scaffold the catalogue they belong in."
 readme = "README.md"
 requires-python = ">=3.10"
