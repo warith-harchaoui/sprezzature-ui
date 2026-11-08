@@ -6,6 +6,32 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.2.3] — 2026-11-08
+
+### Fixed
+
+- **The audit no longer answers "0 findings" for files it never read.** The
+  skip list was tested against the whole path, so a project under a directory
+  named `build`, `dist` or `vendor` had every file dropped; it is now tested
+  below the directory you name. A path that does not exist is a usage error
+  (exit 2) instead of a clean result.
+- **`--fix` moves what it says it moves.** An entry written on one line
+  (`"nav.home": { en: "Home", fr: "Accueil" },`) was skipped whole, and its id
+  stayed current, so the next object in the file was filed under it. A
+  double-quoted string holding an apostrophe, which is most of French, could
+  not be read and was lost without a note when another locale on the line
+  could. Two-letter keys that are not locales (`id`, `to`) were lifted as
+  translations. A locale unreadable beside a readable one is now reported.
+- **A string with no message id is filed under `<file>.line<N>`**, not
+  `line<N>`, which gave two files one id and left the second unmoved. An id
+  held by a different text says so instead of "already in the catalogue".
+- **`POST /v1/i18n-audit` no longer answers 500 on a filename of its caller's
+  choosing** (empty, `..`, a NUL byte, too long) or on a lone surrogate in the
+  source. Only the extension is used; the name is reported back as sent.
+- **`sprezzature-ui-mcp` announces its version.** fastapi-mcp 0.4 passes the
+  description in the version slot of the MCP server, so hosts were told the
+  version was a sentence.
+
 ## [1.2.2] — 2026-11-05
 
 ### Docs
