@@ -181,6 +181,98 @@ def test_a_value_built_by_code_is_not_invented(tmp_path: Path) -> None:
     assert entries == {}
 
 
+def test_an_entry_written_on_one_line_is_lifted(tmp_path: Path) -> None:
+    """The commonest shape of a table: id and both locales on a single line.
+
+    The line matched the header pattern and was skipped whole, so the message
+    vanished and "N strings moved" did not count it.
+    """
+    (tmp_path / "app.js").write_text(
+        'const table = {\n  "nav.home": { en: "Home", fr: "Accueil" },\n};\n',
+        encoding="utf-8",
+    )
+    entries, unparsed = audit_i18n.extract_js(tmp_path / "app.js")
+    assert entries == {"nav.home": {"en": "Home", "fr": "Accueil"}}
+    assert unparsed == []
+
+
+def test_an_apostrophe_in_a_french_string_does_not_lose_it(tmp_path: Path) -> None:
+    """``"L'accueil"`` is ordinary French, and the other quote is not a delimiter."""
+    (tmp_path / "app.js").write_text(
+        'const q = { en: "Home", fr: "L\'accueil" };\n', encoding="utf-8"
+    )
+    entries, _ = audit_i18n.extract_js(tmp_path / "app.js")
+    assert entries == {"app.line1": {"en": "Home", "fr": "L'accueil"}}
+
+
+def test_an_object_after_the_table_is_not_filed_under_its_last_id(tmp_path: Path) -> None:
+    """The id ends with its entry, including when a placeholder ends a string."""
+    (tmp_path / "app.js").write_text(
+        'const table = {\n'
+        '  "results": { en: "{count} results", fr: "{count} résultats" },\n'
+        '  "exit": {\n'
+        '    en: "Exit",\n'
+        '    fr: "Sortir",\n'
+        '  },\n'
+        '};\n'
+        'const route = { id: "main", to: "/x" };\n',
+        encoding="utf-8",
+    )
+    entries, _ = audit_i18n.extract_js(tmp_path / "app.js")
+    assert entries == {
+        "results": {"en": "{count} results", "fr": "{count} résultats"},
+        "exit": {"en": "Exit", "fr": "Sortir"},
+    }
+
+
+def test_two_letter_keys_that_are_not_locales_are_left_in_the_code(tmp_path: Path) -> None:
+    """``id`` and ``to`` have the shape of a locale and are not translations."""
+    (tmp_path / "app.js").write_text(
+        'const q = { en: "A", fr: "B" };\n'
+        'const route = { id: "main", to: "/x" };\n'
+        'const other = {\n  "route": {\n    id: "main",\n    to: "/x",\n  },\n};\n',
+        encoding="utf-8",
+    )
+    entries, _ = audit_i18n.extract_js(tmp_path / "app.js")
+    assert entries == {"app.line1": {"en": "A", "fr": "B"}}
+
+
+def test_a_locale_unreadable_beside_a_readable_one_is_reported(tmp_path: Path) -> None:
+    """The English moved and the French gone, with nothing said, is the bug."""
+    (tmp_path / "app.js").write_text(
+        'const q = { en: "Home", fr: { one: "a", other: "b" } };\n', encoding="utf-8"
+    )
+    entries, unparsed = audit_i18n.extract_js(tmp_path / "app.js")
+    assert entries == {"app.line1": {"en": "Home"}}
+    assert unparsed == [1]
+
+
+def test_two_files_with_a_table_on_the_same_line_keep_both(tmp_path: Path) -> None:
+    """``line1`` alone was one id for two messages, and the second was not moved."""
+    (tmp_path / "a.js").write_text('const q = { en: "One", fr: "Un" };\n', encoding="utf-8")
+    (tmp_path / "b.js").write_text('const q = { en: "Two", fr: "Deux" };\n', encoding="utf-8")
+    written, _ = audit_i18n.fix(
+        [tmp_path / "a.js", tmp_path / "b.js"], tmp_path / "locales" / "i18n.yaml"
+    )
+    assert written == 2
+    assert set(_catalog(tmp_path)["gui"]) == {"a.line1", "b.line1"}
+
+
+def test_an_id_taken_by_another_text_is_not_called_already_there(tmp_path: Path) -> None:
+    """Same file name in two directories: "already in the catalogue" would be false."""
+    for folder, text in (("x", "One"), ("y", "Two")):
+        (tmp_path / folder).mkdir()
+        (tmp_path / folder / "a.js").write_text(
+            f'const q = {{ en: "{text}", fr: "{text}" }};\n', encoding="utf-8"
+        )
+    written, notes = audit_i18n.fix(
+        [tmp_path / "x" / "a.js", tmp_path / "y" / "a.js"], tmp_path / "locales" / "i18n.yaml"
+    )
+    assert written == 1
+    assert any("different text" in note for note in notes)
+    assert not any("already in the catalogue" in note for note in notes)
+
+
 def test_nothing_is_written_when_there_is_nothing_to_move(tmp_path: Path) -> None:
     """A catalogue is not created as a side effect of a clean run."""
     (tmp_path / "clean.py").write_text(

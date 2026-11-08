@@ -12,7 +12,8 @@ sprezzature-ui-i18n-audit src/ templates/ static/js/
 sprezzature-ui-i18n-audit src/ --json
 ```
 
-Exit 1 on any finding, which is what makes it usable as a gate. The audit
+Exit 1 on any finding, which is what makes it usable as a gate, and exit 2
+on a path that does not exist, so a typo cannot pass for a clean tree. The audit
 imports only the standard library. `--json` prints the findings as a JSON
 array; without it, one `path:line: RULE message` line per finding.
 
@@ -76,7 +77,7 @@ whether each can run here.
 ```yaml
 repos:
   - repo: https://github.com/warith-harchaoui/sprezzature-ui
-    rev: v1.2.1
+    rev: v1.2.3
     hooks:
       - id: sprezzature-ui-i18n-audit
 ```

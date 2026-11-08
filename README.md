@@ -80,25 +80,30 @@ sprezzature-ui-i18n-make --dir ../my-project --compile
 
 `sprezzature-ui-i18n-audit` takes files and directories. Directories are
 walked recursively, skipping `node_modules`, `.git`, `__pycache__`, `dist`,
-`build`, `vendor` and `.venv`. `--catalog PATH` changes the catalogue
-`--fix` writes to.
+`build`, `vendor` and `.venv`, below the directory you name: a project that
+itself lives under a `build/` folder is still read. A path that does not exist
+is a usage error (exit 2), not a clean result. `--catalog PATH` changes the
+catalogue `--fix` writes to.
 
 `--fix` writes the catalogue and prints, for each string it moved, the call
 to paste in its place. It does not rewrite the call site, and it still exits
 1, because the strings are still in the code until the author replaces them.
+A string with no message id of its own is filed under `<file>.line<N>`. A
+locale whose value it cannot read (a plural object, a value built by code) is
+named in the output, for a hand to move.
 
 `sprezzature-ui-i18n-make` runs four steps by default. `--init`, `--compile`,
 `--emit-loader` and `--emit-python` each run one step alone. `--dir` points
 at the project root; the catalogue is always `<dir>/locales/i18n.yaml`. The
-compile step refuses a prompt that declares no `validated:` locale, or one
-with no text in it.
+compile step refuses a prompt that declares no `validated:` locale, one that
+names a locale absent from `locales:`, or one with no text in it.
 
 ### As a pre-commit hook
 
 ```yaml
 repos:
   - repo: https://github.com/warith-harchaoui/sprezzature-ui
-    rev: v1.2.1
+    rev: v1.2.3
     hooks:
       - id: sprezzature-ui-i18n-audit
 ```
@@ -132,7 +137,8 @@ curl -s localhost:8000/v1/i18n-audit -H 'Content-Type: application/json' \
 
 `POST /v1/i18n-audit` takes `source` (the file's text) and `filename`
 (default `app.js`, whose extension decides which rule runs). It returns
-`findings_total` and `findings`, with your filename in each `path`.
+`findings_total` and `findings`, with your filename in each `path`. The name
+is only reported back: it never becomes a path on the server.
 `GET /health` returns the status and the version. `/` redirects to `/docs`.
 
 ### Over MCP

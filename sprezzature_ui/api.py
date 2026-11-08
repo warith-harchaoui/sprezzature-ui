@@ -88,11 +88,16 @@ def audit(request: AuditRequest) -> dict:
     sentences are scattered through the source — which is late, and is the
     reason this is a gate rather than a chore.
     """
-    from sprezzature_ui_scripts.audit_i18n import audit_path
+    from sprezzature_ui_scripts.audit_i18n import JS_EXTS, PY_EXTS, audit_path
 
     with tempfile.TemporaryDirectory() as scratch:
-        path = Path(scratch) / Path(request.filename).name
-        path.write_text(request.source, encoding="utf-8")
+        # Only the extension is used. The name is the caller's to choose, and
+        # "", ".." or a NUL byte answered 500 when it became a path on disk.
+        suffix = Path(request.filename).suffix
+        audited = suffix.lower() in JS_EXTS + PY_EXTS
+        path = Path(scratch) / f"source{suffix if audited else ''}"
+        # A lone surrogate is valid JSON and cannot be encoded as UTF-8.
+        path.write_text(request.source, encoding="utf-8", errors="replace")
         findings = audit_path(path)
 
     # The scratch path is an implementation detail of serving text over HTTP.

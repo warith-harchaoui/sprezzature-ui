@@ -21,7 +21,7 @@ without a browser, a model, or the network:
 
 It is the counterpart to :mod:`i18n_make` (the make half). Output is a JSON
 array of findings (``--json``) or human-readable lines, plus an exit code
-(0 clean, 1 on any finding) — suitable for ``pre-commit`` and CI.
+(0 clean, 1 on any finding, 2 on a path that does not exist) — suitable for ``pre-commit`` and CI.
 
 Extraction (``--fix``)
 ----------------------
@@ -296,11 +296,16 @@ def audit_path(path: Path) -> list[dict[str, Any]]:
 #: reported for a hand instead of guessed at.
 _JS_PAIR = re.compile(
     r"""["']?\b(?P<locale>[a-z]{2}(?:-[A-Za-z]{2})?)\b["']?\s*:\s*"""
-    r"""(?P<quote>["'])(?P<text>(?:[^"'\\]|\\.)*?)(?P=quote)"""
+    r"""(?P<quote>["'])(?P<text>(?:(?!(?P=quote))[^\\]|\\.)*)(?P=quote)"""
 )
 
 #: The id a JS table entry sits under: ``"app.title": {`` or ``save: {``.
 _JS_ENTRY_ID = re.compile(r"""^\s*["']?(?P<id>[\w.\-]+)["']?\s*:\s*\{""")
+
+#: The line that ends an entry opened on an earlier one. Without it, the id
+#: stayed current for the rest of the file, and whatever object came next was
+#: filed under the last message of the table.
+_JS_ENTRY_CLOSE = re.compile(r"^\s*\}")
 
 #: The locale codes :data:`_LOCALE_KEY` recognises, on their own. Needed
 #: because ``en: {`` matches :data:`_JS_ENTRY_ID` exactly as well as
@@ -308,6 +313,11 @@ _JS_ENTRY_ID = re.compile(r"""^\s*["']?(?P<id>[\w.\-]+)["']?\s*:\s*\{""")
 #: not the header of a new message. Without this check the line was read as a
 #: header and skipped, so a plural table was dropped without a word.
 _LOCALE_CODES: frozenset[str] = frozenset("en fr es de it pt nl ja zh ko ru ar hi".split())
+
+
+def _primary(locale: str) -> str:
+    """The language part of a locale key: ``pt-BR`` reads as ``pt``."""
+    return locale.split("-")[0].lower()
 
 
 def _message_id(constant: str) -> str:
@@ -377,28 +387,58 @@ def extract_js(path: Path) -> tuple[dict[str, dict[str, str]], list[int]]:
     unparsed: list[int] = []
     current_id: str | None = None
     for number, line in enumerate(lines, 1):
+        body = line
         header = _JS_ENTRY_ID.match(line)
-        if header and header.group("id").lower() not in _LOCALE_CODES:
+        is_entry = header is not None and header.group("id").lower() not in _LOCALE_CODES
+        if header is not None and is_entry:
             current_id = header.group("id")
+            # The pairs of `"nav.home": { en: "Home", fr: "Accueil" },` are on
+            # the header's own line. Skipping the line lost the whole message,
+            # and left its id current for whatever object came next.
+            body = line[header.end() :]
+        elif _JS_ENTRY_CLOSE.match(line):
+            current_id = None
             continue
-        pairs = list(_JS_PAIR.finditer(line))
-        if not pairs:
-            # A locale key whose value this cannot read: a plural object, a
-            # template literal, a value built by code. Reported, not skipped.
-            # Two versions of this loop got that wrong: the first tested
-            # `len(entries[bucket]) < 1` after filling it, which can never be
-            # true; the second let `en: {` match the entry-header pattern, so
-            # a plural table was read as a header and dropped. Both times the
-            # output said "N strings moved" and meant "N of the ones I could".
-            if _LOCALE_KEY.search(line):
-                unparsed.append(number)
-            continue
-        # `en: "Save", fr: "Enregistrer"` on one line, under an id or not.
-        bucket = current_id or f"line{number}"
-        for match in pairs:
-            entries.setdefault(bucket, {})[match.group("locale").lower()] = (
-                match.group("text").replace('\\"', '"').replace("\\'", "'")
-            )
+
+        pairs = list(_JS_PAIR.finditer(body))
+        readable = {_primary(match.group("locale")) for match in pairs}
+        # `{ id: "main", to: "/x" }` has the shape of a locale pair and is a
+        # route. Outside an entry a line has to name a locale the audit knows.
+        if current_id is None and not readable & _LOCALE_CODES:
+            pairs, readable = [], set()
+
+        # A locale key whose value this cannot read: a plural object, a value
+        # built by code. Reported, not skipped, and tested locale by locale:
+        # the earlier test asked only whether the line held no pair at all, so
+        # `en: "Home", fr: {...}` moved the English and lost the French.
+        # Two versions before that got it wrong too: one tested
+        # `len(entries[bucket]) < 1` after filling it, which can never be
+        # true; the other let `en: {` match the entry-header pattern, so a
+        # plural table was read as a header and dropped.
+        if {match.group(1).lower() for match in _LOCALE_KEY.finditer(body)} - readable:
+            unparsed.append(number)
+
+        if pairs:
+            # `en: "Save", fr: "Enregistrer"` on one line, under an id or not.
+            # The file name is in the fallback id because two files with a
+            # table on the same line would otherwise claim the same message.
+            bucket = current_id or f"{path.stem}.line{number}"
+            for match in pairs:
+                entries.setdefault(bucket, {})[match.group("locale").lower()] = (
+                    match.group("text").replace('\\"', '"').replace("\\'", "'")
+                )
+
+        # `{count}` inside a string must not read as the end of the entry, so
+        # only the last character of the line counts.
+        if is_entry and body.rstrip().rstrip(",;").endswith("}"):
+            current_id = None
+
+    # An entry that never named a locale is an object, not a message.
+    entries = {
+        id_: by_locale
+        for id_, by_locale in entries.items()
+        if {_primary(locale) for locale in by_locale} & _LOCALE_CODES
+    }
     return entries, unparsed
 
 
@@ -459,6 +499,14 @@ def fix(paths: list[Path], catalog: Path) -> tuple[int, list[str]]:
         elif suffix in JS_EXTS:
             entries, unparsed = extract_js(path)
             for id_, by_locale in entries.items():
+                if id_ in gui and gui[id_] != by_locale:
+                    # "Already in the catalogue" would be false here: the text
+                    # that is in the catalogue is another one.
+                    notes.append(
+                        f"{path}: {id_} is taken by a different text in the catalogue "
+                        f"— not moved, give this one its own id by hand"
+                    )
+                    continue
                 if id_ in gui:
                     notes.append(f"{path}: {id_} already in the catalogue — left alone")
                     continue
@@ -505,6 +553,9 @@ def gather(paths: list[str]) -> list[Path]:
         Deduplicated, sorted files to audit.
     """
     skip = {"node_modules", ".git", "__pycache__", "dist", "build", "vendor", ".venv"}
+    # Tested below the directory that was asked for, never on the whole path:
+    # a checkout under /home/ci/build/ had every file skipped and reported
+    # "0 findings", which is the one answer a gate must not give by accident.
     out: set[Path] = set()
     for raw in paths:
         p = Path(raw)
@@ -513,7 +564,7 @@ def gather(paths: list[str]) -> list[Path]:
                 if (
                     f.is_file()
                     and f.suffix.lower() in JS_EXTS + PY_EXTS
-                    and not (set(f.parts) & skip)
+                    and not (set(f.relative_to(p).parts) & skip)
                 ):
                     out.add(f)
         elif p.is_file():
@@ -549,7 +600,9 @@ def _build() -> click.Command:
         "PATHS: files and/or directories to audit.",
         epilog=_raw(__doc__),
     )
-    @click.argument("paths", nargs=-1, required=True)
+    # exists=True because a mistyped path used to audit nothing and print
+    # "0 findings" with exit 0: a gate that passes on a directory it never saw.
+    @click.argument("paths", nargs=-1, required=True, type=click.Path(exists=True))
     @click.option("--json", "as_json", is_flag=True, help="Emit findings as a JSON array.")
     @click.option(
         "--fix",

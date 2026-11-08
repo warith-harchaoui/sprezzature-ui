@@ -84,25 +84,32 @@ sprezzature-ui-i18n-make --dir ../mon-projet --compile
 
 `sprezzature-ui-i18n-audit` prend des fichiers et des dossiers. Les dossiers
 sont parcourus récursivement, en sautant `node_modules`, `.git`,
-`__pycache__`, `dist`, `build`, `vendor` et `.venv`. `--catalog CHEMIN`
-change le catalogue où `--fix` écrit.
+`__pycache__`, `dist`, `build`, `vendor` et `.venv`, sous le dossier que vous
+nommez : un projet rangé lui-même sous un dossier `build/` est bien lu. Un
+chemin qui n'existe pas est une erreur d'usage (sortie 2), pas un résultat
+propre. `--catalog CHEMIN` change le catalogue où `--fix` écrit.
 
 `--fix` écrit le catalogue et imprime, pour chaque chaîne déplacée, l'appel à
 coller à sa place. Il ne réécrit pas le site d'appel, et il sort toujours 1 :
 les chaînes restent dans le code tant que l'auteur ne les a pas remplacées.
+Une chaîne sans identifiant de message propre est rangée sous
+`<fichier>.line<N>`. Une langue dont il ne sait pas lire la valeur (un objet de
+pluriels, une valeur construite par du code) est nommée dans la sortie, pour
+être déplacée à la main.
 
 `sprezzature-ui-i18n-make` enchaîne quatre étapes par défaut. `--init`,
 `--compile`, `--emit-loader` et `--emit-python` n'en lancent chacun qu'une.
 `--dir` désigne la racine du projet ; le catalogue est toujours
 `<dir>/locales/i18n.yaml`. L'étape de compilation refuse un prompt qui ne
-déclare aucune langue `validated:`, ou qui n'a pas de texte dans celle-ci.
+déclare aucune langue `validated:`, qui en nomme une absente de `locales:`, ou
+qui n'a pas de texte dans celle-ci.
 
 ### En crochet de pré-commit
 
 ```yaml
 repos:
   - repo: https://github.com/warith-harchaoui/sprezzature-ui
-    rev: v1.2.1
+    rev: v1.2.3
     hooks:
       - id: sprezzature-ui-i18n-audit
 ```
@@ -138,7 +145,8 @@ curl -s localhost:8000/v1/i18n-audit -H 'Content-Type: application/json' \
 `POST /v1/i18n-audit` prend `source` (le texte du fichier) et `filename`
 (par défaut `app.js`, dont l'extension décide quelle règle s'applique). La
 route rend `findings_total` et `findings`, avec votre nom de fichier dans
-chaque `path`. `GET /health` rend l'état et la version. `/` redirige vers
+chaque `path`. Ce nom est seulement renvoyé : il ne devient jamais un chemin
+sur le serveur. `GET /health` rend l'état et la version. `/` redirige vers
 `/docs`.
 
 ### Par MCP
