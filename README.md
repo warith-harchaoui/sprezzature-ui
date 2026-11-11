@@ -3,14 +3,14 @@
 [Français](https://github.com/warith-harchaoui/sprezzature-ui/blob/main/LISEZMOI.md)
 
 The deterministic half of a frontend skill: find the strings that should be
-in a translation catalogue, and scaffold the catalogue they belong in.
+in a translation catalogue, and scaffold the catalogue they belong in,
+compiled to JSON (JavaScript Object Notation, a text format in which programs store data as named fields, like `{"year": 2026}`).
 
 The other half is writing the interface: semantic HTML, Tailwind utilities
-and plain ES modules, no framework runtime, with dark-mode peers, focus
+and plain ES (ECMAScript, the official name of JavaScript; its modules are the `import` lines a browser runs as is) modules, no framework runtime, with dark-mode peers, focus
 rings and reduced-motion guards. That half is the model's work, guided by
 the [`SKILL.md`](https://github.com/warith-harchaoui/sprezzature/blob/main/sprezzature-ui/SKILL.md)
-that ships with the suite and by the prose in `references/`. No HTTP route
-can carry "make this dashboard legible", and this package does not pretend
+that ships with the suite and by the prose in `references/`. No route over HTTP (HyperText Transfer Protocol, the language a browser speaks to fetch a page) can carry "make this dashboard legible", and this package does not pretend
 otherwise.
 
 ---
@@ -23,7 +23,7 @@ otherwise.
 
 | Command | What it does |
 |---|---|
-| `sprezzature-ui-i18n-audit` | **audit.** Finds translation tables embedded in JavaScript or HTML (rule `I18N001`) and LLM (large language model) prompts inlined in Python (rule `I18N002`). Both belong in `locales/i18n.yaml`. With `--fix`, moves what it can read into that catalogue. The audit itself imports only the standard library. |
+| `sprezzature-ui-i18n-audit` | **audit.** Finds translation tables embedded in JavaScript or HTML (rule `I18N001`) and LLM (large language model, an AI that reads and writes text, like the one behind ChatGPT) prompts inlined in Python (rule `I18N002`). Both belong in `locales/i18n.yaml`. With `--fix`, moves what it can read into that catalogue. The audit itself imports only the standard library. |
 | `sprezzature-ui-i18n-make` | **make.** Scaffolds `locales/i18n.yaml`, compiles it to `locales/i18n.json`, and emits two loaders: `locales/i18n.js` for the browser and `locales/i18n_prompts.py` for Python. |
 
 One front door over both, written in click, under two names:
@@ -41,9 +41,9 @@ should call.
 | Surface | Entry point | What it exposes |
 |---|---|---|
 | Library | `from sprezzature_ui import …` | `audit_js`, `audit_py`, `audit_path`, `gather`, `scaffold`, `compile_json`, `emit_loader`, `emit_python` |
-| CLI (command-line interface) | `sprezzature-ui`, `make-ui`, `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make` | both tools |
+| CLI (command-line interface, a program you run by typing a command in a terminal) | `sprezzature-ui`, `make-ui`, `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make` | both tools |
 | HTTP | `uvicorn sprezzature_ui.api:app`, or the `Dockerfile` and `docker-compose.yml` (which also serve `/mcp`) | `GET /health`, `POST /v1/i18n-audit` |
-| MCP (Model Context Protocol) | `sprezzature-ui-mcp` | tools `health` and `audit_i18n`, at `/mcp` |
+| MCP (Model Context Protocol, the protocol through which AI agents call tools in English) | `sprezzature-ui-mcp` | tools `health` and `audit_i18n`, at `/mcp` |
 | Skill | [`SKILL.md`](https://github.com/warith-harchaoui/sprezzature/blob/main/sprezzature-ui/SKILL.md) in the suite | the design prose, plus the two commands |
 
 Only the audit crosses a network boundary. The make tool writes files into a
@@ -173,7 +173,7 @@ source to audit and the catalogue written beside it stay on the host.
 | `I18N002` | `.py` | a module-level or class-level constant whose name contains `PROMPT` or `INSTRUCTION`, assigned a string literal or an f-string |
 
 It reads JavaScript and HTML line by line, and Python through its AST
-(abstract syntax tree). It cannot tell whether a translation is good, or
+(abstract syntax tree, the code split into its parts: this is a function, this is a string). It cannot tell whether a translation is good, or
 whether a string is user-facing at all. "0 findings" means that neither
 shape was found, not that the interface is ready to ship.
 
@@ -181,10 +181,10 @@ shape was found, not that the interface is ready to ship.
 
 `references/` holds the prose the skill reads: the Tailwind and vanilla-JS
 stack, the checklist, anti-patterns, dashboards, charts in SVG (Scalable
-Vector Graphics), colour psychology, a Material Design mapping, and
+Vector Graphics, a picture written as text that stays sharp at any zoom), colour psychology, a Material Design mapping, and
 platform guidelines under `references/ui-guidelines/`. `assets/` holds a
 starter page, seven HTML components, two SVG charts, eight snippets indexed
-by a Law of UX in `assets/snippets/INDEX.md`, and the three Roboto families
+by a Law of UX (user experience, how an interface feels to use: whether you find the button, or give up) in `assets/snippets/INDEX.md`, and the three Roboto families
 under `assets/fonts/`.
 
 The default typography is the three-Roboto rule: Roboto for the interface
@@ -210,7 +210,8 @@ would be mistaking breadth for value.
 
 ## License
 
-BSD-3-Clause. See `LICENSE`.
+The three-clause BSD (Berkeley Software Distribution, a licence that lets anyone copy, change and sell the code as long as the copyright line stays) licence, `BSD-3-Clause`.
+See `LICENSE`.
 
 ## Author
 

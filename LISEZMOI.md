@@ -4,15 +4,15 @@
 
 La moitié déterministe d'un skill d'interface : trouver les chaînes qui
 devraient être dans un catalogue de traduction, et échafauder le catalogue où
-elles ont leur place.
+elles ont leur place, compilé en JSON (JavaScript Object Notation, un format texte dans lequel les programmes rangent des données en champs nommés, comme `{"annee": 2026}`).
 
 L'autre moitié, c'est écrire l'interface : du HTML sémantique, des
-utilitaires Tailwind et des modules ES simples, sans runtime de framework,
+utilitaires Tailwind et des modules ES (ECMAScript, le nom officiel de JavaScript ; ses modules sont les lignes `import`
+qu'un navigateur exécute telles quelles) simples, sans runtime de framework,
 avec les pairs de mode sombre, les anneaux de focus et les gardes de
 mouvement réduit. Cette moitié est le travail du modèle, guidé par le
 [`SKILL.md`](https://github.com/warith-harchaoui/sprezzature/blob/main/sprezzature-ui/SKILL.md)
-livré avec la suite et par la prose de `references/`. Aucune route HTTP ne
-peut porter « rends ce tableau de bord lisible », et ce paquet ne prétend pas
+livré avec la suite et par la prose de `references/`. Aucune route HTTP (HyperText Transfer Protocol, la langue que parle un navigateur pour aller chercher une page) ne peut porter « rends ce tableau de bord lisible », et ce paquet ne prétend pas
 le contraire.
 
 ---
@@ -25,7 +25,7 @@ le contraire.
 
 | Commande | Ce qu'elle fait |
 |---|---|
-| `sprezzature-ui-i18n-audit` | **audit.** Trouve les tables de traduction noyées dans du JavaScript ou du HTML (règle `I18N001`) et les prompts de LLM (grand modèle de langage) incrustés dans du Python (règle `I18N002`). Les deux ont leur place dans `locales/i18n.yaml`. Avec `--fix`, déplace dans ce catalogue ce qu'il sait lire. L'audit lui-même n'importe que la bibliothèque standard. |
+| `sprezzature-ui-i18n-audit` | **audit.** Trouve les tables de traduction noyées dans du JavaScript ou du HTML (règle `I18N001`) et les prompts de LLM (large language model, une IA qui lit et écrit du texte, comme celle derrière ChatGPT) incrustés dans du Python (règle `I18N002`). Les deux ont leur place dans `locales/i18n.yaml`. Avec `--fix`, déplace dans ce catalogue ce qu'il sait lire. L'audit lui-même n'importe que la bibliothèque standard. |
 | `sprezzature-ui-i18n-make` | **fabrique.** Échafaude `locales/i18n.yaml`, le compile en `locales/i18n.json`, et émet deux chargeurs : `locales/i18n.js` pour le navigateur et `locales/i18n_prompts.py` pour Python. |
 
 Une seule porte d'entrée sur les deux, écrite en click, sous deux noms :
@@ -43,9 +43,9 @@ qu'un script ou un crochet de pré-commit doit appeler.
 | Surface | Point d'entrée | Ce qu'elle expose |
 |---|---|---|
 | Bibliothèque | `from sprezzature_ui import …` | `audit_js`, `audit_py`, `audit_path`, `gather`, `scaffold`, `compile_json`, `emit_loader`, `emit_python` |
-| CLI (interface en ligne de commande) | `sprezzature-ui`, `make-ui`, `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make` | les deux outils |
+| CLI (command-line interface, un programme qu'on lance en tapant une commande dans un terminal) | `sprezzature-ui`, `make-ui`, `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make` | les deux outils |
 | HTTP | `uvicorn sprezzature_ui.api:app`, ou le `Dockerfile` et le `docker-compose.yml` (qui servent aussi `/mcp`) | `GET /health`, `POST /v1/i18n-audit` |
-| MCP (Model Context Protocol) | `sprezzature-ui-mcp` | les outils `health` et `audit_i18n`, sur `/mcp` |
+| MCP (Model Context Protocol, le protocole par lequel les agents IA appellent des outils en français) | `sprezzature-ui-mcp` | les outils `health` et `audit_i18n`, sur `/mcp` |
 | Skill | [`SKILL.md`](https://github.com/warith-harchaoui/sprezzature/blob/main/sprezzature-ui/SKILL.md) dans la suite | la prose de design, plus les deux commandes |
 
 Seul l'audit franchit une frontière réseau. L'outil de fabrication écrit des
@@ -183,7 +183,7 @@ catalogue écrit à côté restent sur l'hôte.
 | `I18N002` | `.py` | une constante de module ou de classe dont le nom contient `PROMPT` ou `INSTRUCTION`, affectée d'un littéral de chaîne ou d'une f-string |
 
 Il lit le JavaScript et le HTML ligne par ligne, et le Python par son AST
-(arbre syntaxique abstrait). Il ne sait pas dire si une traduction est bonne,
+(abstract syntax tree, le code découpé en ses morceaux : ceci est une fonction, ceci est une chaîne). Il ne sait pas dire si une traduction est bonne,
 ni si une chaîne est seulement visible de l'utilisateur. « 0 findings » veut
 dire qu'aucune des deux formes n'a été trouvée, pas que l'interface est prête
 à livrer.
@@ -192,11 +192,11 @@ dire qu'aucune des deux formes n'a été trouvée, pas que l'interface est prêt
 
 `references/` contient la prose que lit le skill : la pile Tailwind et
 JavaScript simple, la liste de contrôle, les anti-motifs, les tableaux de
-bord, les graphiques en SVG (Scalable Vector Graphics), la psychologie des
+bord, les graphiques en SVG (Scalable Vector Graphics, une image écrite en texte qui reste nette à tous les zooms), la psychologie des
 couleurs, une table de correspondance Material Design, et des consignes par
 plateforme sous `references/ui-guidelines/`. `assets/` contient une page de
 départ, sept composants HTML, deux graphiques SVG, huit extraits indexés par
-loi de l'UX dans `assets/snippets/INDEX.md`, et les trois familles Roboto
+loi de l'UX (user experience, la façon dont une interface se vit : on trouve le bouton, ou on abandonne) dans `assets/snippets/INDEX.md`, et les trois familles Roboto
 sous `assets/fonts/`.
 
 La typographie par défaut est la règle des trois Roboto : Roboto pour
@@ -222,7 +222,8 @@ nombre, ce serait prendre la largeur pour de la valeur.
 
 ## Licence
 
-BSD-3-Clause. Voir `LICENSE`.
+La licence BSD (Berkeley Software Distribution, une licence qui permet à chacun de copier, modifier et vendre le code tant que la ligne de copyright reste) à trois clauses, `BSD-3-Clause`.
+Voir `LICENSE`.
 
 ## Auteur
 
