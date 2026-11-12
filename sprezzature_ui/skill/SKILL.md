@@ -24,7 +24,7 @@ compatibility: >-
   not required.
 metadata:
   author: Warith HARCHAOUI
-  version: 1.8.4
+  version: 1.9.0
 ---
 
 # sprezzature-ui — vanilla JS (JavaScript, the programming language web browsers run) + Tailwind UI (user interface, the screens, buttons and forms a person uses) generation

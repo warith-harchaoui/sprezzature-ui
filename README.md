@@ -107,7 +107,7 @@ names a locale absent from `locales:`, or one with no text in it.
 ```yaml
 repos:
   - repo: https://github.com/warith-harchaoui/sprezzature-ui
-    rev: v1.2.3
+    rev: v1.3.0
     hooks:
       - id: sprezzature-ui-i18n-audit
 ```

@@ -113,7 +113,7 @@ qui n'a pas de texte dans celle-ci.
 ```yaml
 repos:
   - repo: https://github.com/warith-harchaoui/sprezzature-ui
-    rev: v1.2.3
+    rev: v1.3.0
     hooks:
       - id: sprezzature-ui-i18n-audit
 ```
