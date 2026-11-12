@@ -6,6 +6,40 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- **The skill ships inside the package.** `SKILL.md`, its `references/`
+  (trigger catalogue included) and its `assets/` (starter page, components,
+  snippets, the three Roboto families) now live in `sprezzature_ui/skill/`
+  and travel in the wheel, so `pip install sprezzature-ui` carries all five
+  surfaces: the library, the CLI (command-line interface, a program you run
+  by typing a command in a terminal) in click, the HTTP (HyperText
+  Transfer Protocol, the language a browser speaks) API (application
+  programming interface, the routes a program calls) in FastAPI with its `Dockerfile` and `docker-compose.yml`, the MCP
+  (Model Context Protocol, the protocol through which AI agents call tools in
+  English) server through fastapi-mcp, and the skill. Until now the skill
+  lived only in the `sprezzature` hub.
+- **`sprezzature-ui-skill`**, also `sprezzature-ui skill`, says whether the
+  copy an agent reads is in step with the package. `--install` copies it into
+  `~/.claude/skills/sprezzature-ui`, moving any previous copy to
+  `~/.claude/skills-superseded/`; `--agent opencode` targets
+  `~/.opencode/skills`; `--path` prints where `pip` put it.
+- **`sprezzature_ui.skill_path()`** returns the skill folder.
+
+### Docs
+
+- README, LISEZMOI, `TRIGGERS.md`, `EXAMPLES.md`, `CODING.md`,
+  `CONTRIBUTING.md` and the skill describe the skill surface. They said the
+  wheel did not carry the reference files, the fonts or the components, and
+  linked a `SKILL.md` in the hub that is no longer there.
+- `-V` is documented where it answers: the front door, both tools and
+  `sprezzature-ui-mcp`, not the skill command.
+- Two dead pointers in the reference files: `simulate_cvd.py`, which nothing
+  ships, is now `sprezzature-colors-cvd`, and `alt-text-ai.md` is said to live
+  in the `sprezzature-accessibility` repository rather than in its skill.
+- `LANDSCAPE.md` and `PAYSAGE.md` count 4 765 lines of reference prose, not
+  4 772. Every acronym on these pages is defined where it first appears.
+
 ## [1.2.3] — 2026-11-08
 
 ### Fixed
@@ -26,7 +60,7 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `line<N>`, which gave two files one id and left the second unmoved. An id
   held by a different text says so instead of "already in the catalogue".
 - **`POST /v1/i18n-audit` no longer answers 500 on a filename of its caller's
-  choosing** (empty, `..`, a NUL byte, too long) or on a lone surrogate in the
+  choosing** (empty, `..`, a NUL (null, the zero character that ends a string in C) byte, too long) or on a lone surrogate in the
   source. Only the extension is used; the name is reported back as sent.
 - **`sprezzature-ui-mcp` announces its version.** fastapi-mcp 0.4 passes the
   description in the version slot of the MCP server, so hosts were told the
@@ -69,7 +103,8 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   imported PyYAML at the top of the module, so `from sprezzature_ui import
   audit_path` loaded it for a caller who only audits, while the README,
   `CODING.md` and the package docstring said otherwise. PyYAML is now
-  imported inside `fix()`, the only code that writes YAML, and
+  imported inside `fix()`, the only code that writes YAML (YAML Ain't Markup Language,
+  a configuration format written as indented `key: value` lines), and
   `tests/test_the_surfaces_agree.py` asks a fresh interpreter whether
   `yaml` or `click` was loaded.
 - **The pre-commit hook passes `.cjs` and `.htm` files**, which the audit
@@ -92,7 +127,8 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   (`sprezzature-ux-laws-audit`, `sprezzature-accessibility-lint`) instead
   of script paths in a clone, and places `tests/test_snippet_catalog.py`
   in the monorepo.
-- **The emitted `i18n_prompts.py`** said it read JSON to avoid an `[i18n]`
+- **The emitted `i18n_prompts.py`** said it read JSON (JavaScript Object
+  Notation, a text format in which programs store data as named fields) to avoid an `[i18n]`
   extra that no longer exists.
 
 ## [1.1.0] — 2026-11-04: click everywhere, and the documentation says what the code does
@@ -197,7 +233,8 @@ edited, so this is a measured feasibility and not an optimistic one.
 
 ### Fixed — the places that encoded the extras
 
-Install lines, error messages, docstrings, the `Dockerfile`, the CI workflow and
+Install lines, error messages, docstrings, the `Dockerfile`, the CI (continuous integration, the
+checks a server runs on every push) workflow and
 the README/LISEZMOI install sections all named extras that no longer exist. pip
 treats an unknown extra as a **warning and exits 0**, so none of these would
 have failed loudly: they would have quietly installed nothing.
@@ -237,7 +274,8 @@ bricks to be extracted.
 ### Added
 
 - **The i18n pair, as commands.** `sprezzature-ui-i18n-audit` finds the
-  translations embedded in JavaScript and HTML and the LLM prompts inlined
+  translations embedded in JavaScript and HTML and the LLM (large language model, an AI
+  that reads and writes text) prompts inlined
   in Python; `sprezzature-ui-i18n-make` scaffolds the catalogue they belong
   in, compiles it and emits the loader. Both reachable through either front
   door — `make-ui` with argparse, `sprezzature-ui` with click.

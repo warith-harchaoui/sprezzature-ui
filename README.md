@@ -9,8 +9,8 @@ compiled to JSON (JavaScript Object Notation, a text format in which programs st
 The other half is writing the interface: semantic HTML, Tailwind utilities
 and plain ES (ECMAScript, the official name of JavaScript; its modules are the `import` lines a browser runs as is) modules, no framework runtime, with dark-mode peers, focus
 rings and reduced-motion guards. That half is the model's work, guided by
-the [`SKILL.md`](https://github.com/warith-harchaoui/sprezzature/blob/main/sprezzature-ui/SKILL.md)
-that ships with the suite and by the prose in `references/`. No route over HTTP (HyperText Transfer Protocol, the language a browser speaks to fetch a page) can carry "make this dashboard legible", and this package does not pretend
+the [`SKILL.md`](https://github.com/warith-harchaoui/sprezzature-ui/blob/main/sprezzature_ui/skill/SKILL.md)
+that ships inside this package and by the prose in its `references/`. No route over HTTP (HyperText Transfer Protocol, the language a browser speaks to fetch a page) can carry "make this dashboard legible", and this package does not pretend
 otherwise.
 
 ---
@@ -25,6 +25,7 @@ otherwise.
 |---|---|
 | `sprezzature-ui-i18n-audit` | **audit.** Finds translation tables embedded in JavaScript or HTML (rule `I18N001`) and LLM (large language model, an AI that reads and writes text, like the one behind ChatGPT) prompts inlined in Python (rule `I18N002`). Both belong in `locales/i18n.yaml`. With `--fix`, moves what it can read into that catalogue. The audit itself imports only the standard library. |
 | `sprezzature-ui-i18n-make` | **make.** Scaffolds `locales/i18n.yaml`, compiles it to `locales/i18n.json`, and emits two loaders: `locales/i18n.js` for the browser and `locales/i18n_prompts.py` for Python. |
+| `sprezzature-ui-skill` | **skill.** Says whether the copy of this package's skill that an agent reads is in step with the one `pip` installed; `--install` copies it into `~/.claude/skills/sprezzature-ui` (`--agent opencode` for `~/.opencode/skills`), `--path` prints where it sits. |
 
 One front door over both, written in click, under two names:
 `make-ui <tool>` and `sprezzature-ui <tool>` are the same callable, so they
@@ -32,7 +33,10 @@ cannot drift. `sprezzature-ui tools` lists the tools and says whether each
 can run on this machine. The argparse front door was removed on 2026-10-25,
 and since 2026-11-04 no command parses with argparse: the per-tool commands
 and `sprezzature-ui-mcp` are click too, and `-V` (or `--version`) prints the
-package version, on the front door as on every tool.
+package version, on the front door as on both tools and on
+`sprezzature-ui-mcp`. `sprezzature-ui skill` is the same command as
+`sprezzature-ui-skill`, one sub-command away; `sprezzature-ui tools` does not
+list it, because it is not one of the two i18n tools.
 Each tool keeps its own command, which is what a script or a pre-commit hook
 should call.
 
@@ -40,11 +44,11 @@ should call.
 
 | Surface | Entry point | What it exposes |
 |---|---|---|
-| Library | `from sprezzature_ui import …` | `audit_js`, `audit_py`, `audit_path`, `gather`, `scaffold`, `compile_json`, `emit_loader`, `emit_python` |
-| CLI (command-line interface, a program you run by typing a command in a terminal) | `sprezzature-ui`, `make-ui`, `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make` | both tools |
-| HTTP | `uvicorn sprezzature_ui.api:app`, or the `Dockerfile` and `docker-compose.yml` (which also serve `/mcp`) | `GET /health`, `POST /v1/i18n-audit` |
-| MCP (Model Context Protocol, the protocol through which AI agents call tools in English) | `sprezzature-ui-mcp` | tools `health` and `audit_i18n`, at `/mcp` |
-| Skill | [`SKILL.md`](https://github.com/warith-harchaoui/sprezzature/blob/main/sprezzature-ui/SKILL.md) in the suite | the design prose, plus the two commands |
+| Library | `from sprezzature_ui import …` | `audit_js`, `audit_py`, `audit_path`, `gather`, `scaffold`, `compile_json`, `emit_loader`, `emit_python`, and `skill_path()`, the folder of the shipped skill |
+| CLI (command-line interface, a program you run by typing a command in a terminal), in click | `sprezzature-ui`, `make-ui`, `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make`, `sprezzature-ui-skill` | both tools, and the skill check |
+| HTTP API (application programming interface, the routes a program calls), in FastAPI | `uvicorn sprezzature_ui.api:app`, or the `Dockerfile` and `docker-compose.yml` (which also serve `/mcp`) | `GET /health`, `POST /v1/i18n-audit` |
+| MCP (Model Context Protocol, the protocol through which AI agents call tools in English), through fastapi-mcp | `sprezzature-ui-mcp` | tools `health` and `audit_i18n`, at `/mcp` |
+| Skill | [`sprezzature_ui/skill/`](https://github.com/warith-harchaoui/sprezzature-ui/tree/main/sprezzature_ui/skill), inside the package; `sprezzature-ui-skill --install` puts it where the agent reads | `SKILL.md`, its `references/` and `assets/`: the design prose, plus the two commands |
 
 Only the audit crosses a network boundary. The make tool writes files into a
 project, so it has no route and no MCP tool.
@@ -65,8 +69,8 @@ pip install sprezzature-ui
 ```
 
 One line installs every surface: the audit, the catalogue tools (PyYAML),
-the click front door, the HTTP app and the MCP server. There are no feature
-extras. `[dev]` holds only the test toolchain.
+the click front door, the HTTP app, the MCP server and the skill. There are
+no feature extras. `[dev]` holds only the test toolchain.
 
 ## Use
 
@@ -152,6 +156,23 @@ It serves the same FastAPI app with the MCP endpoint mounted at `/mcp`. The
 tool names are the routes' `operation_id`: `health` and `audit_i18n`.
 `SPREZZATURE_UI_HOST` and `SPREZZATURE_UI_PORT` set the defaults.
 
+### As a skill
+
+```sh
+sprezzature-ui-skill                          # is the installed copy in step?
+sprezzature-ui-skill --install                # copy it into ~/.claude/skills/sprezzature-ui
+sprezzature-ui-skill --install --agent opencode   # ~/.opencode/skills instead
+sprezzature-ui-skill --path                   # where pip put it
+```
+
+The skill is the folder an agent reads: `SKILL.md`, its `references/` and
+its `assets/`, under `sprezzature_ui/skill/` in the installed package
+(`sprezzature_ui.skill_path()` returns it). Without `--install` the command
+only reports: in step, or which file differs, or how many do. With it, a previous copy
+is moved to `~/.claude/skills-superseded/` before the new one is written, so
+it is never read as a second skill. `sprezzature-ui skill` is the same
+command.
+
 ### In containers
 
 ```sh
@@ -179,18 +200,19 @@ shape was found, not that the interface is ready to ship.
 
 ## The design half
 
-`references/` holds the prose the skill reads: the Tailwind and vanilla-JS
+`sprezzature_ui/skill/references/` holds the prose the skill reads: the Tailwind and vanilla-JS
 stack, the checklist, anti-patterns, dashboards, charts in SVG (Scalable
 Vector Graphics, a picture written as text that stays sharp at any zoom), colour psychology, a Material Design mapping, and
-platform guidelines under `references/ui-guidelines/`. `assets/` holds a
+platform guidelines under `references/ui-guidelines/`. `sprezzature_ui/skill/assets/` holds a
 starter page, seven HTML components, two SVG charts, eight snippets indexed
 by a Law of UX (user experience, how an interface feels to use: whether you find the button, or give up) in `assets/snippets/INDEX.md`, and the three Roboto families
 under `assets/fonts/`.
 
 The default typography is the three-Roboto rule: Roboto for the interface
 and body, Roboto Serif for long-form text, Roboto Mono for code. All three
-are self-hosted. These files live in this repository and in the skill
-folder; the Python wheel does not carry them.
+are self-hosted. The Python wheel carries all of it, inside the skill
+folder. The `references/` and `assets/` folders at the root of this
+repository hold the same files for a reader of the repository.
 
 ## The boundary, said plainly
 
@@ -206,7 +228,7 @@ would be mistaking breadth for value.
 - **[sprezzature-colors](https://github.com/warith-harchaoui/sprezzature-colors)**: contrast and colour-vision checks on the palette.
 - **[sprezzature-ux-laws](https://github.com/warith-harchaoui/sprezzature-ux-laws)**: audit how the interface feels, by the named heuristics.
 - **[sprezzature-cli-gui](https://github.com/warith-harchaoui/sprezzature-cli-gui)**: when there is a command-line tool behind the screen.
-- **[sprezzature](https://github.com/warith-harchaoui/sprezzature)**: the suite, and the skills that drive it from Claude.
+- **[sprezzature](https://github.com/warith-harchaoui/sprezzature)**: the suite that gathers the ten bricks and their skills.
 
 ## License
 

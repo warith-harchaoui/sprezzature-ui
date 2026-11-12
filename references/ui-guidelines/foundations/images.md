@@ -83,7 +83,7 @@ make-alt --kind complex --context "Weekly active users" ./public/chart.png
 
 Output is one line ≤ 150 characters at a word boundary (no trailing `…`). For decorative images, emit `alt=""` directly (the script returns empty when called with `--kind decorative`). Do **not** add `role="presentation"` or `aria-hidden="true"`; `alt=""` alone is the WAI-recommended signal.
 
-Full guidance (W3C decision tree, prompt rules, server-side proxy pattern for browser calls, review workflow, failure modes) in `sprezzature-accessibility/references/alt-text-ai.md`.
+Full guidance (W3C decision tree, prompt rules, server-side proxy pattern for browser calls, review workflow, failure modes) in `references/alt-text-ai.md` of the [sprezzature-accessibility](https://github.com/warith-harchaoui/sprezzature-accessibility) repository (not part of its installed skill).
 
 ## Checklist
 

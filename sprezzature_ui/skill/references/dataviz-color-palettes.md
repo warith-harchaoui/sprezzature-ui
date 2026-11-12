@@ -29,7 +29,7 @@ You can't pick colors well until you know which of these three you're building.
 - Symmetric around the midpoint (same number of steps on each side).
 - Default for "growth": a neutral mid-gray at zero with two opposing ends. Two choices, and the first is the default:
   - **Colour-blind-safe (prefer this): blue ↔ red** (`#007AFF` ↔ `#808080` ↔ `#FF3B30`). The red ↔ green pair is hostile to red-green colour blindness (~8 % of men): under protanopia / deuteranopia both ends drift to a muddy tan and collapse into one hue, so the sign can no longer be read from colour. Blue ↔ red stays discriminable: blue survives, red darkens toward brown. `_style.diverging_pair(cvd_safe=True)` returns it (blue also carries *Trust*, red *Danger* in `color-psychology.md`).
-  - **Conventional red ↔ green** (`#FF3B30` ↔ `#808080` ↔ `#28CD41`). Finance-idiomatic and intuitive for the sighted majority, but only reach for it when the sign is *also* encoded another way (a +/- glyph, position above/below zero) **and** you have confirmed it survives in `simulate_cvd.py`.
+  - **Conventional red ↔ green** (`#FF3B30` ↔ `#808080` ↔ `#28CD41`). Finance-idiomatic and intuitive for the sighted majority, but only reach for it when the sign is *also* encoded another way (a +/- glyph, position above/below zero) **and** you have confirmed it survives `sprezzature-colors-cvd` (a screenshot of the chart in, one PNG per colour-vision deficiency out).
 - Reserve this shape for actual divergent data, not for "category A vs. category B".
 
 ### Categorical

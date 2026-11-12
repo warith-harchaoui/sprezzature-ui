@@ -3,7 +3,8 @@
 When to reach for this package, and what to call.
 
 This file is written for an agent: a Claude Code or OpenCode skill, an MCP
-(Model Context Protocol) host, anything choosing a tool on someone's behalf.
+(Model Context Protocol, the protocol through which AI agents call tools in
+English) host, anything choosing a tool on someone's behalf.
 Humans are welcome, but the routing rules below are the point.
 
 ---
@@ -18,9 +19,10 @@ unbounded; the things this package deals with are not.
 > closed set: page, landing, component, button, card, form, form field,
 > modal, dialog, nav, menu, table, dashboard, chart, settings page, theme
 > toggle. The output is HTML a browser runs directly, with Tailwind
-> utilities and plain ES modules: no React, no build step, no framework
-> runtime. This half is the model's work, read from `SKILL.md` and
-> `references/`.
+> utilities and plain ES (ECMAScript, the official name of JavaScript)
+> modules: no React, no build step, no framework runtime. This half is the
+> model's work, read from `SKILL.md` and `references/`, which ship inside
+> the package under `sprezzature_ui/skill/`.
 >
 > **Source that holds strings meant for people or for a model.** The nouns
 > are a closed set too: translation, locale, language code, message id,
@@ -42,11 +44,12 @@ This is the distinction to get right before routing anything here.
 
 | The half | Who does it | How |
 |---|---|---|
-| **Writing the interface** | the model | read `SKILL.md` and the files in `references/`, copy from `assets/components/` and `assets/snippets/`, then write the HTML |
+| **Writing the interface** | the model | read `SKILL.md` and the files in `references/`, copy from `assets/components/` and `assets/snippets/`, then write the HTML; `sprezzature-ui-skill --install` puts that folder where the agent reads it |
 | **Finding hardcoded strings** | this package | `sprezzature-ui-i18n-audit`, or the `audit_i18n` MCP tool |
 | **Building the catalogue** | this package | `sprezzature-ui-i18n-make` |
 
-No HTTP route can carry "make this dashboard legible". Asking for a tool
+No route over HTTP (HyperText Transfer Protocol, the language a browser
+speaks to fetch a page) can carry "make this dashboard legible". Asking for a tool
 that does it will find nothing, because nothing here claims to. The prose
 in `references/` is the larger half of the package, and reading it is how
 the skill is used. Its default typography is the three-Roboto rule: Roboto,
@@ -63,12 +66,18 @@ Roboto Serif and Roboto Mono, self-hosted.
 | `sprezzature-ui-i18n-make` | "Set up the catalogue and the code that reads it." Scaffolds `locales/i18n.yaml`, compiles `locales/i18n.json`, emits `locales/i18n.js` and `locales/i18n_prompts.py`. One step alone with `--init`, `--compile`, `--emit-loader` or `--emit-python`. |
 | `sprezzature-ui tools` | "What does this package offer, and can it run here?" Lists both tools with their status. |
 | `sprezzature-ui-mcp` | "Expose the audit to an MCP host." Serves the HTTP app with the MCP endpoint at `/mcp`. |
+| `sprezzature-ui-skill` (or `sprezzature-ui skill`) | "Is the skill my agent reads the one this package ships?" Reports in step or which files differ; `--install` copies it into `~/.claude/skills/sprezzature-ui` (`--agent opencode` for `~/.opencode/skills`), `--path` prints where `pip` put it. |
 | `health` (MCP tool, `GET /health`) | "Is this server up, and which version?" |
 | `audit_i18n` (MCP tool, `POST /v1/i18n-audit`) | The audit over the network: one file's text and its filename in, findings out. |
 
 ---
 
 ## What to call, on every surface
+
+The five surfaces are the library, the CLI (command-line interface, a program
+you run by typing a command in a terminal) in click, the HTTP API
+(application programming interface) in FastAPI, with a `Dockerfile` and a
+`docker-compose.yml`, the MCP server through fastapi-mcp, and the skill.
 
 | Job | CLI | MCP tool | HTTP route | Library |
 |---|---|---|---|---|
@@ -77,6 +86,7 @@ Roboto Serif and Roboto Mono, self-hosted.
 | Scaffold and compile the catalogue, emit the loaders | `sprezzature-ui-i18n-make` | none, it writes files | none | `scaffold`, `compile_json`, `emit_loader`, `emit_python` |
 | Check the server | none | `health` | `GET /health` | none |
 | List the tools | `sprezzature-ui tools` | none | none | none |
+| Check or install the skill | `sprezzature-ui-skill [--install]` | none | none | `skill_path()` |
 
 The MCP tool names are the routes' `operation_id`, so the two cannot
 disagree. The audit is the only tool that crosses a network boundary
@@ -89,7 +99,7 @@ sub-commands. The argparse front door was removed on 2026-10-25, and since
 2026-11-04 every command, `sprezzature-ui-mcp` included, parses with click.
 
 Install is one line, `pip install sprezzature-ui`, which brings every
-surface. There are no feature extras.
+surface, the skill included. There are no feature extras.
 
 ---
 
@@ -106,7 +116,7 @@ substitute for one another, and this package answers only the first.
 | **Is it usable?** too many choices, targets too small, no feedback | sprezzature-ux-laws | `audit_interface` |
 
 A page can pass any one and fail the others. When someone asks a broad
-"review my UI", run the other three and say which found what; this one has
+"review my UI (user interface)", run the other three and say which found what; this one has
 nothing mechanical to add to that review beyond the strings.
 
 Two more boundaries. A command-line tool that needs a screen in front of it

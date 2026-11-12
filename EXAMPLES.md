@@ -2,7 +2,9 @@
 
 Two tools, because two is what can be run deterministically. Writing the
 interface is the model's work, guided by `SKILL.md` and the files in
-`references/`; nothing below pretends to do that part.
+`references/`, which ship inside the package under `sprezzature_ui/skill/`;
+nothing below pretends to do that part, and the last section shows how to
+put that folder where an agent reads it.
 
 ## Find the strings that should be in a catalogue
 
@@ -15,11 +17,12 @@ sprezzature-ui-i18n-audit src/ --json
 Exit 1 on any finding, which is what makes it usable as a gate, and exit 2
 on a path that does not exist, so a typo cannot pass for a clean tree. The audit
 imports only the standard library. `--json` prints the findings as a JSON
-array; without it, one `path:line: RULE message` line per finding.
+(JavaScript Object Notation, a text format in which programs store data as
+named fields) array; without it, one `path:line: RULE message` line per finding.
 
 Two things are flagged, and they are the same mistake in two languages: a
-translation dictionary embedded in JavaScript or HTML, and an LLM prompt
-inlined in Python. Both belong in `locales/i18n.yaml`.
+translation dictionary embedded in JavaScript or HTML, and an LLM (large
+language model, an AI that reads and writes text) prompt inlined in Python. Both belong in `locales/i18n.yaml`.
 
 ## Move them there
 
@@ -43,8 +46,10 @@ sprezzature-ui-i18n-make --dir ../my-project
 ```
 
 Four steps run by default: scaffold `locales/i18n.yaml` if it is missing,
-compile it to `locales/i18n.json` because browsers do not parse YAML, emit
-`locales/i18n.js` as a framework-free ES module, and emit
+compile it to `locales/i18n.json` because browsers do not parse YAML (YAML
+Ain't Markup Language, a configuration format written as indented
+`key: value` lines), emit `locales/i18n.js` as a framework-free ES
+(ECMAScript, the official name of JavaScript) module, and emit
 `locales/i18n_prompts.py` as the standard-library prompt loader.
 
 ## One step at a time
@@ -102,7 +107,7 @@ auditable, skipping `node_modules`, `dist`, `vendor` and the rest;
 separate because a caller with its own file list, a pre-commit hook for
 instance, already knows which files changed and should not pay for a walk.
 
-## Over HTTP
+## Over the network, by HTTP (HyperText Transfer Protocol, the language a browser speaks)
 
 ```bash
 uvicorn sprezzature_ui.api:app --port 8000
@@ -115,7 +120,7 @@ One working route, `POST /v1/i18n-audit`, beside `GET /health`: source in,
 findings out. The narrowness is the point. No HTTP route can carry "make this dashboard legible", and
 this package does not invent one that pretends to.
 
-## Over MCP
+## Over MCP (Model Context Protocol, the protocol through which AI agents call tools in English)
 
 ```bash
 sprezzature-ui-mcp
@@ -136,3 +141,21 @@ docker compose run --rm api make-ui i18n-audit /work/src
 Compose mounts `./work` at `/work`. The image's default command,
 `sprezzature-ui-mcp --host 0.0.0.0`, serves the HTTP routes and `/mcp` on
 the same port.
+
+## Put the skill where the agent reads it
+
+```bash
+sprezzature-ui-skill
+sprezzature-ui-skill --install
+sprezzature-ui-skill --install --agent opencode
+sprezzature-ui-skill --path
+sprezzature-ui skill --install
+```
+
+The skill, `SKILL.md` with its `references/` and `assets/`, ships inside the
+package at `sprezzature_ui/skill/`, and `sprezzature_ui.skill_path()` returns
+that folder. With no flag the command reports whether
+`~/.claude/skills/sprezzature-ui` is in step with it. `--install` copies it
+there, moving any previous copy to `~/.claude/skills-superseded/` first;
+`--agent opencode` uses `~/.opencode/skills` instead. `sprezzature-ui skill`
+is the same command under the front door.

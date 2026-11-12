@@ -8,7 +8,8 @@ cd sprezzature-ui
 pip install -e ".[dev]"
 ```
 
-That is the line CI runs. The development dependencies live in the `dev`
+That is the line CI (continuous integration, the checks a server runs on
+every push) runs. The development dependencies live in the `dev`
 extra in `pyproject.toml` rather than in a `requirements-dev.txt`, so there
 is one list and the workflow installs it by name.
 
@@ -65,11 +66,19 @@ ruff check .
    more; an over-eager i18n rule is worse than a missing one, because it
    trains people to pass `--fix` without reading.
 3. Document it in `README.md` and `LISEZMOI.md`, in both languages, list it
-   in `TRIGGERS.md`, and add a worked invocation to `EXAMPLES.md`.
+   in `TRIGGERS.md` and in `sprezzature_ui/skill/SKILL.md`, and add a worked
+   invocation to `EXAMPLES.md`.
 
 ## Changing what the reference files teach
 
-The prose in `references/` is the larger half of this package. A rule
+The prose in `references/` is the larger half of this package. The copy an
+agent reads, and the one the wheel carries, is
+`sprezzature_ui/skill/references/`, beside `sprezzature_ui/skill/SKILL.md`
+and `sprezzature_ui/skill/assets/`; the `references/` and `assets/` folders
+at the root of the repository hold the same files. Change both: no test
+holds them in step, and `tests/test_the_shipped_markup.py` lints the HTML
+under the root `assets/`. After a change, `sprezzature-ui-skill --install`
+refreshes the copy your own agent reads. A rule
 written there has to be one the emitted code can actually hold: the suite
 has a test for exactly that, because a reference that prescribes what the
 runtime cannot do is a reference that will be followed into a bug. If you
@@ -103,4 +112,5 @@ External contributions are welcome. Open an issue or pull request on GitHub.
 
 ## License
 
-[BSD-3-Clause](LICENSE).
+The BSD (Berkeley Software Distribution) 3-Clause licence, `BSD-3-Clause`.
+See [LICENSE](LICENSE).

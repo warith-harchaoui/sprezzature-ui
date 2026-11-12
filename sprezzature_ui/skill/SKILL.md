@@ -29,7 +29,7 @@ metadata:
 
 # sprezzature-ui — vanilla JS (JavaScript, the programming language web browsers run) + Tailwind UI (user interface, the screens, buttons and forms a person uses) generation
 
-> The two deterministic tools below ship as the standalone package [`sprezzature-ui`](https://github.com/warith-harchaoui/sprezzature-ui) (`pip install sprezzature-ui`, one line, no extras), invoked as `sprezzature-ui-i18n-audit` and `sprezzature-ui-i18n-make`, or through the click front door under either name, `make-ui <tool>` or `sprezzature-ui <tool>` (`sprezzature-ui tools` lists them). The audit is also served over HTTP (`POST /v1/i18n-audit`, plus `GET /health`, from `sprezzature_ui.api:app` or the package's Docker image) and over MCP (`sprezzature-ui-mcp`, endpoint `/mcp`, tools `audit_i18n` and `health`). The make tool writes files, so it has no route and no MCP tool. The generation half is this file: writing an interface is the model's work, and no command or route can carry it. The `scripts/` folder has moved out. The pre-ship content gate stayed in the monorepo as `validate_content.py`, beside the other repository-level validators: it validates a skill folder *here* rather than anything in a user's project.
+> The two deterministic tools below ship as the standalone package [`sprezzature-ui`](https://github.com/warith-harchaoui/sprezzature-ui) (`pip install sprezzature-ui`, one line, no extras), invoked as `sprezzature-ui-i18n-audit` and `sprezzature-ui-i18n-make`, or through the click front door under either name, `make-ui <tool>` or `sprezzature-ui <tool>` (`sprezzature-ui tools` lists them). The audit is also served over HTTP (HyperText Transfer Protocol, the language a browser speaks to fetch a page: `POST /v1/i18n-audit`, plus `GET /health`, from `sprezzature_ui.api:app` or the package's Docker image) and over MCP (Model Context Protocol, the protocol through which AI agents call tools in English: `sprezzature-ui-mcp`, endpoint `/mcp`, tools `audit_i18n` and `health`). The make tool writes files, so it has no route and no MCP tool. This folder ships inside the package, at `sprezzature_ui/skill/` (`sprezzature_ui.skill_path()` returns it): `sprezzature-ui-skill` (or `sprezzature-ui skill`) says whether the copy an agent reads is in step, `--install` copies it into `~/.claude/skills/sprezzature-ui`, and `--agent opencode` targets `~/.opencode/skills`. The generation half is this file: writing an interface is the model's work, and no command or route can carry it. The `scripts/` folder has moved out. The pre-ship content gate stayed in the monorepo as `validate_content.py`, beside the other repository-level validators: it validates a skill folder *here* rather than anything in a user's project.
 
 ## Audience
 
@@ -81,7 +81,7 @@ for contrast / CVD audits on the emitted output.
 ### i18n — one `locales/i18n.yaml` for GUI *and* prompts
 
 Translatable strings (GUI labels and LLM prompts) share one concern
-(language), so they share one per-project catalog: **`locales/i18n.yaml`**
+(language), so they share one per-project catalog, a YAML (YAML Ain't Markup Language, a configuration format written as indented `key: value` lines) file: **`locales/i18n.yaml`**
 (`gui:` and `prompts:` namespaces, each `message.id → { en: …, fr: … }`).
 Never hardcode a UI string in JavaScript, never inline a prompt in Python.
 
@@ -265,4 +265,5 @@ Load these only when needed.
 ## Scripts
 
 - `sprezzature-ui-i18n-audit`, `sprezzature-ui-i18n-make` — the two i18n tools, from the `sprezzature-ui` package (see the i18n section above).
+- `sprezzature-ui-skill` — reports whether the installed copy of this skill is in step with the package; `--install` refreshes it (`--agent opencode` for OpenCode), `--path` prints where `pip` put it.
 - `validate_content.py`, in the monorepo's own scripts folder — the pre-ship content gate. Stdlib only. Checks SKILL.md frontmatter, forbidden framework imports, trademarked platform terms, marketing phrases, reference path resolution. Exit non-zero on any failure.

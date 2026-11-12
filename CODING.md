@@ -14,7 +14,8 @@ comment saying why the broad catch is intentional.
 parses JavaScript, HTML and Python with the tools already in the
 interpreter, which is what makes it cheap enough to put in a pre-commit
 hook. PyYAML is imported only by `--fix` and by `i18n_make`, because the
-catalogue is YAML and the audit that finds what belongs in it is not. PyYAML
+catalogue is YAML (YAML Ain't Markup Language, a configuration format
+written as indented `key: value` lines) and the audit that finds what belongs in it is not. PyYAML
 is a base dependency, like every other runtime dependency of this package:
 there are no feature extras.
 
@@ -29,7 +30,8 @@ An import added to the audit is a review question, not a detail.
 
 `i18n_make` writes JavaScript and Python into somebody else's project.
 That output is held to the same rules as the interface this package
-teaches: no framework runtime, plain ES modules, no build step required to
+teaches: no framework runtime, plain ES (ECMAScript, the official name of
+JavaScript) modules, no build step required to
 read it. A loader that needs bundling would contradict the stack the skill
 prescribes, and a reference that teaches a rule the runtime cannot hold is
 the defect the suite watches for.
@@ -46,6 +48,15 @@ argparse import anywhere in `sprezzature_ui/` or `scripts/`. Both names resolve 
 other. A new tool is an entry in that table plus its own console script in
 `pyproject.toml`; `tests/test_the_surfaces_agree.py` checks that every
 declared command imports and announces the name that installs it.
+
+`skill` is the one sub-command outside that table. It is attached to the
+front door from `sprezzature_ui/_skill.py`, which is also the
+`sprezzature-ui-skill` console script, and it is not a tool: it reports
+whether the skill folder `sprezzature_ui/skill/` is in step with the copy an
+agent reads, and with `--install` copies it there. `_skill.py` and
+`tests/test_the_skill_ships_with_the_package.py` are shared verbatim by the
+ten bricks and kept in step by the hub's `scripts/sync_helpers.py`: change
+the canonical copy that script names, not this one.
 
 ## Small on purpose
 
