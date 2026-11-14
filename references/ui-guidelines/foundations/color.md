@@ -19,7 +19,7 @@
 
 ## Semantic color tokens (light / dark)
 
-These are the only colors authors should reference. The light values of the hues are the corporate palette of [deraison.ai/en/colors](https://deraison.ai/en/colors), the source of truth for every colour in the suite. The dark values are Apple's dark-mode system colours of June 9, 2025, which the site does not publish. The site also offers an academic palette, readable with colour blindness, and a print palette, under the same names.
+These are the only colors authors should reference. The light values of the hues are the corporate palette of [deraison.ai/en/colors](https://deraison.ai/en/colors), the source of truth for every colour in the suite. The dark values are the dark-mode system colours of the same platform, June 9, 2025, which the site does not publish. The site also offers an academic palette, readable with colour blindness, and a print palette, under the same names.
 
 | Role | Light | Dark |
 |---|---|---|

@@ -11,7 +11,7 @@ carries a hex code and a light tint.
 
 | Palette | What it is | When to use it |
 |---|---|---|
-| corporate | Apple's system colours, light mode, values of June 9, 2025 | The default for interfaces generated here |
+| corporate | standard system colours, light mode, values of June 9, 2025 | The default for interfaces generated here |
 | academic | OKABE and ITO (2002), readable with colour blindness, completed from the CUD (Colour Universal Design) recommended set | Charts and figures that must survive colour blindness |
 | print | Checked for offset printing on coated paper | Anything that will be printed |
 

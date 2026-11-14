@@ -67,7 +67,7 @@ can bring in by accident.
 >
 > The emitter produces the eight saturated brand hues with their
 > CSV-canonical `DEFAULT` and `light` values. The `dark:` variants
-> below are Apple's dark-mode system colours of June 9, 2025, which
+> below are the corporate palette's dark-mode counterparts, dated June 9, 2025, which
 > the site does not publish. The emitter offers a `--with-dark` flag
 > that derives a close OKLCH-L-bumped neighbour but does not reproduce
 > these exact values. Treat the dark column as a per-token override,
