@@ -75,7 +75,7 @@ See `sprezzature-publish/references/meta-tags.md` for the full meta-tag set this
     { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "background_color": "#FFFFFF",
-  "theme_color": "#007AFF",
+  "theme_color": "#0088FF",
   "display": "standalone"
 }
 ```

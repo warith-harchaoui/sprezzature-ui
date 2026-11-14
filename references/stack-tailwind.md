@@ -56,8 +56,10 @@ can bring in by accident.
 ## Tailwind config (drop into `tailwind.config.js`)
 
 > **Source of truth for brand hexes:**
-> `sprezzature-colors/references/palette.csv`. Regenerate this block at any
-> time with:
+> [deraison.ai/en/colors](https://deraison.ai/en/colors), whose corporate
+> palette `sprezzature-colors` ships as `references/palette-corporate.csv`
+> (and, in a compact layout, `references/palette.csv`). Regenerate this
+> block at any time with:
 >
 > ```bash
 > sprezzature-colors-palette-to-tailwind --emit theme
@@ -65,10 +67,12 @@ can bring in by accident.
 >
 > The emitter produces the eight saturated brand hues with their
 > CSV-canonical `DEFAULT` and `light` values. The `dark:` variants
-> below are **hand-tuned by the project maintainer**: the emitter
-> offers a `--with-dark` flag that derives a close OKLCH-L-bumped
-> neighbour but does not reproduce these exact values. Treat the
-> dark column as a per-token override, not a derivation.
+> below are Apple's dark-mode system colours of June 9, 2025, which
+> the site does not publish. The emitter offers a `--with-dark` flag
+> that derives a close OKLCH-L-bumped neighbour but does not reproduce
+> these exact values. Treat the dark column as a per-token override,
+> not a derivation. `--theme academic` or `--theme print` emits the
+> other two palettes of the site.
 
 ```js
 /** @type {import('tailwindcss').Config} */
@@ -84,14 +88,14 @@ module.exports = {
       },
       colors: {
         brand: {
-          blue:      { DEFAULT: '#007AFF', dark: '#0A84FF', light: '#CCE4FF' },
-          red:       { DEFAULT: '#FF3B30', dark: '#FF453A', light: '#FFD8D6' },
-          green:     { DEFAULT: '#28CD41', dark: '#30D158', light: '#D4F5D9' },
-          orange:    { DEFAULT: '#FF9500', dark: '#FF9F0A', light: '#FFEACC' },
-          yellow:    { DEFAULT: '#FFCC00', dark: '#FFD60A', light: '#FFF5CC' },
-          purple:    { DEFAULT: '#AF52DE', dark: '#BF5AF2', light: '#EFDCF8' },
-          pink:      { DEFAULT: '#FF2D55', dark: '#FF375F', light: '#FFD5DD' },
-          turquoise: { DEFAULT: '#79DBDC', dark: '#64D2FF', light: '#C0E7E7' },
+          blue:      { DEFAULT: '#0088FF', dark: '#0091FF', light: '#CCE7FF' },
+          red:       { DEFAULT: '#FF383C', dark: '#FF4245', light: '#FFD7D8' },
+          green:     { DEFAULT: '#34C759', dark: '#30D158', light: '#D6F4DE' },
+          orange:    { DEFAULT: '#FF8D28', dark: '#FF9230', light: '#FFE8D4' },
+          yellow:    { DEFAULT: '#FFCC00', dark: '#FFD600', light: '#FFF5CC' },
+          purple:    { DEFAULT: '#CB30E0', dark: '#DB34F2', light: '#F5D6F9' },
+          pink:      { DEFAULT: '#FF2D55', dark: '#FF375F', light: '#FFC0CC' },
+          turquoise: { DEFAULT: '#00C3D0', dark: '#00D2E0', light: '#CCF3F6' },
         },
         label: {
           primary:        { DEFAULT: '#000000' },
@@ -186,7 +190,7 @@ module.exports = {
 
 ## Conventions
 
-1. **Semantic tokens only.** Never `bg-[#007AFF]`, always `bg-brand-blue`.
+1. **Semantic tokens only.** Never `bg-[#0088FF]`, always `bg-brand-blue`.
 2. **`dark:` peer for every meaningful color utility**: no orphan light-only classes.
 3. **Spacing scale**: `0.5 / 1 / 2 / 3 / 4 / 5 / 6 / 8 / 10 / 12 / 16`. No `gap-7`, no `p-9`.
 4. **Order of utilities**: layout → spacing → sizing → typography → color → effects → state. Use Prettier with `prettier-plugin-tailwindcss` to enforce.

@@ -19,18 +19,18 @@
 
 ## Semantic color tokens (light / dark)
 
-These are the only colors authors should reference. Hex values come from the curated palette plus dark-mode pairs tuned for OLED comfort.
+These are the only colors authors should reference. The light values of the hues are the corporate palette of [deraison.ai/en/colors](https://deraison.ai/en/colors), the source of truth for every colour in the suite. The dark values are Apple's dark-mode system colours of June 9, 2025, which the site does not publish. The site also offers an academic palette, readable with colour blindness, and a print palette, under the same names.
 
 | Role | Light | Dark |
 |---|---|---|
-| Tint primary (Blue) | `#007AFF` | `#0A84FF` |
-| Danger (Red) | `#FF3B30` | `#FF453A` |
-| Success (Green) | `#28CD41` | `#30D158` |
-| Warning (Orange) | `#FF9500` | `#FF9F0A` |
-| Attention (Yellow) | `#FFCC00` | `#FFD60A` |
-| Accent (Purple) | `#AF52DE` | `#BF5AF2` |
+| Tint primary (Blue) | `#0088FF` | `#0091FF` |
+| Danger (Red) | `#FF383C` | `#FF4245` |
+| Success (Green) | `#34C759` | `#30D158` |
+| Warning (Orange) | `#FF8D28` | `#FF9230` |
+| Attention (Yellow) | `#FFCC00` | `#FFD600` |
+| Accent (Purple) | `#CB30E0` | `#DB34F2` |
 | Joy (Pink) | `#FF2D55` | `#FF375F` |
-| Info (Turquoise) | `#79DBDC` | `#64D2FF` |
+| Info (Turquoise) | `#00C3D0` | `#00D2E0` |
 | Label primary (text) | `#000000` | `#FFFFFF` |
 | Label secondary | `rgba(60,60,67,0.6)` | `rgba(235,235,245,0.6)` |
 | Label tertiary | `rgba(60,60,67,0.3)` | `rgba(235,235,245,0.3)` |
@@ -47,14 +47,14 @@ Authors should write semantic class names (never raw hex) so the system stays co
 // tailwind.config.js — excerpt
 colors: {
   brand: {
-    blue:      { DEFAULT: '#007AFF', dark: '#0A84FF', light: '#CCE4FF' },
-    red:       { DEFAULT: '#FF3B30', dark: '#FF453A', light: '#FFD8D6' },
-    green:     { DEFAULT: '#28CD41', dark: '#30D158', light: '#D4F5D9' },
-    orange:    { DEFAULT: '#FF9500', dark: '#FF9F0A', light: '#FFEACC' },
-    yellow:    { DEFAULT: '#FFCC00', dark: '#FFD60A', light: '#FFF5CC' },
-    purple:    { DEFAULT: '#AF52DE', dark: '#BF5AF2', light: '#EFDCF8' },
-    pink:      { DEFAULT: '#FF2D55', dark: '#FF375F', light: '#FFD5DD' },
-    turquoise: { DEFAULT: '#79DBDC', dark: '#64D2FF', light: '#C0E7E7' },
+    blue:      { DEFAULT: '#0088FF', dark: '#0091FF', light: '#CCE7FF' },
+    red:       { DEFAULT: '#FF383C', dark: '#FF4245', light: '#FFD7D8' },
+    green:     { DEFAULT: '#34C759', dark: '#30D158', light: '#D6F4DE' },
+    orange:    { DEFAULT: '#FF8D28', dark: '#FF9230', light: '#FFE8D4' },
+    yellow:    { DEFAULT: '#FFCC00', dark: '#FFD600', light: '#FFF5CC' },
+    purple:    { DEFAULT: '#CB30E0', dark: '#DB34F2', light: '#F5D6F9' },
+    pink:      { DEFAULT: '#FF2D55', dark: '#FF375F', light: '#FFC0CC' },
+    turquoise: { DEFAULT: '#00C3D0', dark: '#00D2E0', light: '#CCF3F6' },
   },
   label: {
     primary:   { DEFAULT: '#000000', dark: '#FFFFFF' },
@@ -72,7 +72,7 @@ colors: {
 
 ## Checklist before shipping
 
-- [ ] No raw hex in markup: use Tailwind tokens (`bg-brand-blue`, not `bg-[#007AFF]`).
+- [ ] No raw hex in markup: use Tailwind tokens (`bg-brand-blue`, not `bg-[#0088FF]`).
 - [ ] Both `light` and `dark:` variants set for every meaningful surface and text token.
 - [ ] Body text ≥ 4.5:1, UI ≥ 3:1, verified with a contrast tool.
 - [ ] Red used only for destructive/critical states.

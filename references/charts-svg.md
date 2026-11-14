@@ -129,7 +129,7 @@ so a single override flips the whole figure (see "Dark-mode aware" below).
   --chart-ink: #000000;
   --chart-ink-secondary: #3C3C43;
   --chart-axis: rgba(60, 60, 67, 0.36);
-  --chart-mark: #007AFF; /* fallback single-series color; multi-series pulls from color-psychology.md */
+  --chart-mark: #0088FF; /* fallback single-series color; multi-series pulls from color-psychology.md */
   font-family: Roboto, system-ui, sans-serif;
 }
 ```
@@ -166,7 +166,7 @@ Two options, in order of preference:
   --chart-ink: #FFFFFF;
   --chart-ink-secondary: rgba(235, 235, 245, 0.6);
   --chart-axis: rgba(84, 84, 88, 0.65);
-  --chart-mark: #0A84FF;
+  --chart-mark: #0091FF;
 }
 ```
 

@@ -91,7 +91,7 @@
       <style>
         .mark { pointer-events: none; }                 /* visible shapes never steal the hover */
         .hit { cursor: pointer; }
-        .hit:focus-visible { outline: 2px solid #007AFF; outline-offset: 2px; }
+        .hit:focus-visible { outline: 2px solid #0088FF; outline-offset: 2px; }
         .tip { opacity: 0; transition: opacity .12s ease; pointer-events: none; }
         .hit:hover ~ .tip, .hit:focus ~ .tip { opacity: 1; }
         @media (prefers-reduced-motion: reduce) { .tip { transition: none; } }
@@ -102,17 +102,17 @@
       <text class="mark" x="24" y="34" font-family="Roboto, system-ui, sans-serif" font-size="18" font-weight="700" fill="#1D1D1F">Quarterly revenue</text>
       <!-- group order: visible bar (mark) → .hit (on top) → .tip -->
       <g transform="translate(40,70)">
-        <rect class="mark" x="30" y="70" width="60" height="80" rx="6" fill="#007AFF" fill-opacity=".85"/>
+        <rect class="mark" x="30" y="70" width="60" height="80" rx="6" fill="#0088FF" fill-opacity=".85"/>
         <rect class="hit" x="0" y="0" width="120" height="150" fill="transparent" tabindex="0" data-tip="Q1|Revenue: €32k|Up 4% QoQ"><title>Q1 — €32k</title></rect>
         <g class="tip"><rect x="4" y="40" width="82" height="24" rx="6" fill="#1D1D1F"/><text x="45" y="57" text-anchor="middle" font-family="Roboto Mono, monospace" font-size="13" fill="#fff">€32k</text></g>
       </g>
       <g transform="translate(180,70)">
-        <rect class="mark" x="30" y="34" width="60" height="116" rx="6" fill="#007AFF" fill-opacity=".85"/>
+        <rect class="mark" x="30" y="34" width="60" height="116" rx="6" fill="#0088FF" fill-opacity=".85"/>
         <rect class="hit" x="0" y="0" width="120" height="150" fill="transparent" tabindex="0" data-tip="Q2|Revenue: €41k|Up 28% QoQ"><title>Q2 — €41k</title></rect>
         <g class="tip"><rect x="4" y="4" width="82" height="24" rx="6" fill="#1D1D1F"/><text x="45" y="21" text-anchor="middle" font-family="Roboto Mono, monospace" font-size="13" fill="#fff">€41k</text></g>
       </g>
       <g transform="translate(320,70)">
-        <rect class="mark" x="30" y="6" width="60" height="144" rx="6" fill="#007AFF"/>
+        <rect class="mark" x="30" y="6" width="60" height="144" rx="6" fill="#0088FF"/>
         <rect class="hit" x="0" y="0" width="120" height="150" fill="transparent" tabindex="0" data-tip="Q3|Revenue: €57k|Up 39% QoQ"><title>Q3 — €57k</title></rect>
         <g class="tip"><rect x="4" y="-24" width="82" height="24" rx="6" fill="#1D1D1F"/><text x="45" y="-7" text-anchor="middle" font-family="Roboto Mono, monospace" font-size="13" fill="#fff">€57k</text></g>
       </g>
@@ -164,7 +164,7 @@
       <desc id="c2-desc">Three bars; hover a bar for its value.</desc>
       <style>
         .mark { pointer-events: none; }
-        .hit { cursor: pointer; } .hit:focus-visible { outline: 2px solid #007AFF; outline-offset: 2px; }
+        .hit { cursor: pointer; } .hit:focus-visible { outline: 2px solid #0088FF; outline-offset: 2px; }
         .tip { opacity: 0; transition: opacity .12s ease; pointer-events: none; }
         .hit:hover ~ .tip, .hit:focus ~ .tip { opacity: 1; }
         @media (prefers-reduced-motion: reduce) { .tip { transition: none; } }
@@ -173,17 +173,17 @@
       <rect class="mark" width="480" height="260" fill="#fff"/>
       <text class="mark" x="24" y="34" font-family="Roboto, system-ui, sans-serif" font-size="18" font-weight="700" fill="#1D1D1F">Quarterly revenue</text>
       <g transform="translate(40,70)">
-        <rect class="mark" x="30" y="70" width="60" height="80" rx="6" fill="#007AFF" fill-opacity=".85"/>
+        <rect class="mark" x="30" y="70" width="60" height="80" rx="6" fill="#0088FF" fill-opacity=".85"/>
         <rect class="hit" x="0" y="0" width="120" height="150" fill="transparent" tabindex="0" data-tip="Q1|Revenue: €32k|Up 4% QoQ"><title>Q1 — €32k</title></rect>
         <g class="tip"><rect x="4" y="40" width="82" height="24" rx="6" fill="#1D1D1F"/><text x="45" y="57" text-anchor="middle" font-family="Roboto Mono, monospace" font-size="13" fill="#fff">€32k</text></g>
       </g>
       <g transform="translate(180,70)">
-        <rect class="mark" x="30" y="34" width="60" height="116" rx="6" fill="#007AFF" fill-opacity=".85"/>
+        <rect class="mark" x="30" y="34" width="60" height="116" rx="6" fill="#0088FF" fill-opacity=".85"/>
         <rect class="hit" x="0" y="0" width="120" height="150" fill="transparent" tabindex="0" data-tip="Q2|Revenue: €41k|Up 28% QoQ"><title>Q2 — €41k</title></rect>
         <g class="tip"><rect x="4" y="4" width="82" height="24" rx="6" fill="#1D1D1F"/><text x="45" y="21" text-anchor="middle" font-family="Roboto Mono, monospace" font-size="13" fill="#fff">€41k</text></g>
       </g>
       <g transform="translate(320,70)">
-        <rect class="mark" x="30" y="6" width="60" height="144" rx="6" fill="#007AFF"/>
+        <rect class="mark" x="30" y="6" width="60" height="144" rx="6" fill="#0088FF"/>
         <rect class="hit" x="0" y="0" width="120" height="150" fill="transparent" tabindex="0" data-tip="Q3|Revenue: €57k|Up 39% QoQ"><title>Q3 — €57k</title></rect>
         <g class="tip"><rect x="4" y="-24" width="82" height="24" rx="6" fill="#1D1D1F"/><text x="45" y="-7" text-anchor="middle" font-family="Roboto Mono, monospace" font-size="13" fill="#fff">€57k</text></g>
       </g>

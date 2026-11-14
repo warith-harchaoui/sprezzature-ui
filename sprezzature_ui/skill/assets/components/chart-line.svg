@@ -18,37 +18,37 @@ subtitle / axis tag below to match this dashboard's interpretation. Inline SVG
 
   <!-- area: single linear fill, the one gradient exception in the house rules -->
   <path d="M40,220 L40,187.2 L130,152.76 L220,169.98 L310,119.6 L400,92.08 L490,81.6 L580,70.76 L580,220 Z"
-        fill="#007AFF" opacity="0.18"/>
+        fill="#0088FF" opacity="0.18"/>
   <path d="M40,187.2 L130,152.76 L220,169.98 L310,119.6 L400,92.08 L490,81.6 L580,70.76"
-        fill="none" stroke="#007AFF" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        fill="none" stroke="#0088FF" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
 
   <!-- one <g> per week: point + native tooltip + hover lift -->
   <g class="chart-point" tabindex="0" role="img" aria-label="Week 1: 1,200 active users">
-    <circle cx="40" cy="187.2" r="4.4" fill="#007AFF"/>
+    <circle cx="40" cy="187.2" r="4.4" fill="#0088FF"/>
     <title>Week 1: 1,200 active users</title>
   </g>
   <g class="chart-point" tabindex="0" role="img" aria-label="Week 2: 1,410 active users">
-    <circle cx="130" cy="152.76" r="4.4" fill="#007AFF"/>
+    <circle cx="130" cy="152.76" r="4.4" fill="#0088FF"/>
     <title>Week 2: 1,410 active users</title>
   </g>
   <g class="chart-point" tabindex="0" role="img" aria-label="Week 3: 1,305 active users">
-    <circle cx="220" cy="169.98" r="4.4" fill="#007AFF"/>
+    <circle cx="220" cy="169.98" r="4.4" fill="#0088FF"/>
     <title>Week 3: 1,305 active users</title>
   </g>
   <g class="chart-point" tabindex="0" role="img" aria-label="Week 4: 1,612 active users">
-    <circle cx="310" cy="119.6" r="4.4" fill="#007AFF"/>
+    <circle cx="310" cy="119.6" r="4.4" fill="#0088FF"/>
     <title>Week 4: 1,612 active users</title>
   </g>
   <g class="chart-point" tabindex="0" role="img" aria-label="Week 5: 1,780 active users">
-    <circle cx="400" cy="92.08" r="4.4" fill="#007AFF"/>
+    <circle cx="400" cy="92.08" r="4.4" fill="#0088FF"/>
     <title>Week 5: 1,780 active users</title>
   </g>
   <g class="chart-point" tabindex="0" role="img" aria-label="Week 6: 1,844 active users">
-    <circle cx="490" cy="81.6" r="4.4" fill="#007AFF"/>
+    <circle cx="490" cy="81.6" r="4.4" fill="#0088FF"/>
     <title>Week 6: 1,844 active users</title>
   </g>
   <g class="chart-point" tabindex="0" role="img" aria-label="Week 7: 1,910 active users">
-    <circle cx="580" cy="70.76" r="4.4" fill="#007AFF"/>
+    <circle cx="580" cy="70.76" r="4.4" fill="#0088FF"/>
     <title>Week 7: 1,910 active users</title>
   </g>
 

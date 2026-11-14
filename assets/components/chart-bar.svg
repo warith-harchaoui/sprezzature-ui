@@ -21,31 +21,31 @@ generated chart dark-mode aware — see references/charts-svg.md.
 
   <!-- one <g> per day: rounded bar + native tooltip + hover lift (see .chart-bar:hover below) -->
   <g class="chart-bar" tabindex="0" role="img" aria-label="Monday: 120 active users">
-    <rect x="51.6" y="130.5" width="54" height="89.5" rx="10" ry="10" fill="#007AFF"/>
+    <rect x="51.6" y="130.5" width="54" height="89.5" rx="10" ry="10" fill="#0088FF"/>
     <title>Monday: 120 active users</title>
   </g>
   <g class="chart-bar" tabindex="0" role="img" aria-label="Tuesday: 184 active users">
-    <rect x="128.7" y="82.8" width="54" height="137.2" rx="10" ry="10" fill="#007AFF"/>
+    <rect x="128.7" y="82.8" width="54" height="137.2" rx="10" ry="10" fill="#0088FF"/>
     <title>Tuesday: 184 active users</title>
   </g>
   <g class="chart-bar" tabindex="0" role="img" aria-label="Wednesday: 152 active users">
-    <rect x="205.9" y="106.7" width="54" height="113.3" rx="10" ry="10" fill="#007AFF"/>
+    <rect x="205.9" y="106.7" width="54" height="113.3" rx="10" ry="10" fill="#0088FF"/>
     <title>Wednesday: 152 active users</title>
   </g>
   <g class="chart-bar" tabindex="0" role="img" aria-label="Thursday: 201 active users">
-    <rect x="283.0" y="70.2" width="54" height="149.8" rx="10" ry="10" fill="#007AFF"/>
+    <rect x="283.0" y="70.2" width="54" height="149.8" rx="10" ry="10" fill="#0088FF"/>
     <title>Thursday: 201 active users</title>
   </g>
   <g class="chart-bar" tabindex="0" role="img" aria-label="Friday: 178 active users">
-    <rect x="360.1" y="87.3" width="54" height="132.7" rx="10" ry="10" fill="#007AFF"/>
+    <rect x="360.1" y="87.3" width="54" height="132.7" rx="10" ry="10" fill="#0088FF"/>
     <title>Friday: 178 active users</title>
   </g>
   <g class="chart-bar" tabindex="0" role="img" aria-label="Saturday: 93 active users">
-    <rect x="437.3" y="150.7" width="54" height="69.3" rx="10" ry="10" fill="#007AFF"/>
+    <rect x="437.3" y="150.7" width="54" height="69.3" rx="10" ry="10" fill="#0088FF"/>
     <title>Saturday: 93 active users</title>
   </g>
   <g class="chart-bar" tabindex="0" role="img" aria-label="Sunday: 76 active users">
-    <rect x="514.4" y="163.3" width="54" height="56.7" rx="10" ry="10" fill="#007AFF"/>
+    <rect x="514.4" y="163.3" width="54" height="56.7" rx="10" ry="10" fill="#0088FF"/>
     <title>Sunday: 76 active users</title>
   </g>
 

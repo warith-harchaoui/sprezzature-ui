@@ -1,6 +1,6 @@
 # Dataviz Color Palettes (Accessible)
 
-Accessible color choices for data visualization. Read alongside `color-psychology.md` (the curated brand palette), `charts-svg.md` (hand-authored SVG house style), and `ui-guidelines/foundations/accessibility.md`.
+Accessible color choices for data visualization. Read alongside `color-psychology.md` (the three palettes of [deraison.ai/en/colors](https://deraison.ai/en/colors) and their psychology), `charts-svg.md` (hand-authored SVG house style), and `ui-guidelines/foundations/accessibility.md`.
 
 Color in a data visualization carries a dimension. It is not decoration. Picking colors badly makes the chart unreadable for color-blind users, illegible at small sizes, or actively misleading.
 
@@ -21,22 +21,23 @@ You can't pick colors well until you know which of these three you're building.
 - One hue, varying luminance from light to dark.
 - Use a perceptual color space (OKLCH preferred, LCH acceptable) so steps look evenly spaced.
 - Avoid hue jumps: they read as category boundaries when there are none.
-- Default: light blue → `brand-blue` (`#CCE4FF` → `#007AFF`).
+- Default: light blue → `brand-blue` (`#CCE7FF` → `#0088FF`).
 
 ### Divergent
 
 - Two opposing hues meeting at a light neutral.
 - Symmetric around the midpoint (same number of steps on each side).
 - Default for "growth": a neutral mid-gray at zero with two opposing ends. Two choices, and the first is the default:
-  - **Colour-blind-safe (prefer this): blue ↔ red** (`#007AFF` ↔ `#808080` ↔ `#FF3B30`). The red ↔ green pair is hostile to red-green colour blindness (~8 % of men): under protanopia / deuteranopia both ends drift to a muddy tan and collapse into one hue, so the sign can no longer be read from colour. Blue ↔ red stays discriminable: blue survives, red darkens toward brown. `_style.diverging_pair(cvd_safe=True)` returns it (blue also carries *Trust*, red *Danger* in `color-psychology.md`).
-  - **Conventional red ↔ green** (`#FF3B30` ↔ `#808080` ↔ `#28CD41`). Finance-idiomatic and intuitive for the sighted majority, but only reach for it when the sign is *also* encoded another way (a +/- glyph, position above/below zero) **and** you have confirmed it survives `sprezzature-colors-cvd` (a screenshot of the chart in, one PNG per colour-vision deficiency out).
+  - **Colour-blind-safe (prefer this): blue ↔ red** (`#0088FF` ↔ `#8E8E93` ↔ `#FF383C`). The red ↔ green pair is hostile to red-green colour blindness (~8 % of men): under protanopia / deuteranopia both ends drift to a muddy tan and collapse into one hue, so the sign can no longer be read from colour. Blue ↔ red stays discriminable: blue survives, red darkens toward brown. `_style.diverging_pair(cvd_safe=True)` returns it (blue also carries *Trust*, red *Danger* in `color-psychology.md`).
+  - **Conventional red ↔ green** (`#FF383C` ↔ `#8E8E93` ↔ `#34C759`). Finance-idiomatic and intuitive for the sighted majority, but only reach for it when the sign is *also* encoded another way (a +/- glyph, position above/below zero) **and** you have confirmed it survives `sprezzature-colors-cvd` (a screenshot of the chart in, one PNG per colour-vision deficiency out).
 - Reserve this shape for actual divergent data, not for "category A vs. category B".
 
 ### Categorical
 
 - Max 8 categories. More than that, the eye stops distinguishing reliably: collapse small categories into "Other" or use a different chart.
 - Use the brand categorical sequence from `charts-svg.md`:
-  `["#007AFF", "#28CD41", "#FF9500", "#AF52DE", "#FF2D55", "#FFCC00", "#79DBDC", "#FF3B30"]`
+  `["#0088FF", "#34C759", "#FF8D28", "#CB30E0", "#FF2D55", "#FFCC00", "#00C3D0", "#FF383C"]`
+- These are the corporate values. The same names exist in the academic palette (OKABE and ITO, built to stay readable with colour blindness) and in the print palette. Take them from [deraison.ai/en/colors](https://deraison.ai/en/colors) when the chart must survive colour blindness or go to print.
 - Avoid simultaneous red + green; they read as the same color to red-green color-blind users (about 8 % of men).
 
 ## Heuristics that beat intuition
@@ -91,16 +92,16 @@ Once the palette passes, formalize as Tailwind tokens so it's used uniformly. Su
 extend: {
   colors: {
     'data-sequential': {
-      100: '#CCE4FF', 200: '#99CAFF', 300: '#66B0FF',
-      400: '#3395FF', 500: '#007AFF', 600: '#0062CC',
-      700: '#004999', 800: '#003166', 900: '#001833',
+      100: '#CCE7FF', 200: '#99CFFF', 300: '#66B8FF',
+      400: '#33A0FF', 500: '#0088FF', 600: '#006DCC',
+      700: '#005299', 800: '#003666', 900: '#001B33',
     },
     'data-categorical': {
-      1: '#007AFF', 2: '#28CD41', 3: '#FF9500', 4: '#AF52DE',
-      5: '#FF2D55', 6: '#FFCC00', 7: '#79DBDC', 8: '#FF3B30',
+      1: '#0088FF', 2: '#34C759', 3: '#FF8D28', 4: '#CB30E0',
+      5: '#FF2D55', 6: '#FFCC00', 7: '#00C3D0', 8: '#FF383C',
     },
     'data-diverging': {
-      neg: '#FF3B30', mid: '#808080', pos: '#28CD41',
+      neg: '#FF383C', mid: '#8E8E93', pos: '#34C759',
     },
   },
 },

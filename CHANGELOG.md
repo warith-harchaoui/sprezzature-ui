@@ -6,6 +6,33 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- **The colours follow [deraison.ai/colors](https://deraison.ai/colors)**,
+  the source of truth for every colour in the suite, as
+  `sprezzature-colors` 1.4.0 does. The references now point there instead
+  of recopying every value, and keep the hex codes that generated code
+  needs.
+  - **corporate**: Apple's system colours of June 9, 2025. Red `#FF383C`,
+    orange `#FF8D28`, green `#34C759`, turquoise `#00C3D0`, blue `#0088FF`,
+    purple `#CB30E0`, brown `#AC7F5E`, gray `#8E8E93`; yellow, pink and
+    black unchanged. Every light tint follows, and the dark-mode values
+    are Apple's of the same date (blue `#0091FF`, red `#FF4245`, orange
+    `#FF9230`, yellow `#FFD600`, purple `#DB34F2`, turquoise `#00D2E0`).
+  - **academic** (OKABE and ITO, readable with colour blindness) and
+    **print** (checked for offset printing on coated paper) are named
+    beside corporate where a reference discusses palettes. The academic
+    red is `#E73121` and its pink `#FF8082`.
+  - **white has left the palette lists**, as on the site on 2026-11-13.
+    It stays the page surface.
+- Touched: `color-psychology.md`, `dataviz-color-palettes.md` (the
+  sequential blue ramp is recomputed from `#0088FF`), `stack-tailwind.md`,
+  `charts-svg.md`, `ui-guidelines/foundations/color.md`, `app-icons.md`,
+  `focus-and-selection.md`, the skill's rule 7, the starter page, the chart
+  and full-screen figure components, and the "how it works" diagrams
+  (redrawn by the hub's `make_brick_diagram.py`). The positioning maps keep
+  their colours: `standpoint` draws them, and its palette is its own.
+
 ## [1.3.0] — 2026-11-12
 
 ### Added

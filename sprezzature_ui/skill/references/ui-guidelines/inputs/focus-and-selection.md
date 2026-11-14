@@ -18,7 +18,7 @@
    ```css
    *:focus { outline: none; }
    *:focus-visible {
-     box-shadow: 0 0 0 2px var(--surface-primary), 0 0 0 4px #007AFF;
+     box-shadow: 0 0 0 2px var(--surface-primary), 0 0 0 4px #0088FF;
      border-radius: inherit;
    }
    ```
@@ -30,7 +30,7 @@
 
 ```css
 ::selection {
-  background-color: rgba(0, 122, 255, 0.25); /* brand-blue at 25% */
+  background-color: rgba(0, 136, 255, 0.25); /* brand-blue at 25% */
   color: inherit;
 }
 html[data-color-scheme="dark"] ::selection {
