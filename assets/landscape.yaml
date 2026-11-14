@@ -74,7 +74,7 @@ approaches:
     axis_1: 3.7027
     axis_2: 3.8639
   role: best
-  color: '#FF3B30'
+  color: '#FF383C'
   attributes:
     Hardcoded string detection: 2.0
     Source languages covered: 3.0
@@ -98,7 +98,7 @@ approaches:
     axis_1: -0.6242
     axis_2: 3.8639
   role: top
-  color: '#AF52DE'
+  color: '#CB30E0'
   attributes:
     Hardcoded string detection: 5.0
     Source languages covered: 2.0
@@ -362,7 +362,7 @@ approaches:
     axis_1: 3.7027
     axis_2: -1.9651
   role: right
-  color: '#007AFF'
+  color: '#0088FF'
   attributes:
     Hardcoded string detection: 1.0
     Source languages covered: 1.0
@@ -626,7 +626,7 @@ approaches:
     axis_1: -0.383
     axis_2: -3.4879
   role: worst
-  color: '#A52A2A'
+  color: '#AC7F5E'
   attributes:
     Hardcoded string detection: 1.0
     Source languages covered: 1.0

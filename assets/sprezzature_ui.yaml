@@ -43,7 +43,7 @@ approaches:
     axis_1: 1.1682
     axis_2: 1.9577
   role: best
-  color: '#FF3B30'
+  color: '#FF383C'
   attributes:
     No framework runtime: 5.0
     Catalogue-driven i18n: 5.0
@@ -82,7 +82,7 @@ approaches:
     axis_1: -0.0699
     axis_2: -1.9577
   role: worst
-  color: '#A52A2A'
+  color: '#AC7F5E'
   attributes:
     No framework runtime: 1.0
     Catalogue-driven i18n: 2.0
@@ -95,7 +95,7 @@ approaches:
     axis_1: 1.1682
     axis_2: -1.017
   role: right
-  color: '#007AFF'
+  color: '#0088FF'
   attributes:
     No framework runtime: 4.0
     Catalogue-driven i18n: 1.0
@@ -121,7 +121,7 @@ approaches:
     axis_1: -1.1682
     axis_2: 1.9577
   role: top
-  color: '#AF52DE'
+  color: '#CB30E0'
   attributes:
     No framework runtime: 4.0
     Catalogue-driven i18n: 5.0
