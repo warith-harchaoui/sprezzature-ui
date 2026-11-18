@@ -62,7 +62,7 @@ For other work, use the companion skills:
 | W3C (World Wide Web Consortium, the body that writes the web's standards) alt text via local Ollama vision | `sprezzature-accessibility` |
 | WebVTT / SRT (SubRip, the most common subtitle file: numbered captions, each with a start and end time) captions via local whisper.cpp | `sprezzature-audio` |
 | Apply / audit the canonical Laws of UX (Hick, Fitts, Miller, Jakob, Peak-End, …) on emitted HTML | `sprezzature-ux-laws` |
-| Screenshot a rendered page, look at it, and refine the markup (the Ralph Eyeball Loop) | `sprezzature-figures` (`sprezzature-figures/references/ralph-eyeball-loop.md`) |
+| Screenshot a rendered page, look at it, and refine the markup | a headless browser screenshot, read by eye |
 
 The companion skills assume the same stack rules below.
 
