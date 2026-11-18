@@ -8,6 +8,7 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- The project name is written `sprezzature`, all lowercase, even at the start of a sentence, in every displayed string and document (API title, MCP server description, comments, examples). Code identifiers such as `SprezzatureCommand` and `SPREZZATURE_*` do not change.
 - **The colours follow [deraison.ai/colors](https://deraison.ai/colors)**,
   the source of truth for every colour in the suite, as
   `sprezzature-colors` 1.4.0 does. The references now point there instead

@@ -28,7 +28,7 @@
 <header class="sticky top-0 z-30 flex items-center gap-3 border-b border-separator/60 bg-surface-primary/80 px-4 py-3 backdrop-blur dark:bg-surface-primary-dark/80">
   <a href="/" class="flex items-center gap-2 font-semibold text-label-primary dark:text-label-primary-dark">
     <img src="/logo.svg" alt="" width="24" height="24" class="rounded" />
-    <span>Sprezzature</span>
+    <span>sprezzature</span>
   </a>
   <nav class="ml-auto flex items-center gap-1">
     <a href="/docs" class="rounded-lg px-3 py-2 text-sm text-label-secondary hover:bg-surface-secondary">Docs</a>
