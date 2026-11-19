@@ -6,8 +6,12 @@ versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.3.1] — 2026-11-19
+
+
 ### Changed
 
+- The licence line reads `Copyright (c) 2026, Warith Harchaoui` in LICENSE, README.md and LISEZMOI.md; the licence is unchanged, BSD 3-Clause.
 - The project name is written `sprezzature`, all lowercase, even at the start of a sentence, in every displayed string and document (API title, MCP server description, comments, examples). Code identifiers such as `SprezzatureCommand` and `SPREZZATURE_*` do not change.
 - **The colours follow [deraison.ai/colors](https://deraison.ai/colors)**,
   the source of truth for every colour in the suite, as
